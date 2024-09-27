@@ -11,8 +11,8 @@ import java.util.UUID;
  * @author Andrzej Pomirski
  */
 public class PlayerDTO {
-    private UUID uniqueId;
-    private String name;
+    private final UUID uniqueId;
+    private final String name;
 
     public PlayerDTO(UUID uuid, String name) {
         this.uniqueId = uuid;
@@ -28,15 +28,7 @@ public class PlayerDTO {
         return uniqueId;
     }
 
-    public void setUniqueId(UUID uniqueId) {
-        this.uniqueId = uniqueId;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }

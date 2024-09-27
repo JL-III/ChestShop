@@ -7,18 +7,18 @@ public abstract class EconomicEvent extends Event {
     private boolean handled = false;
 
     /**
-     * Get whether or not this event was successfully handled by a listener
+     * Get whether this event was successfully handled by a listener
      *
-     * @return Whether or not the amount was successfully handled
+     * @return Whether the amount was successfully handled
      */
     public boolean wasHandled() {
         return handled;
     }
 
     /**
-     * Set whether or not this event was successfully handled by a listener
+     * Set whether this event was successfully handled by a listener
      *
-     * @param handled Whether or not the amount was successfully handled
+     * @param handled Whether the amount was successfully handled
      */
     public void setHandled(boolean handled) {
         this.handled = handled;

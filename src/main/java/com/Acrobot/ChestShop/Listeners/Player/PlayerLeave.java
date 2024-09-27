@@ -16,5 +16,4 @@ public class PlayerLeave implements Listener {
             Toggle.setIgnoring(event.getPlayer(), false);
         }
     }
-
 }

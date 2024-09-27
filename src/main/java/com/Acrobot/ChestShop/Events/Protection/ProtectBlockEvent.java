@@ -5,6 +5,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
@@ -21,14 +22,6 @@ public class ProtectBlockEvent extends Event {
     private final Security.Type type;
 
     boolean isProtected = false;
-
-    public ProtectBlockEvent(Block block, Player player) {
-        this(block, player, player.getUniqueId());
-    }
-
-    public ProtectBlockEvent(Block block, Player player, UUID protectionOwner) {
-        this(block, player, protectionOwner, Security.Type.PRIVATE);
-    }
 
     public ProtectBlockEvent(Block block, Player player, UUID protectionOwner, Security.Type type) {
         this.block = block;
@@ -61,7 +54,7 @@ public class ProtectBlockEvent extends Event {
         return type;
     }
 
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return handlers;
     }
 

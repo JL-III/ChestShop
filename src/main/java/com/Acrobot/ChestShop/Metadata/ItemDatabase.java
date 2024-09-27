@@ -176,8 +176,7 @@ public class ItemDatabase {
      * @param code Item code
      * @return ItemStack represented by this code
      */
-    public ItemStack getFromCode(String code)
-    {
+    public ItemStack getFromCode(String code) {
         // TODO java.lang.StackOverflowError - http://pastebin.com/eRD8wUFM - Corrupt item DB?
 
         int id = Base62.decode(code);

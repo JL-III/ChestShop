@@ -2,7 +2,6 @@ package com.Acrobot.ChestShop.Listeners.PreTransaction;
 
 import com.Acrobot.Breeze.Utils.InventoryUtil;
 import com.Acrobot.Breeze.Utils.MaterialUtil;
-import com.Acrobot.ChestShop.ChestShop;
 import com.Acrobot.ChestShop.Configuration.Properties;
 import com.Acrobot.ChestShop.Economy.Economy;
 import com.Acrobot.ChestShop.Events.Economy.CurrencyAmountEvent;

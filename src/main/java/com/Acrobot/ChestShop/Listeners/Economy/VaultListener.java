@@ -1,4 +1,4 @@
-package com.Acrobot.ChestShop.Listeners.Economy.Plugins;
+package com.Acrobot.ChestShop.Listeners.Economy;
 
 import java.math.BigDecimal;
 import java.util.logging.Level;
@@ -6,7 +6,6 @@ import java.util.logging.Level;
 import javax.annotation.Nullable;
 
 import com.Acrobot.ChestShop.Configuration.Properties;
-import com.Acrobot.ChestShop.Listeners.Economy.EconomyAdapter;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 
@@ -39,7 +38,6 @@ public class VaultListener extends EconomyAdapter {
     private final Plugin plugin;
     private RegisteredServiceProvider<Economy> rsp;
     private static Economy provider;
-    private Plugin providingPlugin;
 
     public VaultListener(Plugin plugin) {
         super(plugin);
@@ -52,7 +50,6 @@ public class VaultListener extends EconomyAdapter {
 
         if (rsp != null) {
             provider = rsp.getProvider();
-            providingPlugin = rsp.getPlugin();
             plugin.getLogger().log(Level.INFO, "Using " + provider.getName() + " as the Economy provider now.");
         }
     }
@@ -65,13 +62,6 @@ public class VaultListener extends EconomyAdapter {
         }
         return true;
     }
-
-    @Override
-    public ProviderInfo getProviderInfo() {
-        return new ProviderInfo(provider.getName(), providingPlugin.getDescription().getVersion());
-    }
-
-    public static Economy getProvider() { return provider; }
 
     public boolean transactionCanFail() {
         if (provider == null) {

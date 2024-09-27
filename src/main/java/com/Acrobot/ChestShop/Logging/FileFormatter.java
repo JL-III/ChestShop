@@ -31,7 +31,7 @@ public class FileFormatter extends Formatter {
             pw.println();
             record.getThrown().printStackTrace(pw);
             pw.close();
-            message.append(sw.toString());
+            message.append(sw);
         }
 
         return message.append('\n').toString();

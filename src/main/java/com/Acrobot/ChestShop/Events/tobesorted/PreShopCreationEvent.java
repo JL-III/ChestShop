@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
@@ -17,7 +18,7 @@ import javax.annotation.Nullable;
 public class PreShopCreationEvent extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
 
-    private Player creator;
+    private final Player creator;
     @Nullable private Account ownerAccount = null;
 
     private CreationOutcome outcome = CreationOutcome.SHOP_CREATED_SUCCESSFULLY;
@@ -70,15 +71,6 @@ public class PreShopCreationEvent extends Event implements Cancellable {
      */
     public void setOutcome(CreationOutcome outcome) {
         this.outcome = outcome;
-    }
-
-    /**
-     * Sets the shop's creator
-     *
-     * @param creator Shop's creator
-     */
-    public void setCreator(Player creator) {
-        this.creator = creator;
     }
 
     /**
@@ -165,7 +157,7 @@ public class PreShopCreationEvent extends Event implements Cancellable {
         this.ownerAccount = ownerAccount;
     }
 
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return handlers;
     }
 
@@ -176,7 +168,7 @@ public class PreShopCreationEvent extends Event implements Cancellable {
     /**
      * Possible outcomes
      */
-    public static enum CreationOutcome {
+    public enum CreationOutcome {
         INVALID_ITEM,
         INVALID_PRICE,
         INVALID_QUANTITY,
@@ -221,9 +213,9 @@ public class PreShopCreationEvent extends Event implements Cancellable {
         }
 
         /**
-         * Get whether or not this outcome should result in the shop sign getting broken
+         * Get whether this outcome should result in the shop sign getting broken
          *
-         * @return Whether or not the shop sign gets broken
+         * @return Whether the shop sign gets broken
          */
         public boolean shouldBreakSign() {
             return breakSign;

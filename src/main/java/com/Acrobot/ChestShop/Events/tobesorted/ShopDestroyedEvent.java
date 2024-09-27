@@ -6,6 +6,7 @@ import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
@@ -67,7 +68,7 @@ public class ShopDestroyedEvent extends Event {
     }
 
     @Override
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return handlers;
     }
 }

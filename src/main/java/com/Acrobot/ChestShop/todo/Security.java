@@ -1,12 +1,11 @@
 package com.Acrobot.ChestShop.todo;
 
 import com.Acrobot.Breeze.Utils.BlockUtil;
-import com.Acrobot.ChestShop.ChestShop;
 import com.Acrobot.ChestShop.Configuration.Properties;
 import com.Acrobot.ChestShop.Database.Account;
-import com.Acrobot.ChestShop.Events.tobesorted.AccountQueryEvent;
 import com.Acrobot.ChestShop.Events.Protection.ProtectBlockEvent;
 import com.Acrobot.ChestShop.Events.Protection.ProtectionCheckEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.AccountQueryEvent;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
 import com.Acrobot.ChestShop.Utils.uBlock;
 import org.bukkit.Bukkit;
@@ -33,14 +32,6 @@ public class Security {
 
     private static final BlockFace[] SIGN_CONNECTION_FACES = {BlockFace.UP, BlockFace.EAST, BlockFace.WEST, BlockFace.NORTH, BlockFace.SOUTH};
     private static final BlockFace[] BLOCKS_AROUND = {BlockFace.UP, BlockFace.DOWN, BlockFace.EAST, BlockFace.WEST, BlockFace.NORTH, BlockFace.SOUTH};
-
-    public boolean protect(Player player, Block block) {
-        return protect(player, block, player.getUniqueId());
-    }
-
-    public boolean protect(Player player, Block block, UUID protectionOwner) {
-        return protect(player, block, protectionOwner, Type.PRIVATE);
-    }
 
     public boolean protect(Player player, Block block, UUID protectionOwner, Type type) {
         ProtectBlockEvent event = new ProtectBlockEvent(block, player, protectionOwner, type);

@@ -1,11 +1,10 @@
 package com.Acrobot.ChestShop.Listeners.Economy;
 
-import com.Acrobot.ChestShop.ChestShop;
 import com.Acrobot.ChestShop.Configuration.Properties;
 import com.Acrobot.ChestShop.Events.Economy.CurrencyAddEvent;
 import com.Acrobot.ChestShop.Events.Economy.CurrencyTransferEvent;
-import com.Acrobot.ChestShop.todo.Permission;
 import com.Acrobot.ChestShop.Utils.NameManager;
+import com.Acrobot.ChestShop.todo.Permission;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;

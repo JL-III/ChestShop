@@ -1,6 +1,5 @@
 package com.Acrobot.ChestShop.Listeners.PostTransaction;
 
-import com.Acrobot.ChestShop.ChestShop;
 import com.Acrobot.ChestShop.Events.Economy.CurrencyTransferEvent;
 import com.Acrobot.ChestShop.Events.tobesorted.TransactionEvent;
 import org.bukkit.event.EventHandler;

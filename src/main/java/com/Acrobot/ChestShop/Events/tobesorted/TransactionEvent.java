@@ -10,11 +10,12 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
 
 /**
- * Represents a state after transaction has occured
+ * Represents a state after transaction has occurred
  *
  * @author Acrobot
  */
@@ -151,7 +152,7 @@ public class TransactionEvent extends Event implements Cancellable {
         return sign;
     }
 
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return handlers;
     }
 

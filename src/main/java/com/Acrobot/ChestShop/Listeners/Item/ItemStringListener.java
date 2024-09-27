@@ -14,5 +14,4 @@ public class ItemStringListener implements Listener {
             event.setItemString(MaterialUtil.getName(event.getItem(), event.getMaxWidth()));
         }
     }
-
 }

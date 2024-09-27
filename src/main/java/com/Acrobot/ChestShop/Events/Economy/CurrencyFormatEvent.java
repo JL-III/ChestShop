@@ -1,6 +1,7 @@
 package com.Acrobot.ChestShop.Events.Economy;
 
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
 
@@ -50,7 +51,7 @@ public class CurrencyFormatEvent extends EconomicEvent {
         this.formattedAmount = formattedAmount;
     }
 
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return handlers;
     }
 

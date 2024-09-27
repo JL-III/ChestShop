@@ -1,13 +1,12 @@
 package com.Acrobot.ChestShop.Listeners;
 
 import com.Acrobot.Breeze.Utils.InventoryUtil;
-import com.Acrobot.Breeze.Utils.MaterialUtil;
 import com.Acrobot.Breeze.Utils.PriceUtil;
 import com.Acrobot.ChestShop.ChestShop;
 import com.Acrobot.ChestShop.Configuration.Messages;
 import com.Acrobot.ChestShop.Configuration.Properties;
-import com.Acrobot.ChestShop.Events.tobesorted.AccountQueryEvent;
 import com.Acrobot.ChestShop.Events.Economy.CurrencyFormatEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.AccountQueryEvent;
 import com.Acrobot.ChestShop.Events.tobesorted.ItemInfoEvent;
 import com.Acrobot.ChestShop.Events.tobesorted.ItemParseEvent;
 import com.Acrobot.ChestShop.Events.tobesorted.ShopInfoEvent;
@@ -19,7 +18,6 @@ import org.bukkit.block.Container;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
-import org.checkerframework.checker.units.qual.C;
 
 import java.math.BigDecimal;
 import java.util.Map;

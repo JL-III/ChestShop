@@ -24,7 +24,6 @@ import static com.Acrobot.Breeze.Utils.StringUtil.getMinecraftStringWidth;
  * @author Acrobot
  */
 public class ItemAliasModule implements Listener {
-    private YamlConfiguration configuration;
     /**
      * Map ChestShop item code -> alias
      */
@@ -37,7 +36,7 @@ public class ItemAliasModule implements Listener {
     private void load() {
         File file = new File(ChestShop.getFolder(), "itemAliases.yml");
 
-        configuration = YamlConfiguration.loadConfiguration(file);
+        YamlConfiguration configuration = YamlConfiguration.loadConfiguration(file);
 
         configuration.options().header(
                 "This file specified optional aliases for certain item codes. (Use the full name from /iteminfo)"
@@ -121,15 +120,16 @@ public class ItemAliasModule implements Listener {
             }
 
             if (newCode != null) {
-                if (event.getMaxWidth() > 0) {
-                    int width = getMinecraftStringWidth(newCode);
-                    if (width > event.getMaxWidth()) {
-                        ChestShop.getBukkitLogger().warning("Can't use configured alias " + newCode + " as it's width (" + width + ") was wider than the allowed max width of " + event.getMaxWidth());
-                        return;
-                    }
-                }
-                event.setItemString(newCode);
+                return;
             }
+            if (event.getMaxWidth() > 0) {
+                int width = getMinecraftStringWidth(newCode);
+                if (width > event.getMaxWidth()) {
+                    ChestShop.getBukkitLogger().warning("Can't use configured alias " + newCode + " as it's width (" + width + ") was wider than the allowed max width of " + event.getMaxWidth());
+                    return;
+                }
+            }
+            event.setItemString(newCode);
         }
     }
 }

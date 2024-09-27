@@ -7,6 +7,7 @@ import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
@@ -41,16 +42,6 @@ public class ShopCreatedEvent extends Event {
         this.container = container;
         this.signLines = signLines.clone();
         this.ownerAccount = ownerAccount;
-    }
-
-    /**
-     * Returns the text on the sign
-     *
-     * @param line Line number (0-3)
-     * @return Text on the sign
-     */
-    public String getSignLine(short line) {
-        return signLines[line];
     }
 
     /**
@@ -108,7 +99,7 @@ public class ShopCreatedEvent extends Event {
     }
 
     /**
-     * Check whether or not the created shop is owned by the creator
+     * Check whether the created shop is owned by the creator
      *
      * @return <tt>true</tt> if the owner account is the creators one (or null); <tt>false</tt> if it's not
      */
@@ -116,7 +107,7 @@ public class ShopCreatedEvent extends Event {
         return ownerAccount == null || ownerAccount.getUuid().equals(creator.getUniqueId());
     }
 
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return handlers;
     }
 

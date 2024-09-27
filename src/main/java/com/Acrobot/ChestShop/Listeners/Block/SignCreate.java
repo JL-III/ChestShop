@@ -6,7 +6,6 @@ import com.Acrobot.ChestShop.ChestShop;
 import com.Acrobot.ChestShop.Configuration.Messages;
 import com.Acrobot.ChestShop.Events.tobesorted.PreShopCreationEvent;
 import com.Acrobot.ChestShop.Events.tobesorted.ShopCreatedEvent;
-import com.Acrobot.ChestShop.Listeners.Block.Break.SignBreak;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
 import com.Acrobot.ChestShop.Utils.NameManager;
 import com.Acrobot.ChestShop.Utils.uBlock;

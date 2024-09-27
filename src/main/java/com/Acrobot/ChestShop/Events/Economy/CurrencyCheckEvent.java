@@ -3,6 +3,7 @@ package com.Acrobot.ChestShop.Events.Economy;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -19,7 +20,7 @@ public class CurrencyCheckEvent extends EconomicEvent {
 
     private BigDecimal amount;
     private UUID account;
-    private World world;
+    private final World world;
 
     public CurrencyCheckEvent(BigDecimal amount, UUID account, World world) {
         this.amount = amount;
@@ -108,7 +109,7 @@ public class CurrencyCheckEvent extends EconomicEvent {
         this.account = account;
     }
 
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return handlers;
     }
 

@@ -2,6 +2,7 @@ package com.Acrobot.ChestShop.Events.Economy;
 
 import org.bukkit.World;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
@@ -15,16 +16,12 @@ public class AccountCheckEvent extends EconomicEvent {
 
     private boolean outcome = false;
 
-    private UUID account;
+    private final UUID account;
     private World world;
 
     public AccountCheckEvent(UUID account, World world) {
         this.account = account;
         this.world = world;
-    }
-
-    public AccountCheckEvent(UUID account) {
-        this.account = account;
     }
 
     /**
@@ -57,7 +54,7 @@ public class AccountCheckEvent extends EconomicEvent {
         return world;
     }
 
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return handlers;
     }
 

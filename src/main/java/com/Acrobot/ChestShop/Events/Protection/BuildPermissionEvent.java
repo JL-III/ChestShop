@@ -14,8 +14,9 @@ import javax.annotation.Nullable;
 public class BuildPermissionEvent extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
 
-    private Player player;
-    private Location chest, sign;
+    private final Player player;
+    private final Location chest;
+    private final Location sign;
 
     private boolean allowed = true;
 

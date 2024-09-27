@@ -1,12 +1,6 @@
 package com.Acrobot.ChestShop.Listeners.Economy;
 
-import com.Acrobot.ChestShop.ChestShop;
-import com.Acrobot.ChestShop.Events.Economy.AccountCheckEvent;
 import com.Acrobot.ChestShop.Events.Economy.CurrencyAddEvent;
-import com.Acrobot.ChestShop.Events.Economy.CurrencyAmountEvent;
-import com.Acrobot.ChestShop.Events.Economy.CurrencyCheckEvent;
-import com.Acrobot.ChestShop.Events.Economy.CurrencyFormatEvent;
-import com.Acrobot.ChestShop.Events.Economy.CurrencyHoldEvent;
 import com.Acrobot.ChestShop.Events.Economy.CurrencySubtractEvent;
 import com.Acrobot.ChestShop.Events.Economy.CurrencyTransferEvent;
 import com.Acrobot.ChestShop.Utils.NameManager;
@@ -63,8 +57,6 @@ public abstract class EconomyAdapter implements Listener {
             plugin.getServer().getPluginManager().callEvent(currencyResetEvent);
         }
     }
-
-    public abstract ProviderInfo getProviderInfo();
 
     public static class ProviderInfo {
         private final String name;

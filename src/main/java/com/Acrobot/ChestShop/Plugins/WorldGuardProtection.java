@@ -16,8 +16,6 @@ import com.sk89q.worldguard.protection.flags.Flags;
 import com.sk89q.worldguard.protection.flags.StateFlag;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.type.Sign;
-import org.bukkit.block.data.type.WallSign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -28,8 +26,8 @@ import org.bukkit.plugin.Plugin;
  * @author Acrobot
  */
 public class WorldGuardProtection implements Listener {
-    private WorldGuardPlugin worldGuard;
-    private WorldGuardPlatform worldGuardPlatform;
+    private final WorldGuardPlugin worldGuard;
+    private final WorldGuardPlatform worldGuardPlatform;
 
     public WorldGuardProtection(Plugin plugin) {
         this.worldGuard =(WorldGuardPlugin) plugin;

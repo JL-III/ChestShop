@@ -1,4 +1,4 @@
-package com.Acrobot.ChestShop.Listeners.Block.Break;
+package com.Acrobot.ChestShop.Listeners.Block;
 
 import com.Acrobot.Breeze.Utils.BlockUtil;
 import com.Acrobot.ChestShop.ChestShop;
@@ -6,7 +6,6 @@ import com.Acrobot.ChestShop.Configuration.Messages;
 import com.Acrobot.ChestShop.Configuration.Properties;
 import com.Acrobot.ChestShop.Events.EventManager;
 import com.Acrobot.ChestShop.Events.tobesorted.ShopDestroyedEvent;
-import com.Acrobot.ChestShop.Listeners.Block.Break.Attached.PhysicsBreak;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
 import com.Acrobot.ChestShop.Utils.NameManager;
 import com.Acrobot.ChestShop.Utils.uBlock;
@@ -50,7 +49,7 @@ public class SignBreak implements Listener {
         this.nameManager = new NameManager(plugin);
         try {
             Class.forName("com.destroystokyo.paper.event.block.BlockDestroyEvent");
-            eventManager.registerEvent((Listener) Class.forName("com.Acrobot.ChestShop.Listeners.Block.Break.Attached.PaperBlockDestroy").getDeclaredConstructor().newInstance());
+            eventManager.registerEvent((Listener) Class.forName("com.Acrobot.ChestShop.Listeners.Block.PaperBlockDestroy").getDeclaredConstructor().newInstance());
             ChestShop.getBukkitLogger().info("Using Paper's BlockDestroyEvent instead of the BlockPhysicsEvent!");
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
             eventManager.registerEvent(new PhysicsBreak(this));

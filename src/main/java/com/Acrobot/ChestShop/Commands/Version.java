@@ -25,7 +25,7 @@ public class Version implements CommandExecutor {
             return true;
         }
 
-        sender.sendMessage(ChatColor.GRAY + ChestShop.getPluginName() + "'s version is: " + ChatColor.GREEN + ChestShop.getVersion());
+        sender.sendMessage(ChatColor.GRAY + plugin.getName() + "'s version is: " + ChatColor.GREEN + plugin.getDescription().getVersion());
         return true;
     }
 }

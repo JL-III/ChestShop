@@ -1,7 +1,6 @@
 package com.Acrobot.ChestShop.Listeners;
 
 import com.Acrobot.Breeze.Utils.StringUtil;
-import com.Acrobot.ChestShop.ChestShop;
 import com.Acrobot.ChestShop.Commands.ItemInfo;
 import com.Acrobot.ChestShop.Events.EventManager;
 import com.Acrobot.ChestShop.Events.tobesorted.ItemInfoEvent;
@@ -13,18 +12,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.AxolotlBucketMeta;
-import org.bukkit.inventory.meta.BookMeta;
-import org.bukkit.inventory.meta.BundleMeta;
-import org.bukkit.inventory.meta.CrossbowMeta;
-import org.bukkit.inventory.meta.EnchantmentStorageMeta;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.KnowledgeBookMeta;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
-import org.bukkit.inventory.meta.MapMeta;
-import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.inventory.meta.Repairable;
-import org.bukkit.inventory.meta.TropicalFishBucketMeta;
+import org.bukkit.inventory.meta.*;
 import org.bukkit.map.MapView;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
@@ -34,31 +22,13 @@ import java.util.Map;
 import static com.Acrobot.Breeze.Utils.NumberUtil.toRoman;
 import static com.Acrobot.Breeze.Utils.NumberUtil.toTime;
 import static com.Acrobot.Breeze.Utils.StringUtil.capitalizeFirstLetter;
-import static com.Acrobot.ChestShop.Configuration.Messages.iteminfo_axolotl_variant;
-import static com.Acrobot.ChestShop.Configuration.Messages.iteminfo_book;
-import static com.Acrobot.ChestShop.Configuration.Messages.iteminfo_book_generation;
-import static com.Acrobot.ChestShop.Configuration.Messages.iteminfo_bundle_items;
-import static com.Acrobot.ChestShop.Configuration.Messages.iteminfo_crossbow_projectile;
-import static com.Acrobot.ChestShop.Configuration.Messages.iteminfo_crossbow_projectiles;
-import static com.Acrobot.ChestShop.Configuration.Messages.iteminfo_leather_color;
-import static com.Acrobot.ChestShop.Configuration.Messages.iteminfo_lore;
-import static com.Acrobot.ChestShop.Configuration.Messages.iteminfo_map_location;
-import static com.Acrobot.ChestShop.Configuration.Messages.iteminfo_map_view;
-import static com.Acrobot.ChestShop.Configuration.Messages.iteminfo_recipes;
-import static com.Acrobot.ChestShop.Configuration.Messages.iteminfo_repaircost;
-import static com.Acrobot.ChestShop.Configuration.Messages.iteminfo_tropical_fish;
+import static com.Acrobot.ChestShop.Configuration.Messages.*;
 
 /**
  * @author Acrobot
  */
 public class ItemInfoListener implements Listener {
-    private final Plugin plugin;
-    private final ItemInfo itemInfo;
-
     public ItemInfoListener(Plugin plugin, EventManager eventManager, ItemInfo itemInfo) {
-        this.plugin = plugin;
-        this.itemInfo = itemInfo;
-
         try {
             Class.forName("org.bukkit.inventory.meta.AxolotlBucketMeta");
             eventManager.registerEvent(new Listener() {
@@ -107,8 +77,6 @@ public class ItemInfoListener implements Listener {
             });
         } catch (ClassNotFoundException | NoClassDefFoundError ignored) {}
     }
-    // Register version dependent listeners
-
 
     @EventHandler
     public static void addRepairCost(ItemInfoEvent event) {

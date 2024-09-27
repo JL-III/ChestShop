@@ -3,6 +3,7 @@ package com.Acrobot.ChestShop.Events.tobesorted;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Represents a plugin reload call
@@ -12,7 +13,7 @@ import org.bukkit.event.HandlerList;
 public class ChestShopReloadEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
 
-    private CommandSender sender;
+    private final CommandSender sender;
 
     public ChestShopReloadEvent(CommandSender sender) {
         this.sender = sender;
@@ -25,7 +26,7 @@ public class ChestShopReloadEvent extends Event {
         return sender;
     }
 
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return handlers;
     }
 

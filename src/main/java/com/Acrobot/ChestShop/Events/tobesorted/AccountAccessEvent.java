@@ -4,6 +4,7 @@ import com.Acrobot.ChestShop.Database.Account;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Represents an access request for a specific account.
@@ -28,25 +29,25 @@ public class AccountAccessEvent extends PlayerEvent {
     }
 
     /**
-     * Whether or not the player can access the account.
+     * Whether the player can access the account.
      *
-     * @return Whether or not the player can access the account
+     * @return Whether the player can access the account
      */
     public boolean canAccess() {
         return canAccess;
     }
 
     /**
-     * Set whether or not the player can access the account.
+     * Set whether the player can access the account.
      *
-     * @param canAccess Whether or not the player can access the account
+     * @param canAccess Whether the player can access the account
      */
     public void setAccess(boolean canAccess) {
         this.canAccess = canAccess;
     }
 
     @Override
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return handlers;
     }
 

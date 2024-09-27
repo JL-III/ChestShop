@@ -1,6 +1,5 @@
-package com.Acrobot.ChestShop.Listeners.Block.Break.Attached;
+package com.Acrobot.ChestShop.Listeners.Block;
 
-import com.Acrobot.ChestShop.Listeners.Block.Break.SignBreak;
 import com.destroystokyo.paper.event.block.BlockDestroyEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

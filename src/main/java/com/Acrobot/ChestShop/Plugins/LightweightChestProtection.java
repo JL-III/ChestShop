@@ -55,19 +55,20 @@ public class LightweightChestProtection implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onPreShopCreation(PreShopCreationEvent event) {
         if (Properties.LWC_LIMITS_BLOCK_CREATION) {
-            if (Properties.PROTECT_SIGN_WITH_LWC) {
-                if (isAtLimit(event.getPlayer(), event.getSign())) {
-                    event.setOutcome(OTHER_BREAK);
-                    return;
-                }
+            if (!Properties.PROTECT_SIGN_WITH_LWC) {
+                return;
+            }
+            if (isAtLimit(event.getPlayer(), event.getSign())) {
+                event.setOutcome(OTHER_BREAK);
+                return;
             }
 
-            if (Properties.PROTECT_CHEST_WITH_LWC) {
-                Container container = uBlock.findConnectedContainer(event.getSign());
-                if (container != null && isAtLimit(event.getPlayer(), container)) {
-                    event.setOutcome(OTHER_BREAK);
-                    return;
-                }
+            if (!Properties.PROTECT_CHEST_WITH_LWC) {
+                return;
+            }
+            Container container = uBlock.findConnectedContainer(event.getSign());
+            if (container != null && isAtLimit(event.getPlayer(), container)) {
+                event.setOutcome(OTHER_BREAK);
             }
         }
     }

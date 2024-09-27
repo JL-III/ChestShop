@@ -4,6 +4,7 @@ import com.Acrobot.ChestShop.Events.tobesorted.TransactionEvent;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -23,18 +24,9 @@ public class CurrencyTransferEvent extends EconomicEvent {
 
     private UUID partner;
 
-    private Direction direction;
+    private final Direction direction;
 
     private final TransactionEvent transactionEvent;
-
-    public CurrencyTransferEvent(BigDecimal amount, Player initiator, UUID partner, Direction direction) {
-        this(amount, amount, initiator, partner, direction);
-    }
-
-    public CurrencyTransferEvent(BigDecimal amountSent, BigDecimal amountReceived, Player initiator, UUID partner, Direction direction) {
-        this(amountSent, amountReceived, initiator, partner, direction, null);
-    }
-
 
     public CurrencyTransferEvent(BigDecimal amount, Player initiator, UUID partner, Direction direction, TransactionEvent transactionEvent) {
         this(amount, amount, initiator, partner, direction, transactionEvent);
@@ -211,7 +203,7 @@ public class CurrencyTransferEvent extends EconomicEvent {
         return direction == Direction.PARTNER ? partner : initiator.getUniqueId();
     }
 
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return handlers;
     }
 

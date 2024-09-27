@@ -19,7 +19,7 @@ import static com.Acrobot.Breeze.Utils.ImplementationAdapter.getHolder;
 public class ItemMoveListener implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
-    public static void onItemMove(InventoryMoveItemEvent event) {
+    public void onItemMove(InventoryMoveItemEvent event) {
         InventoryHolder destinationHolder = getHolder(event.getDestination(), false);
         InventoryHolder sourceHolder = getHolder(event.getSource(), false);
 
@@ -29,6 +29,4 @@ public class ItemMoveListener implements Listener {
             StockCounterModule.updateCounterOnItemMoveEvent(event.getItem(), destinationHolder);
         }
     }
-
-
 }

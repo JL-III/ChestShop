@@ -29,10 +29,6 @@ public class uBlock {
     @Deprecated
     public static final BlockFace[] NEIGHBOR_FACES = {BlockFace.EAST, BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH};
 
-    public static Sign getConnectedSign(BlockState blockState) {
-        return getConnectedSign(blockState.getBlock());
-    }
-
     public static Sign getConnectedSign(Block block) {
         Sign sign = uBlock.findAnyNearbyShopSign(block);
 
@@ -60,21 +56,6 @@ public class uBlock {
             signFace = ((WallSign) data).getFacing().getOppositeFace();
         }
         return findConnectedChest(sign.getBlock(), signFace);
-    }
-
-    /**
-     * @deprecated Use {@link #findConnectedContainer(Block)}
-     */
-    @Deprecated
-    public static org.bukkit.block.Chest findConnectedChest(Block block) {
-        BlockFace signFace = null;
-        if (BlockUtil.isSign(block)) {
-            BlockData data = block.getBlockData();
-            if (data instanceof WallSign) {
-                signFace = ((WallSign) data).getFacing().getOppositeFace();
-            }
-        }
-        return findConnectedChest(block, signFace);
     }
 
     /**
@@ -147,31 +128,6 @@ public class uBlock {
             }
         }
         return null;
-    }
-
-    @Deprecated
-    public static Sign findValidShopSign(Block block, String originalName) {
-        Sign ownerShopSign = null;
-
-        for (BlockFace bf : SHOP_FACES) {
-            Block faceBlock = block.getRelative(bf);
-
-            if (!BlockUtil.isSign(faceBlock)) {
-                continue;
-            }
-
-            Sign sign = (Sign) faceBlock.getState();
-
-            if (ChestShopSign.isValid(sign) && signIsAttachedToBlock(sign, block)) {
-                if (!sign.getLine(0).equals(originalName)) {
-                    return sign;
-                } else if (ownerShopSign == null) {
-                    ownerShopSign = sign;
-                }
-            }
-        }
-
-        return ownerShopSign;
     }
 
     public static List<Sign> findConnectedShopSigns(InventoryHolder chestShopInventoryHolder) {
@@ -259,11 +215,6 @@ public class uBlock {
         return null;
     }
 
-    public static org.bukkit.block.Chest findNeighbor(org.bukkit.block.Chest chest) {
-        Block neighbor = findNeighbor(chest.getBlock());
-        return neighbor != null ? (org.bukkit.block.Chest) neighbor.getState() : null;
-    }
-
     public static Block findNeighbor(Block block) {
         if (!BlockUtil.isLoaded(block)) {
             return null;
@@ -306,10 +257,6 @@ public class uBlock {
         }
 
         return null;
-    }
-
-    private static boolean signIsAttachedToBlock(Sign sign, Block block) {
-        return sign.getBlock().equals(block) || BlockUtil.getAttachedBlock(sign).equals(block);
     }
 
     public static boolean couldBeShopContainer(Block block) {

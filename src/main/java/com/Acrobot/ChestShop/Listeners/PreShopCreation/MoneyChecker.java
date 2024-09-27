@@ -4,12 +4,11 @@ import com.Acrobot.ChestShop.ChestShop;
 import com.Acrobot.ChestShop.Configuration.Properties;
 import com.Acrobot.ChestShop.Events.Economy.CurrencyCheckEvent;
 import com.Acrobot.ChestShop.Events.tobesorted.PreShopCreationEvent;
-import com.Acrobot.ChestShop.todo.Permission;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
+import com.Acrobot.ChestShop.todo.Permission;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.checkerframework.checker.units.qual.C;
 
 import java.math.BigDecimal;
 

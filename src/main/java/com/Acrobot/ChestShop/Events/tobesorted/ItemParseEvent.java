@@ -3,18 +3,20 @@ package com.Acrobot.ChestShop.Events.tobesorted;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 public class ItemParseEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
 
     private final String itemString;
+    //TODO: Fix this
     private ItemStack item = null;
 
     public ItemParseEvent(String itemString) {
         this.itemString = itemString;
     }
 
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return handlers;
     }
 
@@ -44,13 +46,5 @@ public class ItemParseEvent extends Event {
      */
     public ItemStack getItem() {
         return item;
-    }
-
-    /**
-     * Whether or not the item string of this event has a parsed item
-     * @return True if an item was successfully parsed; false if not
-     */
-    public boolean hasItem() {
-        return item != null;
     }
 }

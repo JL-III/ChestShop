@@ -1,6 +1,5 @@
 package com.Acrobot.ChestShop.todo;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -70,10 +69,6 @@ public enum Permission {
         return sender.hasPermission(node) || sender.hasPermission(node.toLowerCase(Locale.ROOT));
     }
 
-    public static boolean otherName(Player player, String name) {
-        return otherName(player, OTHER_NAME, name);
-    }
-
     public static boolean otherName(Player player, Permission base, String name) {
         boolean hasBase = base != OTHER_NAME && otherName(player, OTHER_NAME, name);
         if (hasBase || has(player, base + ".*")) {
@@ -86,17 +81,6 @@ public enum Permission {
     public static boolean hasPermissionSetFalse(CommandSender sender, String permission) {
         return (sender.isPermissionSet(permission) && !sender.hasPermission(permission))
                 || (sender.isPermissionSet(permission.toLowerCase(Locale.ROOT)) && !sender.hasPermission(permission.toLowerCase(Locale.ROOT)));
-    }
-
-    public static org.bukkit.permissions.Permission getPermission(Permission permission) {
-        org.bukkit.permissions.Permission bukkitPerm = Bukkit.getServer().getPluginManager().getPermission(permission.permission);
-        if (bukkitPerm == null) {
-            bukkitPerm = permission.getPermission();
-            try {
-                Bukkit.getServer().getPluginManager().addPermission(bukkitPerm);
-            } catch (IllegalArgumentException ignored) {} // this should never happen
-        }
-        return bukkitPerm;
     }
 
     public org.bukkit.permissions.Permission getPermission() {

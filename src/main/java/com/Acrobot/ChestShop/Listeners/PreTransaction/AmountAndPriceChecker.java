@@ -1,7 +1,6 @@
 package com.Acrobot.ChestShop.Listeners.PreTransaction;
 
 import com.Acrobot.Breeze.Utils.InventoryUtil;
-import com.Acrobot.ChestShop.ChestShop;
 import com.Acrobot.ChestShop.Events.Economy.CurrencyCheckEvent;
 import com.Acrobot.ChestShop.Events.tobesorted.PreTransactionEvent;
 import org.bukkit.event.EventHandler;

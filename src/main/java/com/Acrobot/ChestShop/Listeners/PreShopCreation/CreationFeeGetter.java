@@ -1,15 +1,14 @@
 package com.Acrobot.ChestShop.Listeners.PreShopCreation;
 
-import com.Acrobot.ChestShop.ChestShop;
 import com.Acrobot.ChestShop.Configuration.Messages;
 import com.Acrobot.ChestShop.Configuration.Properties;
 import com.Acrobot.ChestShop.Economy.Economy;
 import com.Acrobot.ChestShop.Events.Economy.CurrencyAddEvent;
 import com.Acrobot.ChestShop.Events.Economy.CurrencySubtractEvent;
 import com.Acrobot.ChestShop.Events.tobesorted.PreShopCreationEvent;
-import com.Acrobot.ChestShop.todo.Permission;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
 import com.Acrobot.ChestShop.Utils.NameManager;
+import com.Acrobot.ChestShop.todo.Permission;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

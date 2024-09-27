@@ -37,7 +37,7 @@ public class TransactionLogger implements Listener {
 
         String message = String.format(template,
                 event.getClient().getName(),
-                items.toString(),
+                items,
                 event.getExactPrice(),
                 event.getOwnerAccount().getName(),
                 LocationUtil.locationToString(event.getSign().getLocation()));

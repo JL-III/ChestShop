@@ -3,6 +3,7 @@ package com.Acrobot.ChestShop.Events.tobesorted;
 import org.bukkit.Material;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
 public class MaterialParseEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
@@ -16,7 +17,7 @@ public class MaterialParseEvent extends Event {
         this.data = data;
     }
 
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return handlers;
     }
 
@@ -57,13 +58,4 @@ public class MaterialParseEvent extends Event {
     public Material getMaterial() {
         return material;
     }
-
-    /**
-     * Whether or not the material string of this event has a parsed material
-     * @return True if an material was successfully parsed; false if not
-     */
-    public boolean hasMaterial() {
-        return material != null;
-    }
-
 }

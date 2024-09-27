@@ -4,6 +4,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Represents an /iteminfo call
@@ -13,8 +14,8 @@ import org.bukkit.inventory.ItemStack;
 public class ItemInfoEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
 
-    private CommandSender sender;
-    private ItemStack item;
+    private final CommandSender sender;
+    private final ItemStack item;
 
     public ItemInfoEvent(CommandSender sender, ItemStack item) {
         this.sender = sender;
@@ -35,7 +36,7 @@ public class ItemInfoEvent extends Event {
         return item;
     }
 
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return handlers;
     }
 

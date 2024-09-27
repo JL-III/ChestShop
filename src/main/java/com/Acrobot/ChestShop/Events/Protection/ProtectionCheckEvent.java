@@ -4,6 +4,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Acrobot
@@ -14,13 +15,8 @@ public class ProtectionCheckEvent extends Event {
     private Result result = Result.DEFAULT;
     private boolean ignoreBuiltInProtection = false;
     private boolean checkManagement = true;
-    private Block block;
-    private Player player;
-
-    public ProtectionCheckEvent(Block block, Player player) {
-        this.block = block;
-        this.player = player;
-    }
+    private final Block block;
+    private final Player player;
 
     public ProtectionCheckEvent(Block block, Player player, boolean ignoreBuiltInProtection) {
         this.block = block;
@@ -59,7 +55,7 @@ public class ProtectionCheckEvent extends Event {
         return block;
     }
 
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return handlers;
     }
 

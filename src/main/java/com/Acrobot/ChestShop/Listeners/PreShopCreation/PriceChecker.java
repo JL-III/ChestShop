@@ -79,7 +79,6 @@ public class PriceChecker implements Listener {
                 return !PriceUtil.hasPrice(part, character);
             }
         }
-
         return false;
     }
 }

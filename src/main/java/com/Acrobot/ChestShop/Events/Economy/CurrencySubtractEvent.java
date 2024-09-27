@@ -3,13 +3,13 @@ package com.Acrobot.ChestShop.Events.Economy;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
 /**
  * Represents a subtraction of goods from entity
- *
  * Use {@link CurrencyTransferEvent} if you want to transfer money from one account to another one!
  *
  * @author Acrobot
@@ -19,7 +19,7 @@ public class CurrencySubtractEvent extends EconomicEvent {
 
     private BigDecimal amount;
     private UUID target;
-    private World world;
+    private final World world;
 
     public CurrencySubtractEvent(BigDecimal amount, UUID target, World world) {
         this.amount = amount;
@@ -106,7 +106,7 @@ public class CurrencySubtractEvent extends EconomicEvent {
         this.target = target;
     }
 
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return handlers;
     }
 

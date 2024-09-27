@@ -1,7 +1,5 @@
 package com.Acrobot.ChestShop.Listeners.PreTransaction;
 
-import com.Acrobot.Breeze.Utils.MaterialUtil;
-import com.Acrobot.ChestShop.ChestShop;
 import com.Acrobot.ChestShop.Commands.Toggle;
 import com.Acrobot.ChestShop.Configuration.Messages;
 import com.Acrobot.ChestShop.Configuration.Properties;
@@ -21,12 +19,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Collections;
 import java.util.UUID;
 
-import static com.Acrobot.ChestShop.Configuration.Messages.CLIENT_DEPOSIT_FAILED;
-import static com.Acrobot.ChestShop.Configuration.Messages.NOT_ENOUGH_STOCK_IN_YOUR_SHOP;
-import static com.Acrobot.ChestShop.Configuration.Messages.NOT_ENOUGH_SPACE_IN_YOUR_SHOP;
+import static com.Acrobot.ChestShop.Configuration.Messages.*;
 
 /**
  * @author Acrobot
@@ -40,7 +35,7 @@ public class ErrorMessageSender implements Listener {
         this.itemUtil = itemUtil;
     }
 
-    private static Table<UUID, String, Long> notificationCooldowns = HashBasedTable.create();
+    private static final Table<UUID, String, Long> notificationCooldowns = HashBasedTable.create();
 
     @EventHandler(priority = EventPriority.MONITOR)
     public static void onQuit(PlayerQuitEvent event) {

@@ -3,6 +3,7 @@ package com.Acrobot.ChestShop.Events.tobesorted;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 public class ItemStringQueryEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
@@ -10,14 +11,6 @@ public class ItemStringQueryEvent extends Event {
     private String itemString = null;
     private final ItemStack item;
     private final int maxWidth;
-
-    /**
-     * Query the item string representation of a certain item with a certain length
-     * @param item      The item to query the string for
-     */
-    public ItemStringQueryEvent(ItemStack item) {
-        this(item, 0);
-    }
 
     /**
      * Query the item string representation of a certain item with a certain length
@@ -30,7 +23,7 @@ public class ItemStringQueryEvent extends Event {
     }
 
     @Override
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return handlers;
     }
 

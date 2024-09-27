@@ -12,8 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import java.math.BigDecimal;
 
 import static com.Acrobot.ChestShop.Events.tobesorted.PreTransactionEvent.TransactionOutcome.OTHER;
-import static com.Acrobot.ChestShop.Events.tobesorted.PreTransactionEvent.TransactionOutcome.TRANSACTION_SUCCESFUL;
-import static com.Acrobot.ChestShop.Events.tobesorted.TransactionEvent.TransactionType;
+import static com.Acrobot.ChestShop.Events.tobesorted.PreTransactionEvent.TransactionOutcome.TRANSACTION_SUCCESSFUL;
 
 /**
  * Represents a state before transaction occurs
@@ -24,21 +23,21 @@ public class PreTransactionEvent extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
 
     private final Player client;
-    private Account ownerAccount;
+    private final Account ownerAccount;
 
-    private final TransactionType transactionType;
+    private final TransactionEvent.TransactionType transactionType;
     private final Sign sign;
 
-    private Inventory ownerInventory;
-    private Inventory clientInventory;
+    private final Inventory ownerInventory;
+    private final Inventory clientInventory;
 
     private ItemStack[] items;
 
     private BigDecimal exactPrice;
 
-    private TransactionOutcome transactionOutcome = TRANSACTION_SUCCESFUL;
+    private TransactionOutcome transactionOutcome = TRANSACTION_SUCCESSFUL;
 
-    public PreTransactionEvent(Inventory ownerInventory, Inventory clientInventory, ItemStack[] items, BigDecimal exactPrice, Player client, Account ownerAccount, Sign sign, TransactionType type) {
+    public PreTransactionEvent(Inventory ownerInventory, Inventory clientInventory, ItemStack[] items, BigDecimal exactPrice, Player client, Account ownerAccount, Sign sign, TransactionEvent.TransactionType type) {
         this.ownerInventory = ownerInventory;
         this.clientInventory = (clientInventory == null ? client.getInventory() : clientInventory);
 
@@ -53,10 +52,10 @@ public class PreTransactionEvent extends Event implements Cancellable {
     }
 
     /**
-     * @deprecated Use {@link #PreTransactionEvent(Inventory, Inventory, ItemStack[], BigDecimal, Player, Account, Sign, TransactionType)}
+     * @deprecated Use {@link #PreTransactionEvent(Inventory, Inventory, ItemStack[], BigDecimal, Player, Account, Sign, TransactionEvent.TransactionType)}
      */
     @Deprecated
-    public PreTransactionEvent(Inventory ownerInventory, Inventory clientInventory, ItemStack[] items, double price, Player client, Account ownerAccount, Sign sign, TransactionType type) {
+    public PreTransactionEvent(Inventory ownerInventory, Inventory clientInventory, ItemStack[] items, double price, Player client, Account ownerAccount, Sign sign, TransactionEvent.TransactionType type) {
         this(ownerInventory, clientInventory, items, BigDecimal.valueOf(price), client, ownerAccount, sign, type);
     }
 
@@ -138,37 +137,10 @@ public class PreTransactionEvent extends Event implements Cancellable {
     }
 
     /**
-     * Sets the shop's owner
-     *
-     * @param ownerAccount Account of the shop owner
-     */
-    public void setOwnerAccount(Account ownerAccount) {
-        this.ownerAccount = ownerAccount;
-    }
-
-    /**
      * @return Owner's inventory
      */
     public Inventory getOwnerInventory() {
         return ownerInventory;
-    }
-
-    /**
-     * Sets the owner's inventory
-     *
-     * @param ownerInventory Onwer's inventory
-     */
-    public void setOwnerInventory(Inventory ownerInventory) {
-        this.ownerInventory = ownerInventory;
-    }
-
-    /**
-     * Sets the client's inventory
-     *
-     * @param clientInventory Client's inventory
-     */
-    public void setClientInventory(Inventory clientInventory) {
-        this.clientInventory = clientInventory;
     }
 
     /**
@@ -181,7 +153,7 @@ public class PreTransactionEvent extends Event implements Cancellable {
     /**
      * @return Transaction's type
      */
-    public TransactionType getTransactionType() {
+    public TransactionEvent.TransactionType getTransactionType() {
         return transactionType;
     }
 
@@ -189,7 +161,7 @@ public class PreTransactionEvent extends Event implements Cancellable {
      * @return Is the transaction cancelled?
      */
     public boolean isCancelled() {
-        return transactionOutcome != TRANSACTION_SUCCESFUL;
+        return transactionOutcome != TRANSACTION_SUCCESSFUL;
     }
 
     @Override
@@ -197,7 +169,7 @@ public class PreTransactionEvent extends Event implements Cancellable {
         if (cancel) {
             transactionOutcome = OTHER;
         } else {
-            transactionOutcome = TRANSACTION_SUCCESFUL;
+            transactionOutcome = TRANSACTION_SUCCESSFUL;
         }
     }
 
@@ -252,6 +224,6 @@ public class PreTransactionEvent extends Event implements Cancellable {
 
         OTHER, //For plugin use!
 
-        TRANSACTION_SUCCESFUL
+        TRANSACTION_SUCCESSFUL
     }
 }

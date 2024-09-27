@@ -16,13 +16,11 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.regex.Matcher;
-
-import static com.Acrobot.Breeze.Utils.MaterialUtil.*;
+import static com.Acrobot.Breeze.Utils.MaterialUtil.MAXIMUM_SIGN_WIDTH;
 import static com.Acrobot.ChestShop.Events.tobesorted.PreShopCreationEvent.CreationOutcome.INVALID_ITEM;
 import static com.Acrobot.ChestShop.Events.tobesorted.PreShopCreationEvent.CreationOutcome.ITEM_AUTOFILL;
-import static com.Acrobot.ChestShop.Signs.ChestShopSign.ITEM_LINE;
 import static com.Acrobot.ChestShop.Signs.ChestShopSign.AUTOFILL_CODE;
+import static com.Acrobot.ChestShop.Signs.ChestShopSign.ITEM_LINE;
 
 /**
  * @author Acrobot
@@ -73,23 +71,5 @@ public class ItemChecker implements Listener {
         }
 
         event.setSignLine(ITEM_LINE, itemCode);
-    }
-
-    private static boolean isSameItem(String newCode, ItemStack item) {
-        ItemParseEvent parseEvent = new ItemParseEvent(newCode);
-        Bukkit.getPluginManager().callEvent(parseEvent);
-        ItemStack newItem = parseEvent.getItem();
-
-        return newItem != null && MaterialUtil.equals(newItem, item);
-    }
-
-    private static String getMetadata(String itemCode) {
-        Matcher m = METADATA.matcher(itemCode);
-
-        if (!m.find()) {
-            return "";
-        }
-
-        return m.group();
     }
 }

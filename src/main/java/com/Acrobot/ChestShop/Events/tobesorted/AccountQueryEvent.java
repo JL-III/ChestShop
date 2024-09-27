@@ -3,6 +3,7 @@ package com.Acrobot.ChestShop.Events.tobesorted;
 import com.Acrobot.ChestShop.Database.Account;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Represents a query for an account by using the name (e.g. from the shop sign)
@@ -30,24 +31,24 @@ public class AccountQueryEvent extends Event {
     }
 
     /**
-     * Get whether or not offline player data should be searched (too)
-     * @return Whether or not offline player data should be searched (too)
+     * Get whether offline player data should be searched (too)
+     * @return Whether offline player data should be searched (too)
      */
     public boolean searchOfflinePlayers() {
         return searchOfflinePlayers;
     }
 
     /**
-     * Set whether or not offline player data should be searched (too).
+     * Set whether offline player data should be searched (too).
      * This could lead to network lookups if the player by the name never joined the server!
-     * @param searchOfflinePlayers Whether or not offline player data should be searched (too)
+     * @param searchOfflinePlayers Whether offline player data should be searched (too)
      */
     public void searchOfflinePlayers(boolean searchOfflinePlayers) {
         this.searchOfflinePlayers = searchOfflinePlayers;
     }
 
     @Override
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return handlers;
     }
 

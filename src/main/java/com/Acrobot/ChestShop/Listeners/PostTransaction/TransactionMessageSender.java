@@ -1,7 +1,5 @@
 package com.Acrobot.ChestShop.Listeners.PostTransaction;
 
-import com.Acrobot.Breeze.Utils.MaterialUtil;
-import com.Acrobot.ChestShop.ChestShop;
 import com.Acrobot.ChestShop.Commands.Toggle;
 import com.Acrobot.ChestShop.Configuration.Messages;
 import com.Acrobot.ChestShop.Configuration.Properties;
@@ -11,7 +9,6 @@ import com.Acrobot.ChestShop.Events.tobesorted.TransactionEvent;
 import com.Acrobot.ChestShop.Utils.ItemUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -111,5 +108,4 @@ public class TransactionMessageSender implements Listener {
         BUYER,
         SELLER
     }
-
 }

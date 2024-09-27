@@ -4,7 +4,7 @@ import com.Acrobot.ChestShop.ChestShop;
 import com.Acrobot.ChestShop.Configuration.Properties;
 import com.Acrobot.ChestShop.Events.EventManager;
 import com.Acrobot.ChestShop.Listeners.Economy.EconomyAdapter;
-import com.Acrobot.ChestShop.Listeners.Economy.Plugins.VaultListener;
+import com.Acrobot.ChestShop.Listeners.Economy.VaultListener;
 import com.Acrobot.ChestShop.Plugins.LightweightChestProtection;
 import com.Acrobot.ChestShop.Plugins.WorldGuardBuilding;
 import com.Acrobot.ChestShop.Plugins.WorldGuardFlags;
@@ -24,20 +24,20 @@ import java.util.logging.Level;
  * @author Acrobot
  */
 public class Dependencies implements Listener {
-    private final ChestShop plugin;
+    private final Plugin plugin;
     private final EventManager eventManager;
     private final VaultListener vaultListener;
 
-    public Dependencies(ChestShop plugin, EventManager eventManager, VaultListener vaultListener) {
+    public Dependencies(Plugin plugin, EventManager eventManager, VaultListener vaultListener) {
         this.plugin = plugin;
         this.eventManager = eventManager;
         this.vaultListener = vaultListener;
     }
 
-    public static void initializePlugins() {
+    public void initializePlugins() {
         PluginManager pluginManager = Bukkit.getPluginManager();
 
-        for (String dependency : com.Acrobot.ChestShop.ChestShop.getDependencies()) {
+        for (String dependency : plugin.getDescription().getPluginDependencies()) {
             Plugin plugin = pluginManager.getPlugin(dependency);
 
             if (plugin != null) {

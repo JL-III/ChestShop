@@ -8,7 +8,7 @@ import com.Acrobot.ChestShop.Database.Migrations;
 import com.Acrobot.ChestShop.Events.EventManager;
 import com.Acrobot.ChestShop.Events.Protection.ProtectionCheckEvent;
 import com.Acrobot.ChestShop.Events.tobesorted.ChestShopReloadEvent;
-import com.Acrobot.ChestShop.Listeners.Economy.Plugins.VaultListener;
+import com.Acrobot.ChestShop.Listeners.Economy.VaultListener;
 import com.Acrobot.ChestShop.Logging.FileFormatter;
 import com.Acrobot.ChestShop.Metadata.ItemDatabase;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
@@ -27,7 +27,6 @@ import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.core.config.LoggerConfig;
 import org.apache.logging.log4j.core.filter.AbstractFilter;
 import org.apache.logging.log4j.message.Message;
-import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.command.CommandExecutor;
@@ -36,7 +35,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -58,7 +56,6 @@ import static com.Acrobot.Breeze.Utils.ImplementationAdapter.getState;
  * @author Acrobot
  */
 public class ChestShop extends JavaPlugin implements Listener {
-    private static PluginDescriptionFile description;
     private static final ExecutorService executorService = Executors.newCachedThreadPool();
     private final EventManager eventManager;
     private static BukkitAudiences audiences;
@@ -74,6 +71,7 @@ public class ChestShop extends JavaPlugin implements Listener {
     private final Security security;
     private final ItemInfo itemInfo;
     private final ItemUtil itemUtil;
+    private final Dependencies dependencies;
 
     private final List<PluginCommand> commands = new ArrayList<>();
 
@@ -82,19 +80,19 @@ public class ChestShop extends JavaPlugin implements Listener {
         logger = getLogger();
         shopLogger = Logger.getLogger("ChestShop Shops");
         shopLogger.setParent(logger);
-        description = getDescription();
         nameManager = new NameManager(this);
         chestShopSign = new ChestShopSign();
         eventManager = new EventManager(getServer().getPluginManager(), this, chestShopSign, nameManager);
         security = new Security(this);
         itemUtil = new ItemUtil(this);
         itemInfo = new ItemInfo(this, itemUtil);
+        dependencies = new Dependencies(this, eventManager, new VaultListener(this));
         getServer().getPluginManager().registerEvents(this, this);
     }
 
     @Override
     public void onLoad() {
-        Dependencies.initializePlugins();
+        dependencies.initializePlugins();
     }
 
     @Override
@@ -107,8 +105,6 @@ public class ChestShop extends JavaPlugin implements Listener {
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
-        Dependencies dependencies = new Dependencies(this, eventManager, new VaultListener(this));
-
         registerCommand("iteminfo", itemInfo, Permission.ITEMINFO);
         registerCommand("shopinfo", new ShopInfo(this), Permission.SHOPINFO);
         registerCommand("csVersion", new Version(this), Permission.ADMIN);
@@ -270,18 +266,6 @@ public class ChestShop extends JavaPlugin implements Listener {
         if (Properties.DEBUG) {
             getBukkitLogger().info("[DEBUG] " + message);
         }
-    }
-
-    public static String getVersion() {
-        return description.getVersion();
-    }
-
-    public static String getPluginName() {
-        return description.getName();
-    }
-
-    public static List<String> getDependencies() {
-        return description.getSoftDepend();
     }
 
     public static BukkitAudiences getAudiences() {
