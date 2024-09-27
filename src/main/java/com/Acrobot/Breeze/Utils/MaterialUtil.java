@@ -2,33 +2,24 @@ package com.Acrobot.Breeze.Utils;
 
 import com.Acrobot.Breeze.Collection.SimpleCache;
 import com.Acrobot.ChestShop.ChestShop;
-import com.Acrobot.ChestShop.Configuration.Messages;
 import com.Acrobot.ChestShop.Configuration.Properties;
 import com.Acrobot.ChestShop.Events.tobesorted.MaterialParseEvent;
 import com.Acrobot.ChestShop.Utils.ItemUtil;
-import de.themoep.minedown.adventure.Replacer;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConstructor;
 import org.bukkit.configuration.file.YamlRepresenter;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.plugin.Plugin;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.nodes.Tag;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -190,26 +181,6 @@ public class MaterialUtil {
     }
 
     /**
-     * Get a list with item information
-     *
-     * @param items The items to get the information from
-     * @return The list, including the amount and names of the items
-     * @deprecated Use {@link ItemUtil#getItemList(ItemStack[])} instead!
-     */
-    @Deprecated
-    public static String getItemList(ItemStack[] items) {
-        ItemStack[] mergedItems = InventoryUtil.mergeSimilarStacks(items);
-
-        List<String> itemText = new ArrayList<>();
-
-        for (ItemStack item : mergedItems) {
-            itemText.add(item.getAmount() + " " + getName(item));
-        }
-
-        return String.join(", ", itemText);
-    }
-
-    /**
      * Returns item's name
      * Use {@link ItemUtil#getName(ItemStack, int)} if you want to get name aliases too!
      *
@@ -218,30 +189,6 @@ public class MaterialUtil {
      */
     public static String getName(ItemStack itemStack) {
         return getName(itemStack, 0);
-    }
-
-    /**
-     * Returns item's name
-     *
-     * @param itemStack     ItemStack to name
-     * @param showDataValue Should we also show the data value?
-     * @return ItemStack's name
-     * @deprecated Use {@link #getName(ItemStack, int)}
-     */
-    @Deprecated
-    public static String getName(ItemStack itemStack, boolean showDataValue) {
-        return getName(itemStack, 0);
-    }
-
-    /**
-     * Returns item's name, just like on the sign
-     * Use {@link ItemUtil#getSignName(ItemStack)} if you want to get name aliases too!
-     *
-     * @param itemStack ItemStack to name
-     * @return ItemStack's name
-     */
-    public static String getSignName(ItemStack itemStack) {
-        return getName(itemStack, MAXIMUM_SIGN_WIDTH);
     }
 
     /**

@@ -11,7 +11,6 @@ import com.Acrobot.ChestShop.Listeners.Economy.ServerAccountCorrector;
 import com.Acrobot.ChestShop.Listeners.Economy.TaxModule;
 import com.Acrobot.ChestShop.Listeners.GarbageTextListener;
 import com.Acrobot.ChestShop.Listeners.Item.ItemMoveListener;
-import com.Acrobot.ChestShop.Listeners.Item.ItemStringListener;
 import com.Acrobot.ChestShop.Listeners.ItemInfoListener;
 import com.Acrobot.ChestShop.Listeners.Modules.*;
 import com.Acrobot.ChestShop.Listeners.Player.*;
@@ -44,10 +43,9 @@ public class EventManager {
         this.chestShopSign = chestShopSign;
         this.nameManager = nameManager;
         economy = new Economy(plugin);
-        registerEvents();
     }
 
-    private void registerEvents() {
+    public void registerEvents() {
         registerEvent(new NameManager(plugin));
 
         registerPreShopCreationEvents();
@@ -70,7 +68,6 @@ public class EventManager {
         registerEvent(new PlayerTeleport());
 
         registerEvent(new SignParseListener());
-        registerEvent(new ItemStringListener());
         registerEvent(new ItemInfoListener(plugin, this, plugin.getItemInfo()));
         registerEvent(new ShopInfoListener(plugin, plugin.getItemUtil()));
         registerEvent(new GarbageTextListener());

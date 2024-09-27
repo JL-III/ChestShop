@@ -18,6 +18,7 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 import java.util.logging.Level;
@@ -38,7 +39,8 @@ public class ItemInfo implements CommandExecutor {
         this.itemUtil = itemUtil;
     }
 
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    @Override
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         ItemStack item;
 
         if (args.length == 0) {

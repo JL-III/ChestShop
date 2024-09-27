@@ -4,7 +4,6 @@ import com.Acrobot.Breeze.Utils.MaterialUtil;
 import com.Acrobot.ChestShop.ChestShop;
 import com.Acrobot.ChestShop.Events.tobesorted.ChestShopReloadEvent;
 import com.Acrobot.ChestShop.Events.tobesorted.ItemParseEvent;
-import com.Acrobot.ChestShop.Events.tobesorted.ItemStringQueryEvent;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -17,8 +16,6 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
-
-import static com.Acrobot.Breeze.Utils.StringUtil.getMinecraftStringWidth;
 
 /**
  * @author Acrobot
@@ -99,37 +96,6 @@ public class ItemAliasModule implements Listener {
         }
         if (code != null) {
             event.setItem(MaterialUtil.getItem(code));
-        }
-    }
-
-    @EventHandler(priority = EventPriority.HIGH)
-    public void onItemStringQuery(ItemStringQueryEvent event) {
-        if (event.getItemString() != null) {
-            String newCode = null;
-
-            if (aliases.containsKey(event.getItemString())) {
-                newCode = aliases.get(event.getItemString());
-            } else if (!event.getItemString().contains("#")) {
-                newCode = aliases.get(event.getItemString().toLowerCase(Locale.ROOT));
-            } else {
-                String[] parts = event.getItemString().split("#", 2);
-                String lowercaseCode = parts[0].toLowerCase(Locale.ROOT) + "#" + parts[1];
-                if (aliases.containsKey(lowercaseCode)) {
-                    newCode = aliases.get(lowercaseCode);
-                }
-            }
-
-            if (newCode != null) {
-                return;
-            }
-            if (event.getMaxWidth() > 0) {
-                int width = getMinecraftStringWidth(newCode);
-                if (width > event.getMaxWidth()) {
-                    ChestShop.getBukkitLogger().warning("Can't use configured alias " + newCode + " as it's width (" + width + ") was wider than the allowed max width of " + event.getMaxWidth());
-                    return;
-                }
-            }
-            event.setItemString(newCode);
         }
     }
 }

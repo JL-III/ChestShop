@@ -3,7 +3,6 @@ package com.Acrobot.ChestShop.Utils;
 import com.Acrobot.Breeze.Utils.InventoryUtil;
 import com.Acrobot.Breeze.Utils.MaterialUtil;
 import com.Acrobot.ChestShop.Events.tobesorted.ItemParseEvent;
-import com.Acrobot.ChestShop.Events.tobesorted.ItemStringQueryEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
@@ -58,9 +57,7 @@ public class ItemUtil {
      * @return ItemStack's name
      */
     public String getName(ItemStack itemStack, int maxWidth) {
-        ItemStringQueryEvent event = new ItemStringQueryEvent(itemStack, maxWidth);
-        String code = event.getItemString();
-        plugin.getServer().getPluginManager().callEvent(event);
+        String code = getItemString(itemStack, maxWidth);
 
         if (code != null) {
             if (maxWidth > 0) {
@@ -103,5 +100,9 @@ public class ItemUtil {
      */
     public String getSignName(ItemStack itemStack) {
         return getName(itemStack, MAXIMUM_SIGN_WIDTH);
+    }
+
+    public String getItemString(ItemStack item, int maxWidth) {
+        return MaterialUtil.getName(item, maxWidth);
     }
 }

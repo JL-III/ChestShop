@@ -87,7 +87,6 @@ public class ChestShop extends JavaPlugin implements Listener {
         itemUtil = new ItemUtil(this);
         itemInfo = new ItemInfo(this, itemUtil);
         dependencies = new Dependencies(this, eventManager, new VaultListener(this));
-        getServer().getPluginManager().registerEvents(this, this);
     }
 
     @Override
@@ -120,6 +119,8 @@ public class ChestShop extends JavaPlugin implements Listener {
         if (!dependencies.loadPlugins()) {
             getServer().getPluginManager().disablePlugin(this);
         }
+        eventManager.registerEvents();
+        getServer().getPluginManager().registerEvents(this, this);
     }
 
     private void registerCommand(String name, CommandExecutor executor, Permission permission) {
