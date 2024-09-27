@@ -6,8 +6,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import com.Acrobot.ChestShop.ChestShop;
-import com.Acrobot.ChestShop.UUIDs.NameManager;
-import com.Acrobot.ChestShop.UUIDs.PlayerDTO;
+import com.Acrobot.ChestShop.Utils.NameManager;
+import com.Acrobot.ChestShop.Utils.PlayerDTO;
 
 /**
  * @author Acrobot

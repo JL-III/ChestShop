@@ -1,11 +1,10 @@
 package com.Acrobot.ChestShop.Listeners.Block;
 
 import com.Acrobot.ChestShop.Configuration.Messages;
-import com.Acrobot.ChestShop.Permission;
-import com.Acrobot.ChestShop.Security;
+import com.Acrobot.ChestShop.todo.Permission;
+import com.Acrobot.ChestShop.todo.Security;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
 import com.Acrobot.ChestShop.Utils.uBlock;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Directional;

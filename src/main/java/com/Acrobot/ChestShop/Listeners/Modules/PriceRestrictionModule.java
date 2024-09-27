@@ -6,7 +6,7 @@ import com.Acrobot.ChestShop.Configuration.Messages;
 import com.Acrobot.ChestShop.Events.ChestShopReloadEvent;
 import com.Acrobot.ChestShop.Events.ItemParseEvent;
 import com.Acrobot.ChestShop.Events.PreShopCreationEvent;
-import com.Acrobot.ChestShop.Permission;
+import com.Acrobot.ChestShop.todo.Permission;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
 import com.Acrobot.ChestShop.Utils.ItemUtil;
 import org.bukkit.Bukkit;
@@ -25,7 +25,7 @@ import java.util.Locale;
 import java.util.logging.Level;
 
 import static com.Acrobot.ChestShop.Events.PreShopCreationEvent.CreationOutcome.*;
-import static com.Acrobot.ChestShop.Permission.*;
+import static com.Acrobot.ChestShop.todo.Permission.*;
 
 /**
  * @author Acrobot

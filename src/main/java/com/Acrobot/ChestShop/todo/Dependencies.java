@@ -1,6 +1,7 @@
-package com.Acrobot.ChestShop;
+package com.Acrobot.ChestShop.todo;
 
 import com.Acrobot.Breeze.Utils.MaterialUtil;
+import com.Acrobot.ChestShop.ChestShop;
 import com.Acrobot.ChestShop.Configuration.Properties;
 import com.Acrobot.ChestShop.Listeners.Economy.EconomyAdapter;
 import com.Acrobot.ChestShop.Listeners.Economy.Plugins.ReserveListener;
@@ -33,7 +34,7 @@ public class Dependencies implements Listener {
     public static void initializePlugins() {
         PluginManager pluginManager = Bukkit.getPluginManager();
 
-        for (String dependency : ChestShop.getDependencies()) {
+        for (String dependency : com.Acrobot.ChestShop.ChestShop.getDependencies()) {
             Plugin plugin = pluginManager.getPlugin(dependency);
 
             if (plugin != null) {
@@ -59,7 +60,7 @@ public class Dependencies implements Listener {
         }
 
         PluginDescriptionFile description = plugin.getDescription();
-        ChestShop.getBukkitLogger().info(description.getName() + " version " + description.getVersion() + " loaded.");
+        com.Acrobot.ChestShop.ChestShop.getBukkitLogger().info(description.getName() + " version " + description.getVersion() + " loaded.");
     }
 
     public static boolean loadPlugins() {
@@ -84,7 +85,7 @@ public class Dependencies implements Listener {
                             AbstractMap.SimpleEntry::getKey,
                             AbstractMap.SimpleEntry::getValue
                     ));
-            ChestShop.getMetrics().addCustomChart(new DrilldownPie("dependencies", () -> map));
+            com.Acrobot.ChestShop.ChestShop.getMetrics().addCustomChart(new DrilldownPie("dependencies", () -> map));
             return true;
         }
         return false;
@@ -106,15 +107,15 @@ public class Dependencies implements Listener {
         }
 
         if (economy == null) {
-            ChestShop.getBukkitLogger().severe("No Economy adapter found! You need to install either Vault or Reserve!");
+            com.Acrobot.ChestShop.ChestShop.getBukkitLogger().severe("No Economy adapter found! You need to install either Vault or Reserve!");
             return false;
         }
 
-        ChestShop.getMetrics().addCustomChart(ChestShop.createStaticDrilldownStat("economyAdapter", plugin, Bukkit.getPluginManager().getPlugin(plugin).getDescription().getVersion()));
-        ChestShop.getMetrics().addCustomChart(ChestShop.createStaticDrilldownStat("economyPlugin", economy.getProviderInfo().getName(), economy.getProviderInfo().getVersion()));
+        com.Acrobot.ChestShop.ChestShop.getMetrics().addCustomChart(com.Acrobot.ChestShop.ChestShop.createStaticDrilldownStat("economyAdapter", plugin, Bukkit.getPluginManager().getPlugin(plugin).getDescription().getVersion()));
+        com.Acrobot.ChestShop.ChestShop.getMetrics().addCustomChart(com.Acrobot.ChestShop.ChestShop.createStaticDrilldownStat("economyPlugin", economy.getProviderInfo().getName(), economy.getProviderInfo().getVersion()));
 
-        ChestShop.registerListener(economy);
-        ChestShop.getBukkitLogger().info(plugin + " loaded!");
+        com.Acrobot.ChestShop.ChestShop.registerListener(economy);
+        com.Acrobot.ChestShop.ChestShop.getBukkitLogger().info(plugin + " loaded!");
         return true;
     }
 
@@ -125,7 +126,7 @@ public class Dependencies implements Listener {
             dependency = Dependency.valueOf(name);
 
             if (dependency.author != null && !plugin.getDescription().getAuthors().contains(dependency.author)) {
-                ChestShop.getBukkitLogger().info("You are not using the supported variant of " + name + " by " + dependency.author + "."
+                com.Acrobot.ChestShop.ChestShop.getBukkitLogger().info("You are not using the supported variant of " + name + " by " + dependency.author + "."
                         + " This variant of " + name + " seems to be made by " + plugin.getDescription().getAuthors().get(0) + " which isn't supported!");
                 return false;
             }
@@ -165,7 +166,7 @@ public class Dependencies implements Listener {
                 }
 
                 if (Properties.WORLDGUARD_USE_PROTECTION) {
-                    ChestShop.registerListener(new WorldGuardProtection(plugin));
+                    com.Acrobot.ChestShop.ChestShop.registerListener(new WorldGuardProtection(plugin));
                 }
 
                 if (Properties.WORLDGUARD_INTEGRATION) {
@@ -184,7 +185,7 @@ public class Dependencies implements Listener {
         }
 
         if (listener != null) {
-            ChestShop.registerListener(listener);
+            com.Acrobot.ChestShop.ChestShop.registerListener(listener);
         }
 
         PluginDescriptionFile description = plugin.getDescription();

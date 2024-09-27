@@ -5,7 +5,7 @@ import com.Acrobot.ChestShop.Database.Account;
 import com.Acrobot.ChestShop.Events.AccountQueryEvent;
 import com.Acrobot.ChestShop.Events.PreShopCreationEvent;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
-import com.Acrobot.ChestShop.UUIDs.NameManager;
+import com.Acrobot.ChestShop.Utils.NameManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -13,7 +13,7 @@ import org.bukkit.event.Listener;
 
 import java.util.logging.Level;
 
-import static com.Acrobot.ChestShop.Permission.OTHER_NAME_CREATE;
+import static com.Acrobot.ChestShop.todo.Permission.OTHER_NAME_CREATE;
 import static com.Acrobot.ChestShop.Signs.ChestShopSign.NAME_LINE;
 import static com.Acrobot.ChestShop.Events.PreShopCreationEvent.CreationOutcome.UNKNOWN_PLAYER;
 

@@ -2,7 +2,7 @@ package com.Acrobot.ChestShop.Listeners.Economy;
 
 import com.Acrobot.ChestShop.Database.Account;
 import com.Acrobot.ChestShop.Events.Economy.*;
-import com.Acrobot.ChestShop.UUIDs.NameManager;
+import com.Acrobot.ChestShop.Utils.NameManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;

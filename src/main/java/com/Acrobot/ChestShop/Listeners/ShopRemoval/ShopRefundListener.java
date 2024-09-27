@@ -9,9 +9,9 @@ import com.Acrobot.ChestShop.Events.AccountQueryEvent;
 import com.Acrobot.ChestShop.Events.Economy.CurrencyAddEvent;
 import com.Acrobot.ChestShop.Events.Economy.CurrencySubtractEvent;
 import com.Acrobot.ChestShop.Events.ShopDestroyedEvent;
-import com.Acrobot.ChestShop.Permission;
+import com.Acrobot.ChestShop.todo.Permission;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
-import com.Acrobot.ChestShop.UUIDs.NameManager;
+import com.Acrobot.ChestShop.Utils.NameManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
@@ -20,7 +20,7 @@ import org.bukkit.event.Listener;
 
 import java.math.BigDecimal;
 
-import static com.Acrobot.ChestShop.Permission.NOFEE;
+import static com.Acrobot.ChestShop.todo.Permission.NOFEE;
 import static com.Acrobot.ChestShop.Signs.ChestShopSign.AUTOFILL_CODE;
 
 /**

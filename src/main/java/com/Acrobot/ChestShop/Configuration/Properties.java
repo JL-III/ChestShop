@@ -6,7 +6,7 @@ import com.Acrobot.Breeze.Configuration.Annotations.PrecededBySpace;
 import com.Acrobot.Breeze.Configuration.Configuration;
 import com.Acrobot.Breeze.Configuration.ValueParser;
 import com.Acrobot.ChestShop.ChestShop;
-import com.Acrobot.ChestShop.Security;
+import com.Acrobot.ChestShop.todo.Security;
 import org.bukkit.Material;
 
 import java.math.BigDecimal;

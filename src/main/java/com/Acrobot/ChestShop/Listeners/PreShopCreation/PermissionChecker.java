@@ -3,9 +3,9 @@ package com.Acrobot.ChestShop.Listeners.PreShopCreation;
 import com.Acrobot.Breeze.Utils.PriceUtil;
 import com.Acrobot.ChestShop.Events.ItemParseEvent;
 import com.Acrobot.ChestShop.Events.PreShopCreationEvent;
-import com.Acrobot.ChestShop.Permission;
+import com.Acrobot.ChestShop.todo.Permission;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
-import com.Acrobot.ChestShop.UUIDs.NameManager;
+import com.Acrobot.ChestShop.Utils.NameManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,7 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Locale;
 
 import static com.Acrobot.ChestShop.Events.PreShopCreationEvent.CreationOutcome.NO_PERMISSION;
-import static com.Acrobot.ChestShop.Permission.*;
+import static com.Acrobot.ChestShop.todo.Permission.*;
 import static com.Acrobot.ChestShop.Signs.ChestShopSign.NAME_LINE;
 import static org.bukkit.event.EventPriority.HIGH;
 

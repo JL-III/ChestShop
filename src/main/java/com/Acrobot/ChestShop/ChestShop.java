@@ -43,9 +43,10 @@ import com.Acrobot.ChestShop.Listeners.ShopRemoval.ShopRemovalLogger;
 import com.Acrobot.ChestShop.Logging.FileFormatter;
 import com.Acrobot.ChestShop.Metadata.ItemDatabase;
 import com.Acrobot.ChestShop.Signs.RestrictedSign;
-import com.Acrobot.ChestShop.UUIDs.NameManager;
-import com.Acrobot.ChestShop.Updater.Updater;
+import com.Acrobot.ChestShop.Utils.NameManager;
 
+import com.Acrobot.ChestShop.todo.Dependencies;
+import com.Acrobot.ChestShop.todo.Permission;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
@@ -170,7 +171,6 @@ public class ChestShop extends JavaPlugin {
 
         startStatistics();
         startBuildNotificatier();
-        startUpdater();
     }
 
     private void registerCommand(String name, CommandExecutor executor, Permission permission) {
@@ -540,23 +540,6 @@ public class ChestShop extends JavaPlugin {
     }
 
     private static final int PROJECT_BUKKITDEV_ID = 31263;
-
-    private void startUpdater() {
-        if (Properties.TURN_OFF_UPDATES) {
-            getLogger().info("Auto-updater is disabled. If you want the plugin to automatically download new releases then set 'TURN_OFF_UPDATES' to 'false' in your config.yml!");
-            if (!Properties.TURN_OFF_UPDATE_NOTIFIER) {
-                final Updater updater = new Updater(this, getPluginName().toLowerCase(Locale.ROOT), this.getFile(), Updater.UpdateType.NO_DOWNLOAD, true);
-                runInAsyncThread(() -> {
-                    if (updater.getResult() == Updater.UpdateResult.UPDATE_AVAILABLE) {
-                        getLogger().info("There is a new version available: " + updater.getLatestName() + ". You can download it from https://modrinth.com/plugin/" + getPluginName().toLowerCase(Locale.ROOT));
-                    }
-                });
-            }
-            return;
-        }
-
-        new Updater(this, getPluginName().toLowerCase(Locale.ROOT), this.getFile(), Updater.UpdateType.DEFAULT, true);
-    }
 
     private static final String PROJECT_JENKINS_JOB_URL = "https://ci.minebench.de/job/ChestShop-3/";
 

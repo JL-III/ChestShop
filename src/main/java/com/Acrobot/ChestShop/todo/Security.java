@@ -1,6 +1,7 @@
-package com.Acrobot.ChestShop;
+package com.Acrobot.ChestShop.todo;
 
 import com.Acrobot.Breeze.Utils.BlockUtil;
+import com.Acrobot.ChestShop.ChestShop;
 import com.Acrobot.ChestShop.Configuration.Properties;
 import com.Acrobot.ChestShop.Database.Account;
 import com.Acrobot.ChestShop.Events.AccountQueryEvent;

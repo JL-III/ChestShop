@@ -2,7 +2,7 @@ package com.Acrobot.ChestShop.Plugins;
 
 import com.Acrobot.ChestShop.Events.ChestShopReloadEvent;
 import com.Acrobot.ChestShop.Events.Protection.ProtectionCheckEvent;
-import com.Acrobot.ChestShop.Permission;
+import com.Acrobot.ChestShop.todo.Permission;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
 import com.Acrobot.ChestShop.Utils.uBlock;
 import org.bukkit.block.Block;

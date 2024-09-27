@@ -1,4 +1,4 @@
-package com.Acrobot.ChestShop.UUIDs;
+package com.Acrobot.ChestShop.Utils;
 
 import org.bukkit.entity.Player;
 

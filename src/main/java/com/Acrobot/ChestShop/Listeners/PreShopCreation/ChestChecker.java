@@ -1,8 +1,8 @@
 package com.Acrobot.ChestShop.Listeners.PreShopCreation;
 
 import com.Acrobot.ChestShop.Events.PreShopCreationEvent;
-import com.Acrobot.ChestShop.Permission;
-import com.Acrobot.ChestShop.Security;
+import com.Acrobot.ChestShop.todo.Permission;
+import com.Acrobot.ChestShop.todo.Security;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
 import com.Acrobot.ChestShop.Utils.uBlock;
 import org.bukkit.block.Container;
@@ -13,7 +13,7 @@ import org.bukkit.event.Listener;
 
 import static com.Acrobot.ChestShop.Events.PreShopCreationEvent.CreationOutcome.NO_CHEST;
 import static com.Acrobot.ChestShop.Events.PreShopCreationEvent.CreationOutcome.NO_PERMISSION_FOR_CHEST;
-import static com.Acrobot.ChestShop.Permission.ADMIN;
+import static com.Acrobot.ChestShop.todo.Permission.ADMIN;
 
 /**
  * @author Acrobot

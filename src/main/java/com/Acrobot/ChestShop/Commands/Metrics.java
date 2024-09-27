@@ -2,7 +2,7 @@ package com.Acrobot.ChestShop.Commands;
 
 import com.Acrobot.ChestShop.Configuration.Messages;
 import com.Acrobot.ChestShop.Listeners.Modules.MetricsModule;
-import com.Acrobot.ChestShop.UUIDs.NameManager;
+import com.Acrobot.ChestShop.Utils.NameManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

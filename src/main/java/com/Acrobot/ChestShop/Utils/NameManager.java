@@ -1,4 +1,4 @@
-package com.Acrobot.ChestShop.UUIDs;
+package com.Acrobot.ChestShop.Utils;
 
 import com.Acrobot.Breeze.Utils.Encoding.Base62;
 import com.Acrobot.Breeze.Utils.NameUtil;
@@ -10,7 +10,7 @@ import com.Acrobot.ChestShop.Database.Account;
 import com.Acrobot.ChestShop.Database.DaoCreator;
 import com.Acrobot.ChestShop.Events.AccountAccessEvent;
 import com.Acrobot.ChestShop.Events.AccountQueryEvent;
-import com.Acrobot.ChestShop.Permission;
+import com.Acrobot.ChestShop.todo.Permission;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
 import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;

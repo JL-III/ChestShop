@@ -7,7 +7,7 @@ import com.Acrobot.ChestShop.Configuration.Properties;
 import com.Acrobot.ChestShop.Events.ShopDestroyedEvent;
 import com.Acrobot.ChestShop.Listeners.Block.Break.Attached.PhysicsBreak;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
-import com.Acrobot.ChestShop.UUIDs.NameManager;
+import com.Acrobot.ChestShop.Utils.NameManager;
 import com.Acrobot.ChestShop.Utils.uBlock;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -33,7 +33,7 @@ import java.util.List;
 import static com.Acrobot.Breeze.Utils.ImplementationAdapter.getState;
 import static com.Acrobot.Breeze.Utils.BlockUtil.getAttachedBlock;
 import static com.Acrobot.Breeze.Utils.BlockUtil.isSign;
-import static com.Acrobot.ChestShop.Permission.OTHER_NAME_DESTROY;
+import static com.Acrobot.ChestShop.todo.Permission.OTHER_NAME_DESTROY;
 
 /**
  * @author Acrobot
