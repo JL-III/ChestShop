@@ -1,7 +1,6 @@
 package com.Acrobot.ChestShop.Events.Economy;
 
 import org.bukkit.World;
-import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
@@ -25,10 +24,6 @@ public class CurrencySubtractEvent extends EconomicEvent {
         this.amount = amount;
         this.target = target;
         this.world = world;
-    }
-
-    public CurrencySubtractEvent(BigDecimal amount, Player target) {
-        this(amount, target.getUniqueId(), target.getWorld());
     }
 
     /**

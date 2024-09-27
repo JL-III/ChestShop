@@ -17,7 +17,7 @@ public class AccountCheckEvent extends EconomicEvent {
     private boolean outcome = false;
 
     private final UUID account;
-    private World world;
+    private final World world;
 
     public AccountCheckEvent(UUID account, World world) {
         this.account = account;

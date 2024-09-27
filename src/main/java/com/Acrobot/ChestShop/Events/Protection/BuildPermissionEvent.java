@@ -38,20 +38,12 @@ public class BuildPermissionEvent extends Event implements Cancellable {
         return sign;
     }
 
-    public void allow() {
-        allowed = true;
-    }
-
     public boolean isAllowed() {
         return allowed;
     }
 
     public void allow(boolean yesOrNot) {
         allowed = yesOrNot;
-    }
-
-    public void disallow() {
-        allowed = false;
     }
 
     public HandlerList getHandlers() {

@@ -27,10 +27,6 @@ public class CurrencyAddEvent extends EconomicEvent {
         this.world = world;
     }
 
-    public CurrencyAddEvent(BigDecimal amount, Player target) {
-        this(amount, target.getUniqueId(), target.getWorld());
-    }
-
     /**
      * @return Amount of currency
      */
