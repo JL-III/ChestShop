@@ -50,10 +50,6 @@
             <url>https://ci.nyaacat.com/maven/</url>
         </repository>
         <repository>
-            <id>redprotect-repo</id>
-            <url>https://raw.githubusercontent.com/FabioZumbi12/RedProtect/mvn-repo/</url>
-        </repository>
-        <repository>
             <id>adventure-repo</id>
             <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
         </repository>
@@ -117,13 +113,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.bstats</groupId>
-            <artifactId>bstats-bukkit</artifactId>
-            <version>3.0.1</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
             <groupId>net.milkbowl.vault</groupId>
             <artifactId>Vault</artifactId>
             <version>1.6.6</version>
@@ -140,54 +129,10 @@
             </exclusions>
         </dependency>
 
-        
-        <dependency>
-            <groupId>com.herocraftonline.heroes</groupId>
-            <artifactId>Heroes</artifactId>
-            <version>1.5.5</version>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>*</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>fr.xephi</groupId>
-            <artifactId>authme</artifactId>
-            <version>5.6.0-SNAPSHOT</version>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.bukkit</groupId>
-                    <artifactId>bukkit</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
         <dependency>
             <groupId>com.griefcraft.lwc</groupId>
             <artifactId>LWCX</artifactId>
             <version>2.2.5</version>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.bukkit</groupId>
-                    <artifactId>bukkit</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.bukkit</groupId>
-                    <artifactId>craftbukkit</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>com.daemitus.deadbolt</groupId>
-            <artifactId>deadbolt</artifactId>
-            <version>2.2</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
@@ -261,94 +206,9 @@
         </dependency>
 
         <dependency>
-            <groupId>br.net.fabiozumbi12.RedProtect</groupId>
-            <artifactId>RedProtect-Spigot</artifactId>
-            <version>7.7.3</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>br.net.fabiozumbi12.RedProtect</groupId>
-            <artifactId>RedProtect-Core</artifactId>
-            <version>7.7.3</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.webkonsept.bukkit.simplechestlock</groupId>
-            <artifactId>simplechestlock</artifactId>
-            <version>1.2.1</version>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.bukkit</groupId>
-                    <artifactId>bukkit</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.bukkit</groupId>
-                    <artifactId>craftbukkit</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>org.yi.acru.bukkit.lockette</groupId>
-            <artifactId>lockette</artifactId>
-            <version>1.8.14</version>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.bukkit</groupId>
-                    <artifactId>bukkit</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.bukkit</groupId>
-                    <artifactId>craftbukkit</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>nl.rutgerkok</groupId>
-            <artifactId>blocklocker</artifactId>
-            <version>1.9</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.bekvon.bukkit</groupId>
-            <artifactId>residence</artifactId>
-            <version>4.6.1.4</version>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.bukkit</groupId>
-                    <artifactId>bukkit</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.bukkit</groupId>
-                    <artifactId>craftbukkit</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
             <groupId>de.themoep.showitem</groupId>
             <artifactId>api</artifactId>
             <version>1.6.3</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>net.tnemc</groupId>
-            <artifactId>Reserve</artifactId>
-            <version>0.1.5.4</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>me.crafter.mc</groupId>
-            <artifactId>lockettepro</artifactId>
-            <version>2.10-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

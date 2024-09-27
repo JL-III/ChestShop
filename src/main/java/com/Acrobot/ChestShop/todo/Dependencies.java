@@ -5,11 +5,8 @@ import com.Acrobot.ChestShop.ChestShop;
 import com.Acrobot.ChestShop.Configuration.Properties;
 import com.Acrobot.ChestShop.Events.EventManager;
 import com.Acrobot.ChestShop.Listeners.Economy.EconomyAdapter;
-import com.Acrobot.ChestShop.Listeners.Economy.Plugins.ReserveListener;
 import com.Acrobot.ChestShop.Listeners.Economy.Plugins.VaultListener;
 import com.Acrobot.ChestShop.Plugins.*;
-import com.google.common.collect.ImmutableMap;
-import org.bstats.charts.DrilldownPie;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -19,11 +16,9 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 
-import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
-import java.util.stream.Collectors;
 
 /**
  * @author Acrobot
@@ -127,21 +122,6 @@ public class Dependencies implements Listener {
             //Protection plugins
             case LWC:
                 listener = new LightweightChestProtection();
-                break;
-            case Lockette:
-                listener = new LocketteListener();
-                break;
-            case LockettePro:
-                listener = new LocketteProListener();
-                break;
-            case Deadbolt:
-                listener = new DeadboltListener();
-                break;
-            case SimpleChestLock:
-                listener = SimpleChestLock.getSimpleChestLock(plugin);
-                break;
-            case BlockLocker:
-                listener = new BlockLocker();
                 break;
 
             //Terrain protection plugins
