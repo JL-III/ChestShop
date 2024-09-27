@@ -24,19 +24,6 @@ public class Economy {
     public Economy(Plugin plugin) {
         this.plugin = plugin;
     }
-    /**
-     * Get the name of the server economy account
-     * @return The username of te server economy account
-     * @deprecated Use {@link NameManager#getServerEconomyAccount()} or {@link Properties#SERVER_ECONOMY_ACCOUNT}
-     */
-    @Deprecated
-    public static String getServerAccountName() {
-        return Properties.SERVER_ECONOMY_ACCOUNT;
-    }
-
-    public static boolean isOwnerEconomicallyActive(Inventory inventory) {
-        return NameManager.getServerEconomyAccount() != null;
-    }
 
     /**
      * @deprecated Directly call the {@link CurrencyAddEvent}

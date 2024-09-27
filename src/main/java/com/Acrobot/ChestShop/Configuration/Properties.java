@@ -151,19 +151,6 @@ public class Properties {
     @Parser("StringSet")
     public static Set<String> REMOVE_EMPTY_WORLDS = new LinkedHashSet<>(Arrays.asList("world1", "world2"));
 
-    @PrecededBySpace
-    @ConfigurationComment("First line of your Admin Shop's sign should look like this:")
-    public static String ADMIN_SHOP_NAME = "Admin Shop";
-
-    @ConfigurationComment("Make all admin shops be unlimited even if they have a shop container at the sign")
-    public static boolean FORCE_UNLIMITED_ADMIN_SHOP = false;
-
-    @ConfigurationComment("The name of the economy account which Admin Shops should use and to which all taxes will go")
-    public static String SERVER_ECONOMY_ACCOUNT = "";
-
-    @ConfigurationComment("The uuid of the economy account for the Admin Shop. Useful for fake accounts as normally only accounts of players work")
-    public static UUID SERVER_ECONOMY_ACCOUNT_UUID = new UUID(0, 0);
-
     @ConfigurationComment("How many decimal places are allowed at a maximum for prices?")
     public static int PRICE_PRECISION = 2;
 

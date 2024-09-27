@@ -39,7 +39,6 @@ public class ItemDatabase {
 
     public ItemDatabase() {
         yaml = new Yaml(new YamlBukkitConstructor(), new YamlRepresenter(), new DumperOptions());
-
         try {
             itemDao = DaoCreator.getDaoAndCreateTable(Item.class);
             handleMetadataUpdate();

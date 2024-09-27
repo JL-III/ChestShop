@@ -3,7 +3,6 @@ package com.Acrobot.ChestShop.Listeners.Economy;
 import com.Acrobot.ChestShop.Events.Economy.CurrencyAddEvent;
 import com.Acrobot.ChestShop.Events.Economy.CurrencySubtractEvent;
 import com.Acrobot.ChestShop.Events.Economy.CurrencyTransferEvent;
-import com.Acrobot.ChestShop.Utils.NameManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
@@ -30,11 +29,7 @@ public abstract class EconomyAdapter implements Listener {
 
         BigDecimal amountSent = event.getAmountSent();
         CurrencySubtractEvent currencySubtractEvent = new CurrencySubtractEvent(amountSent, event.getSender(), event.getWorld());
-        if (!NameManager.isAdminShop(event.getSender())) {
-            plugin.getServer().getPluginManager().callEvent(currencySubtractEvent);
-        } else {
-            currencySubtractEvent.setHandled(true);
-        }
+        plugin.getServer().getPluginManager().callEvent(currencySubtractEvent);
 
         if (!currencySubtractEvent.wasHandled()) {
             return;
@@ -42,11 +37,7 @@ public abstract class EconomyAdapter implements Listener {
 
         BigDecimal amountReceived = event.getAmountReceived().subtract(amountSent.subtract(currencySubtractEvent.getAmount()));
         CurrencyAddEvent currencyAddEvent = new CurrencyAddEvent(amountReceived, event.getReceiver(), event.getWorld());
-        if (!NameManager.isAdminShop(event.getReceiver())) {
-            plugin.getServer().getPluginManager().callEvent(currencyAddEvent);
-        } else {
-            currencyAddEvent.setHandled(true);
-        }
+        plugin.getServer().getPluginManager().callEvent(currencyAddEvent);
 
         if (currencyAddEvent.wasHandled()) {
             event.setHandled(true);

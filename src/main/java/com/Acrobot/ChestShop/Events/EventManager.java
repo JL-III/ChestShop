@@ -7,7 +7,6 @@ import com.Acrobot.ChestShop.Listeners.Block.BlockPlace;
 import com.Acrobot.ChestShop.Listeners.Block.ChestBreak;
 import com.Acrobot.ChestShop.Listeners.Block.SignBreak;
 import com.Acrobot.ChestShop.Listeners.Block.SignCreate;
-import com.Acrobot.ChestShop.Listeners.Economy.ServerAccountCorrector;
 import com.Acrobot.ChestShop.Listeners.GarbageTextListener;
 import com.Acrobot.ChestShop.Listeners.Item.ItemMoveListener;
 import com.Acrobot.ChestShop.Listeners.ItemInfoListener;
@@ -130,12 +129,6 @@ public class EventManager {
         registerEvent(new ItemAliasModule());
         registerEvent(new MetricsModule());
         registerEvent(new StockCounterModule());
-
-        registerEconomicalModules();
-    }
-
-    private void registerEconomicalModules() {
-        registerEvent(new ServerAccountCorrector());
     }
 
     public void registerEvent(Listener listener) {

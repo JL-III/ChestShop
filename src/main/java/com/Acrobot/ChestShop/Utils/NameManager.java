@@ -1,8 +1,8 @@
 package com.Acrobot.ChestShop.Utils;
 
+import com.Acrobot.Breeze.Collection.SimpleCache;
 import com.Acrobot.Breeze.Utils.Encoding.Base62;
 import com.Acrobot.Breeze.Utils.NameUtil;
-import com.Acrobot.Breeze.Collection.SimpleCache;
 import com.Acrobot.Breeze.Utils.NumberUtil;
 import com.Acrobot.ChestShop.ChestShop;
 import com.Acrobot.ChestShop.Configuration.Properties;
@@ -10,11 +10,9 @@ import com.Acrobot.ChestShop.Database.Account;
 import com.Acrobot.ChestShop.Database.DaoCreator;
 import com.Acrobot.ChestShop.Events.tobesorted.AccountAccessEvent;
 import com.Acrobot.ChestShop.Events.tobesorted.AccountQueryEvent;
-import com.Acrobot.ChestShop.Signs.ChestShopSign;
 import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;
 import com.j256.ormlite.dao.Dao;
-
 import com.j256.ormlite.stmt.SelectArg;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -45,9 +43,7 @@ public class NameManager implements Listener {
     private static final SimpleCache<UUID, Account> uuidToAccount = new SimpleCache<>(Properties.CACHE_SIZE);
     private static final SimpleCache<String, Account> shortToAccount = new SimpleCache<>(Properties.CACHE_SIZE);
     private static final SimpleCache<String, Boolean> invalidPlayers = new SimpleCache<>(Properties.CACHE_SIZE);
-
-    private static Account adminAccount;
-    private static Account serverEconomyAccount;
+    ;
     private static int uuidVersion = -1;
 
     public NameManager(Plugin plugin) {
@@ -321,14 +317,6 @@ public class NameManager implements Listener {
         }
     }
 
-    public static boolean isAdminShop(UUID uuid) {
-        return adminAccount != null && uuid.equals(adminAccount.getUuid());
-    }
-
-    public static boolean isServerEconomyAccount(UUID uuid) {
-        return serverEconomyAccount != null && uuid.equals(serverEconomyAccount.getUuid());
-    }
-
     public static void load() {
         if (getUuidVersion() < 0) {
             if (Bukkit.getOnlineMode()) {
@@ -338,42 +326,10 @@ public class NameManager implements Listener {
             }
         }
         try {
-            accounts = DaoCreator.getDaoAndCreateTable(Account.class);
-
-            try {
-                adminAccount = new Account(Properties.ADMIN_SHOP_NAME, Bukkit.getOfflinePlayer(Properties.ADMIN_SHOP_NAME).getUniqueId());
-            } catch (NullPointerException ratelimitedException) {
-                // This happens when the server was ratelimited by Mojang. Unfortunately there is no nice way to check that.
-                // We fall back to the method used by CraftBukkit to generate an OfflinePlayer's UUID
-                adminAccount = new Account(Properties.ADMIN_SHOP_NAME, UUID.nameUUIDFromBytes(("OfflinePlayer:" + Properties.ADMIN_SHOP_NAME).getBytes(Charsets.UTF_8)));
-                ChestShop.getBukkitLogger().log(Level.WARNING, "Your server appears to be ratelimited by Mojang and can't query UUID data from their API. If you run into issues with admin shops please report them!");
-            }
-            accounts.createOrUpdate(adminAccount);
-
-            if (!Properties.SERVER_ECONOMY_ACCOUNT.isEmpty()) {
-                serverEconomyAccount = getAccount(Properties.SERVER_ECONOMY_ACCOUNT);
-            }
-            if (serverEconomyAccount == null && !Properties.SERVER_ECONOMY_ACCOUNT.isEmpty() && !Properties.SERVER_ECONOMY_ACCOUNT_UUID.equals(new UUID(0, 0))) {
-                serverEconomyAccount = getOrCreateAccount(Properties.SERVER_ECONOMY_ACCOUNT_UUID, Properties.SERVER_ECONOMY_ACCOUNT);
-            }
-            if (serverEconomyAccount == null || serverEconomyAccount.getUuid() == null) {
-                serverEconomyAccount = null;
-                if (!Properties.SERVER_ECONOMY_ACCOUNT.isEmpty()) {
-                    ChestShop.getBukkitLogger().log(Level.WARNING, "Server economy account setting '"
-                            + Properties.SERVER_ECONOMY_ACCOUNT
-                            + "' doesn't seem to be the name of a known player account!" +
-                            " Please specify the SERVER_ECONOMY_ACCOUNT_UUID" +
-                            " or log in at least once and create a player shop with that account" +
-                            " in order for the server economy account to work.");
-                }
-            }
+            DaoCreator.getDaoAndCreateTable(Account.class);
         } catch (SQLException e) {
             ChestShop.getBukkitLogger().log(Level.SEVERE, "Error while trying to setup accounts", e);
         }
-    }
-
-    public static Account getServerEconomyAccount() {
-        return serverEconomyAccount;
     }
 
     public static void setUuidVersion(int uuidVersion) {

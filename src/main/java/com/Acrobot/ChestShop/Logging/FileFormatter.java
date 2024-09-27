@@ -18,13 +18,10 @@ public class FileFormatter extends Formatter {
     @Override
     public String format(LogRecord record) {
         StringBuilder message = new StringBuilder(getDateAndTime());
-
         if (record.getLevel() != Level.INFO) {
             message.append(' ').append(record.getLevel().getLocalizedName());
         }
-
         message.append(' ').append(record.getMessage());
-
         if (record.getThrown() != null) {
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
@@ -33,13 +30,11 @@ public class FileFormatter extends Formatter {
             pw.close();
             message.append(sw);
         }
-
         return message.append('\n').toString();
     }
 
     private String getDateAndTime() {
         Date date = new Date();
-
         return dateFormat.format(date);
     }
 }

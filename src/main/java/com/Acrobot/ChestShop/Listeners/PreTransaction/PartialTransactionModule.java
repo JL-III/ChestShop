@@ -128,37 +128,7 @@ public class PartialTransactionModule implements Listener {
         }
 
         Player client = event.getClient();
-        UUID owner = event.getOwnerAccount().getUuid();
-
         BigDecimal pricePerItem = event.getExactPrice().divide(BigDecimal.valueOf(InventoryUtil.countItems(event.getStock())), MathContext.DECIMAL128);
-
-
-        if (Economy.isOwnerEconomicallyActive(event.getOwnerInventory())) {
-            CurrencyCheckEvent currencyCheckEvent = new CurrencyCheckEvent(event.getExactPrice(), owner, client.getWorld());
-            plugin.getServer().getPluginManager().callEvent(currencyCheckEvent);
-
-            if (!currencyCheckEvent.hasEnough()) {
-                CurrencyAmountEvent currencyAmountEvent = new CurrencyAmountEvent(owner, client.getWorld());
-                plugin.getServer().getPluginManager().callEvent(currencyAmountEvent);
-
-                BigDecimal walletMoney = currencyAmountEvent.getAmount();
-                int amountAffordable = getAmountOfAffordableItems(walletMoney, pricePerItem);
-
-                if (amountAffordable < 1) {
-                    event.setCancelled(SHOP_DOES_NOT_HAVE_ENOUGH_MONEY);
-                    return;
-                }
-
-                BigDecimal pricePerItemScaled = pricePerItem.multiply(new BigDecimal(amountAffordable)).setScale(Properties.PRICE_PRECISION, BigDecimal.ROUND_HALF_UP);
-                if (pricePerItem.compareTo(BigDecimal.ZERO) > 0 && pricePerItemScaled.compareTo(BigDecimal.ZERO) == 0) {
-                    event.setCancelled(SHOP_DOES_NOT_HAVE_ENOUGH_MONEY);
-                    return;
-                }
-
-                event.setExactPrice(pricePerItemScaled);
-                event.setStock(getCountedItemStack(event.getStock(), amountAffordable));
-            }
-        }
 
         if (!InventoryUtil.hasItems(event.getStock(), event.getClientInventory())) {
             ItemStack[] itemsHad = getItems(event.getStock(), event.getClientInventory());
@@ -276,7 +246,7 @@ public class PartialTransactionModule implements Listener {
      *
      * @param stock     The items to fit in the inventory
      * @param inventory The inventory to fit it in
-     * @return Whether or not the items fit into the inventory
+     * @return Whether the items fit into the inventory
      */
     private static ItemStack[] getItemsThatFit(ItemStack[] stock, Inventory inventory) {
         List<ItemStack> resultStock = new LinkedList<>();
