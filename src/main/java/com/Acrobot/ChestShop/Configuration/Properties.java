@@ -100,19 +100,6 @@ public class Properties {
     public static boolean DEBUG = false;
 
     @PrecededBySpace
-    @ConfigurationComment("Do you want to turn off the automatic updates of ChestShop?")
-    public static boolean TURN_OFF_UPDATES = true;
-
-    @ConfigurationComment("Do you want to turn off the automatic notifications for releases?")
-    public static boolean TURN_OFF_UPDATE_NOTIFIER = false;
-
-    @ConfigurationComment("Do you want to turn off the automatic notifications for new development builds?")
-    public static boolean TURN_OFF_DEV_UPDATE_NOTIFIER = false;
-
-    @ConfigurationComment("Do you want to include some values of this config in the metrics? (This will not submit any sensitive data and helps in the development process)")
-    public static boolean INCLUDE_SETTINGS_IN_METRICS = true;
-
-    @PrecededBySpace
     @ConfigurationComment("How large should the internal caches be?")
     public static int CACHE_SIZE = 1000;
 
@@ -143,18 +130,6 @@ public class Properties {
 
     @ConfigurationComment("Do you want to block people who have access to a shop due to their permissions from using it? (owners are always ignored)")
     public static boolean IGNORE_ACCESS_PERMS = true;
-
-    @ConfigurationComment("If true, people will buy with left-click and sell with right-click.")
-    public static boolean REVERSE_BUTTONS = false;
-
-    @ConfigurationComment("If true, people will be able to buy/sell in 64 stacks while holding the crouch button.")
-    public static boolean SHIFT_SELLS_IN_STACKS = false;
-
-    @ConfigurationComment("If true, people will be able to sell/buy everything available of the same type.")
-    public static boolean SHIFT_SELLS_EVERYTHING = false;
-
-    @ConfigurationComment("What can you do by clicking shift with SHIFT_SELLS_IN_STACKS turned on? (ALL/BUY/SELL)")
-    public static String SHIFT_ALLOWS = "ALL";
 
     @ConfigurationComment("Can shop's chest be opened by owner with right-clicking a shop's sign?")
     public static boolean ALLOW_SIGN_CHEST_OPEN = false;
@@ -189,28 +164,16 @@ public class Properties {
     @ConfigurationComment("The uuid of the economy account for the Admin Shop. Useful for fake accounts as normally only accounts of players work")
     public static UUID SERVER_ECONOMY_ACCOUNT_UUID = new UUID(0, 0);
 
-    @ConfigurationComment("Percent of the price that should go to the server's account. (100 = 100 percent)")
-    public static double TAX_AMOUNT = 0;
-
-    @ConfigurationComment("Percent of the price that should go to the server's account when buying from an Admin Shop.")
-    public static double SERVER_TAX_AMOUNT = 0;
-
-    @ConfigurationComment("Amount of money player must pay to create a shop")
-    public static BigDecimal SHOP_CREATION_PRICE = BigDecimal.valueOf(0);
-
-    @ConfigurationComment("How much money do you get back when destroying a sign?")
-    public static BigDecimal SHOP_REFUND_PRICE = BigDecimal.valueOf(0);
-
     @ConfigurationComment("How many decimal places are allowed at a maximum for prices?")
     public static int PRICE_PRECISION = 2;
 
     @ConfigurationComment("This makes sure that the UUIDs of player shop accounts match the server's online-mode setting. Disabling this might lead to issues with offline players and is therefore unsupported!")
-    public static boolean ENSURE_CORRECT_PLAYERID = true;
+    public static boolean ENSURE_CORRECT_PLAYER_ID = true;
 
     @ConfigurationComment("This regexp validates the name of the player. If the name doesn't match, the player will neither be able to create a valid shop sign, nor buy/sell from a shop.\n" +
             "Note for Bedrock support: If you have Floodgate on your server, you should set this regexp to ^\\\\.?\\\\w+$ and ENSURE_CORRECT_PLAYERID to false\n" +
             "If your Floodgate prefix is not a dot, then change the first . in the regexp (the one before the question mark) to whatever your prefix is.")
-    public static String VALID_PLAYERNAME_REGEXP = "^\\w+$";
+    public static String VALID_PLAYER_NAME_REGEXP = "^\\w+$";
 
     @PrecededBySpace
     @ConfigurationComment("Should we block shops that sell things for more than they buy? (This prevents newbies from creating shops that would be exploited)")
@@ -229,10 +192,6 @@ public class Properties {
 
     @ConfigurationComment("Can '?' be put in place of item name in order for the sign to be auto-filled?")
     public static boolean ALLOW_AUTO_ITEM_FILL = true;
-
-    @PrecededBySpace
-    @ConfigurationComment("Enable this if you use BungeeCord and want players to receive shop notifications on other servers")
-    public static boolean BUNGEECORD_MESSAGES = false;
 
     @PrecededBySpace
     @ConfigurationComment("Do you want to show \"Out of stock\" messages?")
@@ -264,18 +223,8 @@ public class Properties {
     @ConfigurationComment("Should all shop removals be logged?")
     public static boolean LOG_ALL_SHOP_REMOVALS = true;
 
-    @PrecededBySpace
-    @ConfigurationComment("Do you want to stack all items up to 64 item stacks?")
-    public static boolean STACK_TO_64 = false;
-
     @ConfigurationComment("Do you want to use built-in protection against chest destruction?")
     public static boolean USE_BUILT_IN_PROTECTION = true;
-
-    @ConfigurationComment("Do you want to have shop signs \"stick\" to chests?")
-    public static boolean STICK_SIGNS_TO_CHESTS = false;
-
-    @ConfigurationComment("EXPERIMENTAL: Do you want to turn off the default protection when another plugin is protecting the block? (Will leave the chest visually open - CraftBukkit bug!)")
-    public static boolean TURN_OFF_DEFAULT_PROTECTION_WHEN_PROTECTED_EXTERNALLY = false;
 
     @ConfigurationComment("Do you want to turn off the default sign protection? Warning! Other players will be able to destroy other people's shops!")
     public static boolean TURN_OFF_SIGN_PROTECTION = false;
@@ -283,20 +232,11 @@ public class Properties {
     @ConfigurationComment("Do you want to disable the hopper protection, which prevents Hopper-Minecarts from taking items out of shops?")
     public static boolean TURN_OFF_HOPPER_PROTECTION = false;
 
-    @ConfigurationComment("Only allow users to buy/sell that have access to the sign's protection? (E.g. LWC protection)")
-    public static boolean CHECK_ACCESS_FOR_SHOP_USE = false;
-
     @ConfigurationComment("Do you want to protect shop chests with LWC?")
-    public static boolean PROTECT_CHEST_WITH_LWC = false;
+    public static boolean PROTECT_CHEST_WITH_LWC = true;
 
     @ConfigurationComment("Of which type should the container protection be? Possible type: public, private, donate and on some LWC versions display")
     public static Security.Type LWC_CHEST_PROTECTION_TYPE = Security.Type.PRIVATE;
-
-    @ConfigurationComment("Do you want to protect shop signs with LWC?")
-    public static boolean PROTECT_SIGN_WITH_LWC = false;
-
-    @ConfigurationComment("Of which type should the sign protection be? Possible type: public, private, donate and on some LWC versions display")
-    public static Security.Type LWC_SIGN_PROTECTION_TYPE = Security.Type.PRIVATE;
 
     @ConfigurationComment("Should the chest's LWC protection be removed once the shop sign is destroyed? ")
     public static boolean REMOVE_LWC_PROTECTION_AUTOMATICALLY = true;
@@ -305,39 +245,6 @@ public class Properties {
     public static boolean LWC_LIMITS_BLOCK_CREATION = true;
 
     @PrecededBySpace
-    @ConfigurationComment("Do you want to only let people build inside WorldGuard regions?")
-    public static boolean WORLDGUARD_INTEGRATION = false;
-
-    @ConfigurationComment("Do you want to only let people build inside region flagged by doing /region regionName flag allow-shop allow?")
-    public static boolean WORLDGUARD_USE_FLAG = false;
-
-    @ConfigurationComment("Do you want ChestShop to respect WorldGuard's chest protection?")
-    public static boolean WORLDGUARD_USE_PROTECTION = false;
-
-    @PrecededBySpace
-    @ConfigurationComment("Do you want to only let people build inside GriefPrevention claims?")
-    public static boolean GRIEFPREVENTION_INTEGRATION = false;
-
-    @PrecededBySpace
-    @ConfigurationComment("Do you want to only let people build inside RedProtect regions?")
-    public static boolean REDPROTECT_INTEGRATION = false;
-
-    @PrecededBySpace
-    @ConfigurationComment("Do you want to deny shop access to unlogged users?")
-    public static boolean AUTHME_HOOK = true;
-
-    @ConfigurationComment("Do you want to allow shop access to unregistered users? (Example: registration is optional)")
-    public static boolean AUTHME_ALLOW_UNREGISTERED = false;
-
-    @PrecededBySpace
-    @ConfigurationComment("How much Heroes exp should people get for creating a ChestShop?")
-    public static double HEROES_EXP = 100;
-
-    @PrecededBySpace
-    @ConfigurationComment("Add icons and make item names hoverable in transaction messages when ShowItem is installed?")
-    public static boolean SHOWITEM_MESSAGE = true;
-
-    @PrecededBySpace
     @ConfigurationComment("Add stock counter to quantity line?")
-    public static boolean USE_STOCK_COUNTER = false;
+    public static boolean USE_STOCK_COUNTER = true ;
 }

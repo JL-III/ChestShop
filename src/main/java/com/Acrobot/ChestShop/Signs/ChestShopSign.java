@@ -5,7 +5,6 @@ import com.Acrobot.Breeze.Utils.ImplementationAdapter;
 import com.Acrobot.Breeze.Utils.QuantityUtil;
 import com.Acrobot.Breeze.Utils.StringUtil;
 import com.Acrobot.ChestShop.Configuration.Properties;
-import com.Acrobot.ChestShop.Containers.AdminInventory;
 import com.Acrobot.ChestShop.Database.Account;
 import com.Acrobot.ChestShop.Events.tobesorted.AccountQueryEvent;
 import com.Acrobot.ChestShop.Utils.NameManager;
@@ -45,22 +44,6 @@ public class ChestShopSign {
             { Pattern.compile("^[\\p{L}\\d_? #:\\-]+$") }
     };
     public static final String AUTOFILL_CODE = "?";
-
-    public static boolean isAdminShop(Inventory ownerInventory) {
-        return ownerInventory instanceof AdminInventory;
-    }
-
-    public static boolean isAdminShop(String owner) {
-        return owner.replace(" ", "").equalsIgnoreCase(Properties.ADMIN_SHOP_NAME.replace(" ", ""));
-    }
-
-    public static boolean isAdminShop(Sign sign) {
-        return isAdminShop(sign.getLines());
-    }
-
-    public static boolean isAdminShop(String[] lines) {
-        return isAdminShop(getOwner(lines));
-    }
 
     public static boolean isValid(Sign sign) {
         return isValid(sign.getLines());
@@ -169,10 +152,10 @@ public class ChestShopSign {
         String playername = ChestShopSign.getOwner(lines);
 
         // If the shop owner is not blank (auto-filled) or the admin shop string, we need to validate it
-        if ((!isAdminShop(playername)) && (playername.length() > 0)) {
+        if ((playername.length() > 0)) {
 
             // Prepare regexp patterns
-            Pattern playernamePattern = Pattern.compile(Properties.VALID_PLAYERNAME_REGEXP); // regexp from config file
+            Pattern playernamePattern = Pattern.compile(Properties.VALID_PLAYER_NAME_REGEXP); // regexp from config file
             Matcher playernameWithIdMatcher = Pattern.compile("^(.+):[A-Za-z0-9]+$").matcher(playername); // regexp to match ':' and a base62 encoded string
             // Check if the playername has an ID. This can happen on duplicate or too long names
             if (playernameWithIdMatcher.matches()) {

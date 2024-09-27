@@ -132,7 +132,7 @@ public class ErrorMessageSender implements Listener {
 
     private void sendMessageToOwner(Account ownerAccount, Messages.Message message, String[] replacements, ItemStack... stock) {
         Player player = Bukkit.getPlayer(ownerAccount.getUuid());
-        if (player != null || Properties.BUNGEECORD_MESSAGES) {
+        if (player != null) {
 
             if (Properties.NOTIFICATION_MESSAGE_COOLDOWN > 0) {
                 String cacheKey = message.getKey() + "|" + String.join(",", replacements) + "|" + itemUtil.getItemList(stock);
@@ -143,11 +143,9 @@ public class ErrorMessageSender implements Listener {
                 notificationCooldowns.put(ownerAccount.getUuid(), cacheKey, System.currentTimeMillis());
             }
 
-            if (player != null) {
-                String items = itemUtil.getItemList(stock);
-                message.sendWithPrefix(player,
-                        ImmutableMap.of("material", items, "item", items), replacements);
-            }
+            String items = itemUtil.getItemList(stock);
+            message.sendWithPrefix(player,
+                    ImmutableMap.of("material", items, "item", items), replacements);
         }
     }
 }

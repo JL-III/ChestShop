@@ -18,8 +18,7 @@ public class ShopCreationLogger implements Listener {
     public static void onShopCreation(final ShopCreatedEvent event) {
         ChestShop.runInAsyncThread(() -> {
             String creator = event.getPlayer().getName();
-            String shopOwner = ChestShopSign.getOwner(event.getSignLines());
-            String typeOfShop = ChestShopSign.isAdminShop(shopOwner) ? "an Admin Shop" : "a shop" + (event.createdByOwner() ? "" : " for " + event.getOwnerAccount().getName());
+            String typeOfShop = "a shop" + (event.createdByOwner() ? "" : " for " + event.getOwnerAccount().getName());
 
             String item = ChestShopSign.getQuantity(event.getSignLines()) + ' ' + ChestShopSign.getItem(event.getSignLines());
             String prices = ChestShopSign.getPrice(event.getSignLines());

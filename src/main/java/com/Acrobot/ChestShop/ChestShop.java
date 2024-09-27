@@ -4,7 +4,6 @@ import com.Acrobot.Breeze.Configuration.Configuration;
 import com.Acrobot.ChestShop.Commands.*;
 import com.Acrobot.ChestShop.Configuration.Messages;
 import com.Acrobot.ChestShop.Configuration.Properties;
-import com.Acrobot.ChestShop.Database.Migrations;
 import com.Acrobot.ChestShop.Events.EventManager;
 import com.Acrobot.ChestShop.Events.Protection.ProtectionCheckEvent;
 import com.Acrobot.ChestShop.Events.tobesorted.ChestShopReloadEvent;
@@ -100,10 +99,6 @@ public class ChestShop extends JavaPlugin implements Listener {
         audiences = BukkitAudiences.create(this);
         turnOffDatabaseLogging();
         File versionFile = loadFile("version");
-        if (!Migrations.handleMigrations(logger, versionFile)) {
-            getServer().getPluginManager().disablePlugin(this);
-            return;
-        }
         registerCommand("iteminfo", itemInfo, Permission.ITEMINFO);
         registerCommand("shopinfo", new ShopInfo(this), Permission.SHOPINFO);
         registerCommand("csVersion", new Version(this), Permission.ADMIN);

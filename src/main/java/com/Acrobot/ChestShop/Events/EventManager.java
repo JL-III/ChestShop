@@ -15,12 +15,10 @@ import com.Acrobot.ChestShop.Listeners.Modules.*;
 import com.Acrobot.ChestShop.Listeners.Player.*;
 import com.Acrobot.ChestShop.Listeners.PostShopCreation.MessageSender;
 import com.Acrobot.ChestShop.Listeners.PostShopCreation.ShopCreationLogger;
-import com.Acrobot.ChestShop.Listeners.PostShopCreation.SignSticker;
 import com.Acrobot.ChestShop.Listeners.PostTransaction.*;
 import com.Acrobot.ChestShop.Listeners.PreShopCreation.*;
 import com.Acrobot.ChestShop.Listeners.PreTransaction.*;
 import com.Acrobot.ChestShop.Listeners.ShopInfoListener;
-import com.Acrobot.ChestShop.Listeners.ShopRemoval.ShopRefundListener;
 import com.Acrobot.ChestShop.Listeners.ShopRemoval.ShopRemovalLogger;
 import com.Acrobot.ChestShop.Listeners.SignParseListener;
 import com.Acrobot.ChestShop.Plugins.LightweightChestProtection;
@@ -63,7 +61,6 @@ public class EventManager {
         registerEvent(new BlockPlace(plugin.getSecurity()));
         registerEvent(new PlayerConnect());
         registerEvent(new PlayerInteract(plugin, plugin.getItemUtil(), chestShopSign, plugin.getSecurity(), nameManager));
-        registerEvent(new PlayerInventory(plugin, plugin.getSecurity()));
         registerEvent(new PlayerLeave());
         registerEvent(new PlayerTeleport());
 
@@ -81,7 +78,6 @@ public class EventManager {
     }
 
     private void registerShopRemovalEvents() {
-        registerEvent(new ShopRefundListener(plugin, economy));
         registerEvent(new ShopRemovalLogger());
     }
 
@@ -92,7 +88,6 @@ public class EventManager {
 
         registerEvent(new ChestChecker(plugin.getSecurity()));
         registerEvent(new ItemChecker(plugin.getItemUtil()));
-        registerEvent(new MoneyChecker(plugin));
         registerEvent(new NameChecker(plugin, nameManager));
         registerEvent(new com.Acrobot.ChestShop.Listeners.PreShopCreation.PermissionChecker(nameManager));
         registerEvent(new com.Acrobot.ChestShop.Listeners.PreShopCreation.ErrorMessageSender());
@@ -102,9 +97,7 @@ public class EventManager {
     }
 
     private void registerPostShopCreationEvents() {
-        registerEvent(new CreationFeeGetter(plugin, economy));
         registerEvent(new MessageSender());
-        registerEvent(new SignSticker());
         registerEvent(new ShopCreationLogger());
     }
 

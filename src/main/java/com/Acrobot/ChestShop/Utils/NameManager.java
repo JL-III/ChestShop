@@ -71,7 +71,7 @@ public class NameManager implements Listener {
      */
     public static Account getOrCreateAccount(OfflinePlayer player) {
         Preconditions.checkNotNull(player.getName(), "Name of player " + player.getUniqueId() + " is null?");
-        Preconditions.checkArgument(player instanceof Player || !Properties.ENSURE_CORRECT_PLAYERID || uuidVersion < 0 || player.getUniqueId().version() == uuidVersion,
+        Preconditions.checkArgument(player instanceof Player || !Properties.ENSURE_CORRECT_PLAYER_ID || uuidVersion < 0 || player.getUniqueId().version() == uuidVersion,
                 "Invalid OfflinePlayer! " + player.getUniqueId() + " has version " + player.getUniqueId().version() + " and not server version " + uuidVersion + ". " +
                         "If you believe that is an error and your setup allows such UUIDs then set the ENSURE_CORRECT_PLAYERID config option to false.");
         return getOrCreateAccount(player.getUniqueId(), player.getName());
@@ -213,7 +213,7 @@ public class NameManager implements Listener {
             // no account with that shortname was found, try to get an offline player with that name
             OfflinePlayer offlinePlayer = plugin.getServer().getOfflinePlayer(name);
             if (offlinePlayer != null && offlinePlayer.getName() != null && offlinePlayer.getUniqueId() != null
-                    && (!Properties.ENSURE_CORRECT_PLAYERID || offlinePlayer.getUniqueId().version() == uuidVersion)) {
+                    && (!Properties.ENSURE_CORRECT_PLAYER_ID || offlinePlayer.getUniqueId().version() == uuidVersion)) {
                 account = storeUsername(new PlayerDTO(offlinePlayer.getUniqueId(), offlinePlayer.getName()));
             } else {
                 invalidPlayers.put(name.toLowerCase(Locale.ROOT), true);
@@ -285,15 +285,6 @@ public class NameManager implements Listener {
     }
 
     public boolean canUseName(Player player, Permission base, String name) {
-        if (ChestShopSign.isAdminShop(name)) {
-            if (Permission.has(player, Permission.ADMIN_SHOP)) {
-                return true;
-            } else {
-                ChestShop.logDebug(player.getName() + " cannot use the name " + name + " as it's an admin shop and they don't have the permission " + Permission.ADMIN_SHOP);
-                return false;
-            }
-        }
-
         if (Permission.otherName(player, base, name)) {
             return true;
         }

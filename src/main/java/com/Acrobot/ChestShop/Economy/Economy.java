@@ -1,6 +1,5 @@
 package com.Acrobot.ChestShop.Economy;
 
-import com.Acrobot.ChestShop.ChestShop;
 import com.Acrobot.ChestShop.Configuration.Properties;
 import com.Acrobot.ChestShop.Events.Economy.CurrencyAddEvent;
 import com.Acrobot.ChestShop.Events.Economy.CurrencyCheckEvent;
@@ -36,7 +35,7 @@ public class Economy {
     }
 
     public static boolean isOwnerEconomicallyActive(Inventory inventory) {
-        return !ChestShopSign.isAdminShop(inventory) || NameManager.getServerEconomyAccount() != null;
+        return NameManager.getServerEconomyAccount() != null;
     }
 
     /**

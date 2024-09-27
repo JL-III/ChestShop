@@ -393,7 +393,7 @@ public class InventoryUtil {
      * @return The max stacksize of the item stack's type or 64 if STACK_TO_64 is enabled
      */
     public static int getMaxStackSize(ItemStack item) {
-        return Properties.STACK_TO_64 ? 64 : item.getMaxStackSize();
+        return item.getMaxStackSize();
     }
 
     /**

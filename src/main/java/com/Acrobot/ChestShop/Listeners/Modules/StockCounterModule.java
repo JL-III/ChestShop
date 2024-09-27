@@ -48,8 +48,7 @@ public class StockCounterModule implements Listener {
             event.setSignLine(QUANTITY_LINE, Integer.toString(quantity));
         }
 
-        if (!Properties.USE_STOCK_COUNTER
-                || (Properties.FORCE_UNLIMITED_ADMIN_SHOP && ChestShopSign.isAdminShop(event.getSignLines()))) {
+        if (!Properties.USE_STOCK_COUNTER) {
             return;
         }
 
@@ -79,14 +78,12 @@ public class StockCounterModule implements Listener {
         }
 
         for (Sign shopSign : uBlock.findConnectedShopSigns(holder)) {
-            if (!Properties.USE_STOCK_COUNTER
-                    || (Properties.FORCE_UNLIMITED_ADMIN_SHOP && ChestShopSign.isAdminShop(shopSign))) {
+            if (!Properties.USE_STOCK_COUNTER) {
                 if (QuantityUtil.quantityLineContainsCounter(ChestShopSign.getQuantityLine(shopSign))) {
                     removeCounterFromQuantityLine(shopSign);
                 }
                 continue;
             }
-
             if (Properties.MAX_SHOP_AMOUNT > 99999) {
                 ChestShop.getBukkitLogger().warning("Stock counter cannot be used if MAX_SHOP_AMOUNT is over 5 digits");
                 if (QuantityUtil.quantityLineContainsCounter(ChestShopSign.getQuantityLine(shopSign))) {
@@ -94,7 +91,6 @@ public class StockCounterModule implements Listener {
                 }
                 return;
             }
-
             updateCounterOnQuantityLine(shopSign, event.getInventory());
         }
     }
@@ -114,10 +110,6 @@ public class StockCounterModule implements Listener {
             if (QuantityUtil.quantityLineContainsCounter(quantityLine)) {
                 removeCounterFromQuantityLine(event.getSign());
             }
-            return;
-        }
-
-        if (Properties.FORCE_UNLIMITED_ADMIN_SHOP && ChestShopSign.isAdminShop(event.getSign())) {
             return;
         }
 

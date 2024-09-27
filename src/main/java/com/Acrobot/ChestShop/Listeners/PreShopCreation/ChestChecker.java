@@ -3,7 +3,6 @@ package com.Acrobot.ChestShop.Listeners.PreShopCreation;
 import com.Acrobot.ChestShop.Events.tobesorted.PreShopCreationEvent;
 import com.Acrobot.ChestShop.Utils.Permission;
 import com.Acrobot.ChestShop.Utils.Security;
-import com.Acrobot.ChestShop.Signs.ChestShopSign;
 import com.Acrobot.ChestShop.Utils.uBlock;
 import org.bukkit.block.Container;
 import org.bukkit.entity.Player;
@@ -27,14 +26,10 @@ public class ChestChecker implements Listener {
 
     @EventHandler(priority = EventPriority.LOW)
     public void onPreShopCreation(PreShopCreationEvent event) {
-        String nameLine = ChestShopSign.getOwner(event.getSignLines());
 
         Container connectedContainer = uBlock.findConnectedContainer(event.getSign().getBlock());
-
         if (connectedContainer == null) {
-            if (!ChestShopSign.isAdminShop(nameLine)) {
-                event.setOutcome(NO_CHEST);
-            }
+            event.setOutcome(NO_CHEST);
             return;
         }
 

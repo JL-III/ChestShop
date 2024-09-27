@@ -43,8 +43,6 @@ public class LightweightChestProtection implements Listener {
         this.limitsModule = (LimitsModule) lwc.getModuleLoader().getModule(LimitsModule.class);
         this.limitsV2 = (LimitsV2) lwc.getModuleLoader().getModule(LimitsV2.class);
         try {
-            if (Properties.PROTECT_SIGN_WITH_LWC)
-                Protection.Type.valueOf(Properties.LWC_SIGN_PROTECTION_TYPE.name());
             if (Properties.PROTECT_CHEST_WITH_LWC)
                 Protection.Type.valueOf(Properties.LWC_CHEST_PROTECTION_TYPE.name());
         } catch (IllegalArgumentException e) {
@@ -55,9 +53,6 @@ public class LightweightChestProtection implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onPreShopCreation(PreShopCreationEvent event) {
         if (Properties.LWC_LIMITS_BLOCK_CREATION) {
-            if (!Properties.PROTECT_SIGN_WITH_LWC) {
-                return;
-            }
             if (isAtLimit(event.getPlayer(), event.getSign())) {
                 event.setOutcome(OTHER_BREAK);
                 return;
@@ -83,18 +78,9 @@ public class LightweightChestProtection implements Listener {
     @EventHandler
     public void onShopCreation(ShopCreatedEvent event) {
         Player player = event.getPlayer();
-        Sign sign = event.getSign();
         Container connectedContainer = event.getContainer();
 
         Messages.Message message = null;
-        if (Properties.PROTECT_SIGN_WITH_LWC) {
-            if (security.protect(player, sign.getBlock(), event.getOwnerAccount() != null ? event.getOwnerAccount().getUuid() : player.getUniqueId(), Properties.LWC_SIGN_PROTECTION_TYPE)) {
-                message = Messages.PROTECTED_SHOP_SIGN;
-            } else {
-                message = Messages.NOT_ENOUGH_PROTECTIONS;
-            }
-        }
-
         if (Properties.PROTECT_CHEST_WITH_LWC && connectedContainer != null) {
             if (security.protect(player, connectedContainer.getBlock(), event.getOwnerAccount() != null ? event.getOwnerAccount().getUuid() : player.getUniqueId(), Properties.LWC_CHEST_PROTECTION_TYPE)) {
                 message = Messages.PROTECTED_SHOP;
@@ -110,7 +96,7 @@ public class LightweightChestProtection implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onProtectionCheck(ProtectionCheckEvent event) {
-        if (event.getResult() == Event.Result.DENY && !Properties.TURN_OFF_DEFAULT_PROTECTION_WHEN_PROTECTED_EXTERNALLY) {
+        if (event.getResult() == Event.Result.DENY) {
             return;
         }
 
@@ -127,8 +113,6 @@ public class LightweightChestProtection implements Listener {
                 ? !lwc.canAdminProtection(player, protection)
                 : !lwc.canAccessProtection(player, protection)) {
             event.setResult(Event.Result.DENY);
-        } else if (Properties.TURN_OFF_DEFAULT_PROTECTION_WHEN_PROTECTED_EXTERNALLY) {
-            event.setResult(Event.Result.ALLOW);
         }
     }
 
@@ -180,7 +164,7 @@ public class LightweightChestProtection implements Listener {
                 try {
                     type = Protection.Type.valueOf("DISPLAY");
                 } catch (IllegalArgumentException e) {
-                    // Not supported
+                    e.printStackTrace();
                     return;
                 }
                 break;

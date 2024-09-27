@@ -23,7 +23,7 @@ public class ShopValidator implements Listener {
             return;
         }
 
-        if (!ChestShopSign.isAdminShop(event.getSign()) && event.getOwnerInventory() == null) {
+        if (event.getOwnerInventory() == null) {
             event.setCancelled(INVALID_SHOP);
         }
     }

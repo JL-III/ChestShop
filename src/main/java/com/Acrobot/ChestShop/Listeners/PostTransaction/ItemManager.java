@@ -40,14 +40,8 @@ public class ItemManager implements Listener {
     }
 
     private static void transferItems(Inventory sourceInventory, Inventory targetInventory, ItemStack[] items) {
-        if (Properties.STACK_TO_64) {
-            for (ItemStack item : items) {
-                InventoryUtil.transfer(item, sourceInventory, targetInventory, 64);
-            }
-        } else {
-            for (ItemStack item : items) {
-                InventoryUtil.transfer(item, sourceInventory, targetInventory);
-            }
+        for (ItemStack item : items) {
+            InventoryUtil.transfer(item, sourceInventory, targetInventory);
         }
         update(sourceInventory.getHolder());
         update(targetInventory.getHolder());

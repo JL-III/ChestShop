@@ -80,9 +80,7 @@ public class ShopInfoListener implements Listener {
                     "prices", pricesLine,
                     "quantity", String.valueOf(amount)
             );
-            if (!Properties.SHOWITEM_MESSAGE) {
-                Messages.shopinfo.send(event.getSender(), replacementMap);
-            }
+            Messages.shopinfo.send(event.getSender(), replacementMap);
 
 
             BigDecimal buyPrice = PriceUtil.getExactBuyPrice(pricesLine);
