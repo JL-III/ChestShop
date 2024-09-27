@@ -33,7 +33,7 @@ import java.util.List;
 import static com.Acrobot.Breeze.Utils.ImplementationAdapter.getState;
 import static com.Acrobot.Breeze.Utils.BlockUtil.getAttachedBlock;
 import static com.Acrobot.Breeze.Utils.BlockUtil.isSign;
-import static com.Acrobot.ChestShop.todo.Permission.OTHER_NAME_DESTROY;
+import static com.Acrobot.ChestShop.Utils.Permission.OTHER_NAME_DESTROY;
 
 /**
  * @author Acrobot

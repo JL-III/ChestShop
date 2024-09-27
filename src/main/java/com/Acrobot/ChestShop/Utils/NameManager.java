@@ -10,7 +10,6 @@ import com.Acrobot.ChestShop.Database.Account;
 import com.Acrobot.ChestShop.Database.DaoCreator;
 import com.Acrobot.ChestShop.Events.tobesorted.AccountAccessEvent;
 import com.Acrobot.ChestShop.Events.tobesorted.AccountQueryEvent;
-import com.Acrobot.ChestShop.todo.Permission;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
 import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;
@@ -201,7 +200,7 @@ public class NameManager implements Listener {
      * Get the information from the last time a player logged in that previously used the (shortened) name
      *
      * @param name The name of the player to get the last account for
-     * @param searchOfflinePlayer Whether or not to search the offline players too
+     * @param searchOfflinePlayer Whether to search the offline players too
      * @return The last account or <tt>null</tt> if none was found
      * @throws IllegalArgumentException if the username is empty
      */

@@ -3,7 +3,7 @@ package com.Acrobot.ChestShop.Listeners.PreShopCreation;
 import com.Acrobot.ChestShop.Events.Protection.BuildPermissionEvent;
 import com.Acrobot.ChestShop.Events.tobesorted.PreShopCreationEvent;
 import com.Acrobot.ChestShop.Utils.uBlock;
-import com.Acrobot.ChestShop.todo.Security;
+import com.Acrobot.ChestShop.Utils.Security;
 import org.bukkit.Location;
 import org.bukkit.block.Container;
 import org.bukkit.entity.Player;

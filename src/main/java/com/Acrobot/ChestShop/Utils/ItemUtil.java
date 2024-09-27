@@ -5,7 +5,6 @@ import com.Acrobot.Breeze.Utils.MaterialUtil;
 import com.Acrobot.ChestShop.Events.tobesorted.ItemParseEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,12 +13,6 @@ import static com.Acrobot.Breeze.Utils.MaterialUtil.MAXIMUM_SIGN_WIDTH;
 import static com.Acrobot.Breeze.Utils.StringUtil.getMinecraftStringWidth;
 
 public class ItemUtil {
-    private final Plugin plugin;
-
-    public ItemUtil(Plugin plugin) {
-        this.plugin = plugin;
-    }
-
     /**
      * Get a list with item information
      *
@@ -34,7 +27,6 @@ public class ItemUtil {
         for (ItemStack item : mergedItems) {
             itemText.add(item.getAmount() + " " + getName(item));
         }
-
         return String.join(", ", itemText);
     }
 

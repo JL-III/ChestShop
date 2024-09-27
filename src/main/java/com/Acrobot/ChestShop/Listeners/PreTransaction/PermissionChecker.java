@@ -2,7 +2,7 @@ package com.Acrobot.ChestShop.Listeners.PreTransaction;
 
 import com.Acrobot.ChestShop.Events.tobesorted.PreTransactionEvent;
 import com.Acrobot.ChestShop.Events.tobesorted.TransactionEvent;
-import com.Acrobot.ChestShop.todo.Permission;
+import com.Acrobot.ChestShop.Utils.Permission;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

@@ -5,7 +5,7 @@ import com.Acrobot.ChestShop.Configuration.Properties;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
 import com.Acrobot.ChestShop.Utils.NameManager;
 import com.Acrobot.ChestShop.Utils.uBlock;
-import com.Acrobot.ChestShop.todo.Permission;
+import com.Acrobot.ChestShop.Utils.Permission;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;

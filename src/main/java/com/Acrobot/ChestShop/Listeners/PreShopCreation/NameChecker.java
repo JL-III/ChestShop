@@ -13,7 +13,7 @@ import org.bukkit.event.Listener;
 
 import java.util.logging.Level;
 
-import static com.Acrobot.ChestShop.todo.Permission.OTHER_NAME_CREATE;
+import static com.Acrobot.ChestShop.Utils.Permission.OTHER_NAME_CREATE;
 import static com.Acrobot.ChestShop.Signs.ChestShopSign.NAME_LINE;
 import static com.Acrobot.ChestShop.Events.tobesorted.PreShopCreationEvent.CreationOutcome.UNKNOWN_PLAYER;
 

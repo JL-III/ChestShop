@@ -8,7 +8,7 @@ import com.Acrobot.ChestShop.Events.Protection.ProtectBlockEvent;
 import com.Acrobot.ChestShop.Events.Protection.ProtectionCheckEvent;
 import com.Acrobot.ChestShop.Events.tobesorted.ShopCreatedEvent;
 import com.Acrobot.ChestShop.Events.tobesorted.ShopDestroyedEvent;
-import com.Acrobot.ChestShop.todo.Security;
+import com.Acrobot.ChestShop.Utils.Security;
 import com.Acrobot.ChestShop.Utils.uBlock;
 import com.griefcraft.lwc.LWC;
 import com.griefcraft.model.Protection;

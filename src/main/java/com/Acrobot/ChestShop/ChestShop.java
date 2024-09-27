@@ -15,9 +15,9 @@ import com.Acrobot.ChestShop.Signs.ChestShopSign;
 import com.Acrobot.ChestShop.Utils.ItemUtil;
 import com.Acrobot.ChestShop.Utils.NameManager;
 import com.Acrobot.ChestShop.Utils.uBlock;
-import com.Acrobot.ChestShop.todo.Dependencies;
-import com.Acrobot.ChestShop.todo.Permission;
-import com.Acrobot.ChestShop.todo.Security;
+import com.Acrobot.ChestShop.Utils.Dependencies;
+import com.Acrobot.ChestShop.Utils.Permission;
+import com.Acrobot.ChestShop.Utils.Security;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -84,7 +84,7 @@ public class ChestShop extends JavaPlugin implements Listener {
         chestShopSign = new ChestShopSign();
         eventManager = new EventManager(getServer().getPluginManager(), this, chestShopSign, nameManager);
         security = new Security(this);
-        itemUtil = new ItemUtil(this);
+        itemUtil = new ItemUtil();
         itemInfo = new ItemInfo(this, itemUtil);
         dependencies = new Dependencies(this, eventManager, new VaultListener(this));
     }
@@ -116,7 +116,7 @@ public class ChestShop extends JavaPlugin implements Listener {
 
         itemDatabase = new ItemDatabase();
 
-        if (!dependencies.loadPlugins()) {
+        if (!dependencies.loadEconomy()) {
             getServer().getPluginManager().disablePlugin(this);
         }
         eventManager.registerEvents();

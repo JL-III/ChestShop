@@ -23,6 +23,7 @@ import com.Acrobot.ChestShop.Listeners.ShopInfoListener;
 import com.Acrobot.ChestShop.Listeners.ShopRemoval.ShopRefundListener;
 import com.Acrobot.ChestShop.Listeners.ShopRemoval.ShopRemovalLogger;
 import com.Acrobot.ChestShop.Listeners.SignParseListener;
+import com.Acrobot.ChestShop.Plugins.LightweightChestProtection;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
 import com.Acrobot.ChestShop.Signs.RestrictedSign;
 import com.Acrobot.ChestShop.Utils.NameManager;
@@ -72,6 +73,7 @@ public class EventManager {
         registerEvent(new GarbageTextListener());
 
         registerEvent(new RestrictedSign(chestShopSign, nameManager));
+        registerEvent(new LightweightChestProtection(plugin.getSecurity()));
 
         if (!Properties.TURN_OFF_HOPPER_PROTECTION) {
             registerEvent(new ItemMoveListener());

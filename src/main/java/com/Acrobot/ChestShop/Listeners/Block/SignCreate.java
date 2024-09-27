@@ -17,7 +17,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.plugin.Plugin;
 
-import static com.Acrobot.ChestShop.todo.Permission.OTHER_NAME_DESTROY;
+import static com.Acrobot.ChestShop.Utils.Permission.OTHER_NAME_DESTROY;
 
 /**
  * @author Acrobot

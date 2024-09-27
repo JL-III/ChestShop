@@ -4,7 +4,7 @@ import com.Acrobot.Breeze.Utils.BlockUtil;
 import com.Acrobot.ChestShop.Configuration.Messages;
 import com.Acrobot.ChestShop.Events.tobesorted.PreTransactionEvent;
 import com.Acrobot.ChestShop.Utils.NameManager;
-import com.Acrobot.ChestShop.todo.Permission;
+import com.Acrobot.ChestShop.Utils.Permission;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -18,7 +18,7 @@ import org.bukkit.event.block.SignChangeEvent;
 
 import static com.Acrobot.Breeze.Utils.ImplementationAdapter.getState;
 import static com.Acrobot.ChestShop.Events.tobesorted.PreTransactionEvent.TransactionOutcome.SHOP_IS_RESTRICTED;
-import static com.Acrobot.ChestShop.todo.Permission.ADMIN;
+import static com.Acrobot.ChestShop.Utils.Permission.ADMIN;
 
 /**
  * @author Acrobot

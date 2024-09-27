@@ -1,6 +1,5 @@
 package com.Acrobot.ChestShop.Commands;
 
-import com.Acrobot.ChestShop.ChestShop;
 import com.Acrobot.ChestShop.Configuration.Messages;
 import com.Acrobot.ChestShop.Events.tobesorted.ShopInfoEvent;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
@@ -13,6 +12,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Phoenix616
@@ -24,7 +24,8 @@ public class ShopInfo implements CommandExecutor {
         this.plugin = plugin;
     }
 
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    @Override
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (sender instanceof Player) {
             Block target = ((Player) sender).getTargetBlockExact(5);
             if (target != null) {

@@ -7,6 +7,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,7 +19,8 @@ import java.util.UUID;
 public class AccessToggle implements CommandExecutor {
     private static final Set<UUID> toggledPlayers = new HashSet<>();
 
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    @Override
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (!(sender instanceof Player)) {
             return false;
         }

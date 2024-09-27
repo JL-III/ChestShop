@@ -8,7 +8,7 @@ import com.Acrobot.ChestShop.Events.Economy.CurrencySubtractEvent;
 import com.Acrobot.ChestShop.Events.tobesorted.PreShopCreationEvent;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
 import com.Acrobot.ChestShop.Utils.NameManager;
-import com.Acrobot.ChestShop.todo.Permission;
+import com.Acrobot.ChestShop.Utils.Permission;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -17,7 +17,7 @@ import org.bukkit.plugin.Plugin;
 
 import java.math.BigDecimal;
 
-import static com.Acrobot.ChestShop.todo.Permission.NOFEE;
+import static com.Acrobot.ChestShop.Utils.Permission.NOFEE;
 
 /**
  * @author Acrobot

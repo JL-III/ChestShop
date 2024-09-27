@@ -3,7 +3,7 @@ package com.Acrobot.Breeze.Utils;
 import org.bukkit.Location;
 
 /**
- * An utility class providing various methods to deal with locations
+ * A utility class providing various methods to deal with locations
  *
  * @author Acrobot
  */

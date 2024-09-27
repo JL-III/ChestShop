@@ -10,7 +10,7 @@ import com.Acrobot.ChestShop.Database.Account;
 import com.Acrobot.ChestShop.Events.tobesorted.AccountQueryEvent;
 import com.Acrobot.ChestShop.Utils.NameManager;
 import com.Acrobot.ChestShop.Utils.uBlock;
-import com.Acrobot.ChestShop.todo.Permission;
+import com.Acrobot.ChestShop.Utils.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.block.*;
 import org.bukkit.entity.Player;
