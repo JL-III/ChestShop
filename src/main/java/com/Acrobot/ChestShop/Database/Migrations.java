@@ -4,12 +4,15 @@ import com.Acrobot.ChestShop.ChestShop;
 import com.j256.ormlite.dao.CloseableIterator;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.GenericRawResults;
+import org.bukkit.configuration.file.YamlConfiguration;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.UUID;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * File handling the database migrations
@@ -146,5 +149,36 @@ public class Migrations {
             ChestShop.getBukkitLogger().log(Level.SEVERE, "Error while migrating database to v4", e);
             return false;
         }
+    }
+
+    public static boolean handleMigrations(Logger logger, File versionFile) {
+        YamlConfiguration previousVersion = YamlConfiguration.loadConfiguration(versionFile);
+
+        if (previousVersion.get("version") == null) {
+            previousVersion.set("version", Migrations.CURRENT_DATABASE_VERSION);
+
+            try {
+                previousVersion.save(versionFile);
+            } catch (IOException e) {
+                logger.log(java.util.logging.Level.SEVERE, "Unable to save new database version " + Migrations.CURRENT_DATABASE_VERSION, e);
+            }
+        }
+
+        int lastVersion = previousVersion.getInt("version");
+        int newVersion = Migrations.migrate(lastVersion);
+
+        if (newVersion == -1) {
+            logger.log(java.util.logging.Level.SEVERE, "Error while migrating! ChestShop can not run with a broken/outdated database...");
+            return false;
+        } else if (lastVersion != newVersion) {
+            previousVersion.set("version", newVersion);
+
+            try {
+                previousVersion.save(versionFile);
+            } catch (IOException e) {
+                logger.log(java.util.logging.Level.SEVERE, "Unable to save new database version " + newVersion, e);
+            }
+        }
+        return true;
     }
 }

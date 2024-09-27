@@ -77,29 +77,13 @@ public class Dependencies implements Listener {
                 }
             }
         }
-
-        if (loadEconomy()) {
-            Map<String, Map<String, Integer>> map = versions.entrySet().stream()
-                    .map(e -> new AbstractMap.SimpleEntry<String, Map<String, Integer>>(e.getKey(), ImmutableMap.of(e.getValue(), 1)))
-                    .collect(Collectors.toMap(
-                            AbstractMap.SimpleEntry::getKey,
-                            AbstractMap.SimpleEntry::getValue
-                    ));
-            com.Acrobot.ChestShop.ChestShop.getMetrics().addCustomChart(new DrilldownPie("dependencies", () -> map));
-            return true;
-        }
-        return false;
+        return loadEconomy();
     }
 
     private static boolean loadEconomy() {
         String plugin = "none";
 
         EconomyAdapter economy = null;
-
-        if(Bukkit.getPluginManager().getPlugin("Reserve") != null) {
-            plugin = "Reserve";
-            economy = ReserveListener.prepareListener();
-        }
 
         if(Bukkit.getPluginManager().getPlugin("Vault") != null) {
             plugin = "Vault";
@@ -110,9 +94,6 @@ public class Dependencies implements Listener {
             com.Acrobot.ChestShop.ChestShop.getBukkitLogger().severe("No Economy adapter found! You need to install either Vault or Reserve!");
             return false;
         }
-
-        com.Acrobot.ChestShop.ChestShop.getMetrics().addCustomChart(com.Acrobot.ChestShop.ChestShop.createStaticDrilldownStat("economyAdapter", plugin, Bukkit.getPluginManager().getPlugin(plugin).getDescription().getVersion()));
-        com.Acrobot.ChestShop.ChestShop.getMetrics().addCustomChart(com.Acrobot.ChestShop.ChestShop.createStaticDrilldownStat("economyPlugin", economy.getProviderInfo().getName(), economy.getProviderInfo().getVersion()));
 
         com.Acrobot.ChestShop.ChestShop.registerListener(economy);
         com.Acrobot.ChestShop.ChestShop.getBukkitLogger().info(plugin + " loaded!");
