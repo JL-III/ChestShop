@@ -11,12 +11,7 @@ import com.Acrobot.ChestShop.Listeners.Economy.VaultListener;
 import com.Acrobot.ChestShop.Logging.FileFormatter;
 import com.Acrobot.ChestShop.Metadata.ItemDatabase;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
-import com.Acrobot.ChestShop.Utils.ItemUtil;
-import com.Acrobot.ChestShop.Utils.NameManager;
-import com.Acrobot.ChestShop.Utils.uBlock;
-import com.Acrobot.ChestShop.Utils.Dependencies;
-import com.Acrobot.ChestShop.Utils.Permission;
-import com.Acrobot.ChestShop.Utils.Security;
+import com.Acrobot.ChestShop.Utils.*;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -98,7 +93,6 @@ public class ChestShop extends JavaPlugin implements Listener {
 
         audiences = BukkitAudiences.create(this);
         turnOffDatabaseLogging();
-        File versionFile = loadFile("version");
         registerCommand("iteminfo", itemInfo, Permission.ITEMINFO);
         registerCommand("shopinfo", new ShopInfo(this), Permission.SHOPINFO);
         registerCommand("csVersion", new Version(this), Permission.ADMIN);

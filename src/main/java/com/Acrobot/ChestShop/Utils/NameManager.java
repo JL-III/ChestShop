@@ -10,7 +10,6 @@ import com.Acrobot.ChestShop.Database.Account;
 import com.Acrobot.ChestShop.Database.DaoCreator;
 import com.Acrobot.ChestShop.Events.tobesorted.AccountAccessEvent;
 import com.Acrobot.ChestShop.Events.tobesorted.AccountQueryEvent;
-import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.SelectArg;
@@ -326,7 +325,7 @@ public class NameManager implements Listener {
             }
         }
         try {
-            DaoCreator.getDaoAndCreateTable(Account.class);
+            accounts = DaoCreator.getDaoAndCreateTable(Account.class);
         } catch (SQLException e) {
             ChestShop.getBukkitLogger().log(Level.SEVERE, "Error while trying to setup accounts", e);
         }
