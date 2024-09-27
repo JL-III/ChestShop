@@ -3,6 +3,7 @@ package com.Acrobot.ChestShop.Plugins;
 import com.Acrobot.ChestShop.ChestShop;
 import com.Acrobot.ChestShop.Events.ItemParseEvent;
 import com.Acrobot.ChestShop.Events.ItemStringQueryEvent;
+import com.jojodmo.itembridge.ItemBridge;
 import com.jojodmo.itembridge.ItemBridgeKey;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -17,12 +18,12 @@ import static com.Acrobot.Breeze.Utils.StringUtil.getMinecraftStringWidth;
  *
  * @author Phoenix616
  */
-public class ItemBridge implements Listener {
+public class ItemBridgeListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOW)
     public void onItemParse(ItemParseEvent event) {
         if (event.getItem() == null) {
-            ItemStack item = com.jojodmo.itembridge.ItemBridge.getItemStack(event.getItemString());
+            ItemStack item = ItemBridge.getItemStack(event.getItemString());
             if (item != null) {
                 event.setItem(item);
             }
@@ -31,7 +32,7 @@ public class ItemBridge implements Listener {
 
     @EventHandler(priority = EventPriority.LOW)
     public void onItemStringQuery(ItemStringQueryEvent event) {
-        ItemBridgeKey key = com.jojodmo.itembridge.ItemBridge.getItemKey(event.getItem());
+        ItemBridgeKey key = ItemBridge.getItemKey(event.getItem());
         // If namespace is "minecraft" then we ignore it and use our own logic
         if (key != null && !"minecraft".equalsIgnoreCase(key.getNamespace())) {
             String code = key.toString();

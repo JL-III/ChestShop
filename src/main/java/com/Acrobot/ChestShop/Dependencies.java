@@ -141,29 +141,19 @@ public class Dependencies implements Listener {
                 listener = new LightweightChestProtection();
                 break;
             case Lockette:
-                listener = new Lockette();
+                listener = new LocketteListener();
                 break;
             case LockettePro:
-                listener = new LockettePro();
+                listener = new LocketteProListener();
                 break;
             case Deadbolt:
-                listener = new Deadbolt();
+                listener = new DeadboltListener();
                 break;
             case SimpleChestLock:
                 listener = SimpleChestLock.getSimpleChestLock(plugin);
                 break;
             case BlockLocker:
                 listener = new BlockLocker();
-                break;
-            case Residence:
-                if (plugin.getDescription().getVersion().startsWith("2")) {
-                    ChestShop.getBukkitLogger().severe("You are using an old version of Residence! " +
-                            "Please update to the newest one, which supports UUIDs: http://ci.drtshock.net/job/Residence/");
-
-                    break;
-                }
-
-                listener = new ResidenceChestProtection();
                 break;
 
             //Terrain protection plugins
@@ -184,32 +174,9 @@ public class Dependencies implements Listener {
 
                 break;
 
-            case GriefPrevention:
-                if (!Properties.GRIEFPREVENTION_INTEGRATION) {
-                    return false;
-                }
-                listener = new GriefPrevenentionBuilding(plugin);
-                break;
-
-            case RedProtect:
-                if (!Properties.REDPROTECT_INTEGRATION) {
-                    return false;
-                }
-                listener = new RedProtectBuilding(plugin);
-                break;
-
             //Other plugins
-            case Heroes:
-                Heroes heroes = Heroes.getHeroes(plugin);
-
-                if (heroes == null) {
-                    return false;
-                }
-
-                listener = heroes;
-                break;
             case ItemBridge:
-                listener = new ItemBridge();
+                listener = new ItemBridgeListener();
                 break;
             case ShowItem:
                 MaterialUtil.Show.initialize(plugin);

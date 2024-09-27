@@ -45,8 +45,8 @@ import java.util.zip.ZipFile;
 
 public final class Updater {
 
-    private Plugin plugin;
-    private UpdateType type;
+    private final Plugin plugin;
+    private final UpdateType type;
     private String versionName;
     private String versionLink;
     private String versionHash;
@@ -56,10 +56,10 @@ public final class Updater {
     private boolean announce; // Whether to announce file downloads
 
     private URL url; // Connecting to RSS
-    private File file; // The plugin's file
+    private final File file; // The plugin's file
     private Thread thread; // Updater thread
 
-    private String id; // Project's Curse ID
+    private final String id; // Project's Curse ID
     private String apiKey = null; // Modrinth API key
     private static final String TITLE_VALUE = "version_number"; // Gets remote version
     private static final String FILES_VALUE = "files"; // Gets all files associated with that version

@@ -41,10 +41,10 @@ public class NameManager implements Listener {
 
     private static Dao<Account, String> accounts;
 
-    private static SimpleCache<String, Account> usernameToAccount = new SimpleCache<>(Properties.CACHE_SIZE);
-    private static SimpleCache<UUID, Account> uuidToAccount = new SimpleCache<>(Properties.CACHE_SIZE);
-    private static SimpleCache<String, Account> shortToAccount = new SimpleCache<>(Properties.CACHE_SIZE);
-    private static SimpleCache<String, Boolean> invalidPlayers = new SimpleCache<>(Properties.CACHE_SIZE);
+    private static final SimpleCache<String, Account> usernameToAccount = new SimpleCache<>(Properties.CACHE_SIZE);
+    private static final SimpleCache<UUID, Account> uuidToAccount = new SimpleCache<>(Properties.CACHE_SIZE);
+    private static final SimpleCache<String, Account> shortToAccount = new SimpleCache<>(Properties.CACHE_SIZE);
+    private static final SimpleCache<String, Boolean> invalidPlayers = new SimpleCache<>(Properties.CACHE_SIZE);
 
     private static Account adminAccount;
     private static Account serverEconomyAccount;

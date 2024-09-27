@@ -44,7 +44,6 @@ import com.Acrobot.ChestShop.Logging.FileFormatter;
 import com.Acrobot.ChestShop.Metadata.ItemDatabase;
 import com.Acrobot.ChestShop.Signs.RestrictedSign;
 import com.Acrobot.ChestShop.UUIDs.NameManager;
-import com.Acrobot.ChestShop.Updater.JenkinsBuildsNotifier;
 import com.Acrobot.ChestShop.Updater.Updater;
 
 import com.google.common.collect.ImmutableMap;
@@ -565,8 +564,6 @@ public class ChestShop extends JavaPlugin {
         if (Properties.TURN_OFF_DEV_UPDATE_NOTIFIER) {
             return;
         }
-
-        new JenkinsBuildsNotifier(this, PROJECT_JENKINS_JOB_URL);
     }
 
     ///////////////////////////////////////////////////////////////////////////////

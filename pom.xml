@@ -488,42 +488,42 @@
             </dependencies>
         </profile>
 
-        <profile>
-            <id>spigot</id>
-            <activation>
-                <property>
-                    <name>testprofile</name>
-                    <value>spigot</value>
-                </property>
-            </activation>
-            <repositories>
-                <repository>
-                    <id>spigotmc-repo</id>
-                    <url>https://hub.spigotmc.org/nexus/content/groups/public</url>
-                </repository>
-            </repositories>
-            <dependencies>
-                <dependency>
-                    <groupId>org.spigotmc</groupId>
-                    <artifactId>spigot-api</artifactId>
-                    <version>${bukkit.dependency.version}</version>
-                    <scope>provided</scope>
-                </dependency>
-            </dependencies>
-            <build>
-                <finalName>${project.name}-Spigot</finalName>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-compiler-plugin</artifactId>
-                        <configuration>
-                            <excludes>
-                                <exclude>**/Paper*.java</exclude>
-                            </excludes>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
+<!--        <profile>-->
+<!--            <id>spigot</id>-->
+<!--            <activation>-->
+<!--                <property>-->
+<!--                    <name>testprofile</name>-->
+<!--                    <value>spigot</value>-->
+<!--                </property>-->
+<!--            </activation>-->
+<!--            <repositories>-->
+<!--                <repository>-->
+<!--                    <id>spigotmc-repo</id>-->
+<!--                    <url>https://hub.spigotmc.org/nexus/content/groups/public</url>-->
+<!--                </repository>-->
+<!--            </repositories>-->
+<!--            <dependencies>-->
+<!--                <dependency>-->
+<!--                    <groupId>org.spigotmc</groupId>-->
+<!--                    <artifactId>spigot-api</artifactId>-->
+<!--                    <version>${bukkit.dependency.version}</version>-->
+<!--                    <scope>provided</scope>-->
+<!--                </dependency>-->
+<!--            </dependencies>-->
+<!--            <build>-->
+<!--                <finalName>${project.name}-Spigot</finalName>-->
+<!--                <plugins>-->
+<!--                    <plugin>-->
+<!--                        <artifactId>maven-compiler-plugin</artifactId>-->
+<!--                        <configuration>-->
+<!--                            <excludes>-->
+<!--                                <exclude>**/Paper*.java</exclude>-->
+<!--                            </excludes>-->
+<!--                        </configuration>-->
+<!--                    </plugin>-->
+<!--                </plugins>-->
+<!--            </build>-->
+<!--        </profile>-->
 
         <profile>
             <id>backwards</id>
@@ -535,15 +535,15 @@
             </activation>
             <repositories>
                 <repository>
-                    <id>paper-repo</id>
+                    <id>papermc</id>
                     <url>https://repo.papermc.io/repository/maven-public/</url>
                 </repository>
             </repositories>
             <dependencies>
                 <dependency>
-                    <groupId>com.destroystokyo.paper</groupId>
+                    <groupId>io.papermc.paper</groupId>
                     <artifactId>paper-api</artifactId>
-                    <version>1.13.2-R0.1-SNAPSHOT</version>
+                    <version>1.20.6-R0.1-SNAPSHOT</version>
                     <scope>provided</scope>
                 </dependency>
             </dependencies>
