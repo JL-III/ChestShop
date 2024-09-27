@@ -26,6 +26,7 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.inventory.meta.Repairable;
 import org.bukkit.inventory.meta.TropicalFishBucketMeta;
 import org.bukkit.map.MapView;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 
 import java.util.Map;
@@ -51,7 +52,13 @@ import static com.Acrobot.ChestShop.Configuration.Messages.iteminfo_tropical_fis
  * @author Acrobot
  */
 public class ItemInfoListener implements Listener {
-    public ItemInfoListener(EventManager eventManager) {
+    private final Plugin plugin;
+    private final ItemInfo itemInfo;
+
+    public ItemInfoListener(Plugin plugin, EventManager eventManager, ItemInfo itemInfo) {
+        this.plugin = plugin;
+        this.itemInfo = itemInfo;
+
         try {
             Class.forName("org.bukkit.inventory.meta.AxolotlBucketMeta");
             eventManager.registerEvent(new Listener() {
@@ -90,8 +97,8 @@ public class ItemInfoListener implements Listener {
                         if (meta instanceof CrossbowMeta && ((CrossbowMeta) meta).hasChargedProjectiles()) {
                             iteminfo_crossbow_projectiles.send(event.getSender());
                             for (ItemStack chargedProjectile : ((CrossbowMeta) meta).getChargedProjectiles()) {
-                                ItemInfo.sendItemName(event.getSender(), chargedProjectile, iteminfo_crossbow_projectile);
-                                ChestShop.callEvent(new ItemInfoEvent(event.getSender(), chargedProjectile));
+                                itemInfo.sendItemName(event.getSender(), chargedProjectile, iteminfo_crossbow_projectile);
+                                plugin.getServer().getPluginManager().callEvent(new ItemInfoEvent(event.getSender(), chargedProjectile));
                                 event.getSender().sendMessage(ChatColor.GRAY + "---");
                             }
                         }

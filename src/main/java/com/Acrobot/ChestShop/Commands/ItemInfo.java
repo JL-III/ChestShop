@@ -17,9 +17,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 
 import java.util.Map;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static com.Acrobot.ChestShop.Configuration.Messages.iteminfo;
 import static com.Acrobot.ChestShop.Configuration.Messages.iteminfo_shopname;
@@ -28,6 +30,14 @@ import static com.Acrobot.ChestShop.Configuration.Messages.iteminfo_shopname;
  * @author Acrobot
  */
 public class ItemInfo implements CommandExecutor {
+    private final Plugin plugin;
+    private final ItemUtil itemUtil;
+
+    public ItemInfo(Plugin plugin, ItemUtil itemUtil) {
+        this.plugin = plugin;
+        this.itemUtil = itemUtil;
+    }
+
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         ItemStack item;
 
@@ -51,28 +61,28 @@ public class ItemInfo implements CommandExecutor {
         if (!sendItemName(sender, item, Messages.iteminfo_fullname)) return true;
 
         try {
-            iteminfo_shopname.send(sender, "item", ItemUtil.getSignName(item));
+            iteminfo_shopname.send(sender, "item", itemUtil.getSignName(item));
         } catch (IllegalArgumentException e) {
             sender.sendMessage(ChatColor.RED + "Error while generating shop sign name. Please contact an admin or take a look at the console/log!");
-            ChestShop.getPlugin().getLogger().log(Level.SEVERE, "Error while generating shop sign item name", e);
+            plugin.getLogger().log(Level.SEVERE, "Error while generating shop sign item name", e);
             return true;
         }
 
         ItemInfoEvent event = new ItemInfoEvent(sender, item);
-        ChestShop.callEvent(event);
+        plugin.getServer().getPluginManager().callEvent(event);
 
         return true;
     }
 
-    public static boolean sendItemName(CommandSender sender, ItemStack item, Messages.Message message) {
+    public boolean sendItemName(CommandSender sender, ItemStack item, Messages.Message message) {
         try {
-            Map<String, String> replacementMap = ImmutableMap.of("item", ItemUtil.getName(item));
+            Map<String, String> replacementMap = ImmutableMap.of("item", itemUtil.getName(item));
             if (!Properties.SHOWITEM_MESSAGE || !(sender instanceof Player)) {
                 message.send(sender, replacementMap);
             }
         } catch (IllegalArgumentException e) {
             sender.sendMessage(ChatColor.RED + "Error while generating full name. Please contact an admin or take a look at the console/log!");
-            ChestShop.getPlugin().getLogger().log(Level.SEVERE, "Error while generating full item name", e);
+            plugin.getLogger().log(Level.SEVERE, "Error while generating full item name", e);
             return false;
         }
         return true;

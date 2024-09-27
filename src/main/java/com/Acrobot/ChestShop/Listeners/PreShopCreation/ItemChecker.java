@@ -28,9 +28,14 @@ import static com.Acrobot.ChestShop.Signs.ChestShopSign.AUTOFILL_CODE;
  * @author Acrobot
  */
 public class ItemChecker implements Listener {
+    private final ItemUtil itemUtil;
+
+    public ItemChecker(ItemUtil itemUtil) {
+        this.itemUtil = itemUtil;
+    }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public static void onPreShopCreation(PreShopCreationEvent event) {
+    public void onPreShopCreation(PreShopCreationEvent event) {
         String itemCode = ChestShopSign.getItem(event.getSignLines());
 
         ItemParseEvent parseEvent = new ItemParseEvent(itemCode);
@@ -60,7 +65,7 @@ public class ItemChecker implements Listener {
             }
         }
 
-        itemCode = ItemUtil.getSignName(item);
+        itemCode = itemUtil.getSignName(item);
 
         if (StringUtil.getMinecraftStringWidth(itemCode) > MAXIMUM_SIGN_WIDTH) {
             event.setOutcome(INVALID_ITEM);

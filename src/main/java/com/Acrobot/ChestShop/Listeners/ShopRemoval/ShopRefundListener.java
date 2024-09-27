@@ -27,8 +27,16 @@ import static com.Acrobot.ChestShop.Signs.ChestShopSign.AUTOFILL_CODE;
  * @author Acrobot
  */
 public class ShopRefundListener implements Listener {
+    private final ChestShop plugin;
+    private final Economy economy;
+
+    public ShopRefundListener(ChestShop plugin, Economy economy) {
+        this.plugin = plugin;
+        this.economy = economy;
+    }
+
     @EventHandler(priority = EventPriority.MONITOR)
-    public static void onShopDestroy(ShopDestroyedEvent event) {
+    public void onShopDestroy(ShopDestroyedEvent event) {
         BigDecimal refundPrice = Properties.SHOP_REFUND_PRICE;
 
         if (event.getDestroyer() == null || Permission.has(event.getDestroyer(), NOFEE) || refundPrice.compareTo(BigDecimal.ZERO) == 0) {
@@ -47,16 +55,16 @@ public class ShopRefundListener implements Listener {
         }
 
         CurrencyAddEvent currencyEvent = new CurrencyAddEvent(refundPrice, account.getUuid(), event.getSign().getWorld());
-        ChestShop.callEvent(currencyEvent);
+        plugin.getServer().getPluginManager().callEvent(currencyEvent);
 
         if (NameManager.getServerEconomyAccount() != null) {
             CurrencySubtractEvent currencySubtractEvent = new CurrencySubtractEvent(
                     refundPrice,
                     NameManager.getServerEconomyAccount().getUuid(),
                     event.getSign().getWorld());
-            ChestShop.callEvent(currencySubtractEvent);
+            plugin.getServer().getPluginManager().callEvent(currencySubtractEvent);
         }
 
-        Messages.SHOP_REFUNDED.sendWithPrefix(event.getDestroyer(), "amount", Economy.formatBalance(refundPrice));
+        Messages.SHOP_REFUNDED.sendWithPrefix(event.getDestroyer(), "amount", economy.formatBalance(refundPrice));
     }
 }

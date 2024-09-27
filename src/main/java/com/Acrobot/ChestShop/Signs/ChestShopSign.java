@@ -20,6 +20,7 @@ import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
+import org.checkerframework.checker.units.qual.N;
 
 import java.util.Locale;
 import java.util.Optional;
@@ -140,18 +141,18 @@ public class ChestShopSign {
         return null;
     }
 
-    public static boolean canAccess(Player player, Sign sign) {
-        return hasPermission(player, Permission.OTHER_NAME_ACCESS, sign);
+    public boolean canAccess(Player player, Sign sign, NameManager nameManager) {
+        return hasPermission(player, Permission.OTHER_NAME_ACCESS, sign, nameManager);
     }
 
-    public static boolean hasPermission(Player player, Permission base, Sign sign) {
+    public boolean hasPermission(Player player, Permission base, Sign sign, NameManager nameManager) {
         if (player == null) return false;
         if (sign == null) return true;
 
         String name = getOwner(sign);
         if (name == null || name.isEmpty()) return true;
 
-        return NameManager.canUseName(player, base, name);
+        return nameManager.canUseName(player, base, name);
     }
 
     public static boolean isOwner(Player player, Sign sign) {

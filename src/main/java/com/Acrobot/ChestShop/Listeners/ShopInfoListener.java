@@ -19,6 +19,7 @@ import org.bukkit.block.Container;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
+import org.checkerframework.checker.units.qual.C;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -27,9 +28,16 @@ import java.util.Map;
  * @author Acrobot
  */
 public class ShopInfoListener implements Listener {
+    private final ChestShop plugin;
+    private final ItemUtil itemUtil;
+
+    public ShopInfoListener(ChestShop plugin, ItemUtil itemUtil) {
+        this.plugin = plugin;
+        this.itemUtil = itemUtil;
+    }
 
     @EventHandler(ignoreCancelled = true)
-    public static void showShopInfo(ShopInfoEvent event) {
+    public void showShopInfo(ShopInfoEvent event) {
         if (ChestShopSign.isValid(event.getSign())) {
             String nameLine = ChestShopSign.getOwner(event.getSign());
             int amount;
@@ -42,7 +50,7 @@ public class ShopInfoListener implements Listener {
             String pricesLine = ChestShopSign.getPrice(event.getSign());
 
             AccountQueryEvent queryEvent = new AccountQueryEvent(nameLine);
-            ChestShop.callEvent(queryEvent);
+            plugin.getServer().getPluginManager().callEvent(queryEvent);
             if (queryEvent.getAccount() == null) {
                 Messages.INVALID_SHOP_DETECTED.sendWithPrefix(event.getSender());
                 return;
@@ -52,7 +60,8 @@ public class ShopInfoListener implements Listener {
             ownerName = ownerName != null ? ownerName : nameLine;
 
             ItemParseEvent parseEvent = new ItemParseEvent(ChestShopSign.getItem(event.getSign()));
-            ItemStack item = ChestShop.callEvent(parseEvent).getItem();
+
+            ItemStack item = parseEvent.getItem();
             if (item == null || amount < 1) {
                 Messages.INVALID_SHOP_DETECTED.sendWithPrefix(event.getSender());
                 return;
@@ -67,7 +76,7 @@ public class ShopInfoListener implements Listener {
             }
 
             Map<String, String> replacementMap = ImmutableMap.of(
-                    "item", ItemUtil.getName(item),
+                    "item", itemUtil.getName(item),
                     "stock", stock,
                     "owner", ownerName,
                     "prices", pricesLine,
@@ -81,17 +90,20 @@ public class ShopInfoListener implements Listener {
             BigDecimal buyPrice = PriceUtil.getExactBuyPrice(pricesLine);
             BigDecimal sellPrice = PriceUtil.getExactSellPrice(pricesLine);
 
-            ChestShop.callEvent(new ItemInfoEvent(event.getSender(), item));
+            plugin.getServer().getPluginManager().callEvent(new ItemInfoEvent(event.getSender(), item));
 
             if (!buyPrice.equals(PriceUtil.NO_PRICE)) {
-                CurrencyFormatEvent cfe = ChestShop.callEvent(new CurrencyFormatEvent(buyPrice));
+                CurrencyFormatEvent cfe = new CurrencyFormatEvent(buyPrice);
+                plugin.getServer().getPluginManager().callEvent(cfe);
+
                 Messages.shopinfo_buy.send(event.getSender(),
                         "amount", String.valueOf(amount),
                         "price", cfe.getFormattedAmount()
                 );
             }
             if (!sellPrice.equals(PriceUtil.NO_PRICE)) {
-                CurrencyFormatEvent cfe = ChestShop.callEvent(new CurrencyFormatEvent(sellPrice));
+                CurrencyFormatEvent cfe = new CurrencyFormatEvent(sellPrice);
+                plugin.getServer().getPluginManager().callEvent(cfe);
                 Messages.shopinfo_sell.send(event.getSender(),
                         "amount", String.valueOf(amount),
                         "price", cfe.getFormattedAmount()

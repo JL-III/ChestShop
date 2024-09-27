@@ -22,6 +22,7 @@ import java.util.logging.Level;
  * @author Acrobot
  */
 public class Messages {
+    private final ChestShop plugin;
     public static Message prefix;
 
     public static Message shopinfo;
@@ -117,6 +118,10 @@ public class Messages {
     public static Message TOGGLE_ACCESS_ON;
     public static Message TOGGLE_ACCESS_OFF;
 
+    public Messages(ChestShop plugin) {
+        this.plugin = plugin;
+    }
+
     @Deprecated
     public static String prefix(String message) {
         return Configuration.getColoured(prefix.getLang(null) + message);
@@ -132,7 +137,7 @@ public class Messages {
 
     private static LanguageManager manager;
 
-    public static void load() {
+    public void load() {
         for (Field field : Messages.class.getFields()) {
             if (!Modifier.isStatic(field.getModifiers())) {
                 continue;
@@ -143,7 +148,7 @@ public class Messages {
                 ChestShop.getBukkitLogger().log(Level.SEVERE, "Error while setting Message " + field.getName() + "!", e);
             }
         }
-        manager = new LanguageManager(ChestShop.getPlugin(), Properties.DEFAULT_LANGUAGE);
+        manager = new LanguageManager(plugin, Properties.DEFAULT_LANGUAGE);
 
         if (manager.getDefaultConfig() == null) {
             manager.setDefaultLocale("en");
@@ -151,12 +156,12 @@ public class Messages {
         }
 
         // Legacy locale.yml file
-        File legacyFile = new File(ChestShop.getPlugin().getDataFolder(), "local.yml");
+        File legacyFile = new File(plugin.getDataFolder(), "local.yml");
         if (legacyFile.exists()) {
             ChestShop.getBukkitLogger().log(Level.INFO, "Found legacy local.yml. Loading it as 'legacy' language and using that for all messages.");
             ChestShop.getBukkitLogger().log(Level.INFO, "As long as the legacy file is used automatic language switching based on the client settings will not be supported!");
             ChestShop.getBukkitLogger().log(Level.INFO, "Import it into the corresponding language file and remove/rename the file if you don't want it anymore!");
-            manager.addConfig(new BukkitLanguageConfig(ChestShop.getPlugin(), "", legacyFile, "legacy", false));
+            manager.addConfig(new BukkitLanguageConfig(plugin, "", legacyFile, "legacy", false));
             manager.setDefaultLocale("legacy");
             Properties.USE_CLIENT_LOCALE = false;
         }

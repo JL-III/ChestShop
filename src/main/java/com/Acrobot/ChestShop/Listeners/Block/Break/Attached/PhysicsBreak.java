@@ -1,16 +1,21 @@
 package com.Acrobot.ChestShop.Listeners.Block.Break.Attached;
 
+import com.Acrobot.ChestShop.ChestShop;
+import com.Acrobot.ChestShop.Listeners.Block.Break.SignBreak;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPhysicsEvent;
 
-import static com.Acrobot.ChestShop.Listeners.Block.Break.SignBreak.handlePhysicsBreak;
-
 public class PhysicsBreak implements Listener {
+    private final SignBreak signBreak;
+
+    public PhysicsBreak(SignBreak signBreak) {
+        this.signBreak = signBreak;
+    }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-    public static void onSign(BlockPhysicsEvent event) {
-        handlePhysicsBreak(event.getBlock());
+    public void onSign(BlockPhysicsEvent event) {
+        signBreak.handlePhysicsBreak(event.getBlock());
     }
 }

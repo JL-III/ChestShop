@@ -16,6 +16,7 @@ import org.bukkit.block.sign.Side;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
+import org.bukkit.plugin.Plugin;
 
 import static com.Acrobot.ChestShop.todo.Permission.OTHER_NAME_DESTROY;
 
@@ -23,10 +24,16 @@ import static com.Acrobot.ChestShop.todo.Permission.OTHER_NAME_DESTROY;
  * @author Acrobot
  */
 public class SignCreate implements Listener {
+    private final Plugin plugin;
+    private final NameManager nameManager;
+    private final SignBreak signBreak;
 
     private static boolean HAS_SIGN_SIDES;
 
-    static {
+    public SignCreate(Plugin plugin, NameManager nameManager, SignBreak signBreak) {
+        this.plugin = plugin;
+        this.nameManager = nameManager;
+        this.signBreak = signBreak;
         try {
             SignChangeEvent.class.getMethod("getSide");
             HAS_SIGN_SIDES = true;
@@ -36,7 +43,7 @@ public class SignCreate implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public static void onSignChange(SignChangeEvent event) {
+    public void onSignChange(SignChangeEvent event) {
         Block signBlock = event.getBlock();
 
         if (!BlockUtil.isSign(signBlock)) {
@@ -53,7 +60,7 @@ public class SignCreate implements Listener {
             return;
         }
 
-        if (ChestShopSign.isValid(event.getLines()) && !NameManager.canUseName(event.getPlayer(), OTHER_NAME_DESTROY, ChestShopSign.getOwner(event.getLines()))) {
+        if (ChestShopSign.isValid(event.getLines()) && !nameManager.canUseName(event.getPlayer(), OTHER_NAME_DESTROY, ChestShopSign.getOwner(event.getLines()))) {
             event.setCancelled(true);
             sign.update();
             ChestShop.logDebug("Shop sign creation at " + sign.getLocation() + " by " + event.getPlayer().getName() + " was cancelled as they weren't able to create a shop for the account '" + ChestShopSign.getOwner(event.getLines()) + "'");
@@ -65,13 +72,13 @@ public class SignCreate implements Listener {
         if (!ChestShopSign.isValidPreparedSign(lines)) {
             // Check if a valid shop already existed previously
             if (ChestShopSign.isValid(sign)) {
-                SignBreak.sendShopDestroyedEvent(sign, event.getPlayer());
+                signBreak.sendShopDestroyedEvent(sign, event.getPlayer());
             }
             return;
         }
 
         PreShopCreationEvent preEvent = new PreShopCreationEvent(event.getPlayer(), sign, lines);
-        ChestShop.callEvent(preEvent);
+        plugin.getServer().getPluginManager().callEvent(preEvent);
 
         if (preEvent.getOutcome().shouldBreakSign()) {
             event.setCancelled(true);
@@ -90,6 +97,6 @@ public class SignCreate implements Listener {
         }
 
         ShopCreatedEvent postEvent = new ShopCreatedEvent(preEvent.getPlayer(), preEvent.getSign(), uBlock.findConnectedContainer(preEvent.getSign()), preEvent.getSignLines(), preEvent.getOwnerAccount());
-        ChestShop.callEvent(postEvent);
+        plugin.getServer().getPluginManager().callEvent(postEvent);
     }
 }

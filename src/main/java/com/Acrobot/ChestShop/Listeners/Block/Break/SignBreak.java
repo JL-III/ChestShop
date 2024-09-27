@@ -40,20 +40,24 @@ import static com.Acrobot.ChestShop.todo.Permission.OTHER_NAME_DESTROY;
  * @author Acrobot
  */
 public class SignBreak implements Listener {
+    private final ChestShop plugin;
+    private final NameManager nameManager;
     private static final BlockFace[] SIGN_CONNECTION_FACES = {BlockFace.SOUTH, BlockFace.NORTH, BlockFace.EAST, BlockFace.WEST, BlockFace.UP};
     public static final String METADATA_NAME = "shop_destroyer";
 
-    public SignBreak(EventManager eventManager) {
+    public SignBreak(ChestShop plugin, EventManager eventManager) {
+        this.plugin = plugin;
+        this.nameManager = new NameManager(plugin);
         try {
             Class.forName("com.destroystokyo.paper.event.block.BlockDestroyEvent");
             eventManager.registerEvent((Listener) Class.forName("com.Acrobot.ChestShop.Listeners.Block.Break.Attached.PaperBlockDestroy").getDeclaredConstructor().newInstance());
             ChestShop.getBukkitLogger().info("Using Paper's BlockDestroyEvent instead of the BlockPhysicsEvent!");
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
-            eventManager.registerEvent(new PhysicsBreak());
+            eventManager.registerEvent(new PhysicsBreak(this));
         }
     }
 
-    public static void handlePhysicsBreak(Block block) {
+    public void handlePhysicsBreak(Block block) {
         if (!BlockUtil.isSign(block)) {
             return;
         }
@@ -69,7 +73,7 @@ public class SignBreak implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public static void onSignBreak(BlockBreakEvent event) {
+    public void onSignBreak(BlockBreakEvent event) {
         if (!canBlockBeBroken(event.getBlock(), event.getPlayer())) {
             event.setCancelled(true);
             Messages.ACCESS_DENIED.sendWithPrefix(event.getPlayer());
@@ -80,14 +84,14 @@ public class SignBreak implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-    public static void onBrokenSign(BlockBreakEvent event) {
+    public void onBrokenSign(BlockBreakEvent event) {
         if (ChestShopSign.isValid(event.getBlock())) {
             sendShopDestroyedEvent((Sign) event.getBlock().getState(), event.getPlayer());
         }
     }
 
     @EventHandler(ignoreCancelled = true)
-    public static void onBlockPistonExtend(BlockPistonExtendEvent event) {
+    public void onBlockPistonExtend(BlockPistonExtendEvent event) {
         for (Block block : event.getBlocks()) {
             if (!canBlockBeBroken(block, null)) {
                 event.setCancelled(true);
@@ -97,7 +101,7 @@ public class SignBreak implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public static void onBlockPistonRetract(BlockPistonRetractEvent event) {
+    public void onBlockPistonRetract(BlockPistonRetractEvent event) {
         for (Block block : event.getBlocks()) {
             if (!canBlockBeBroken(block, null)) {
                 event.setCancelled(true);
@@ -107,7 +111,7 @@ public class SignBreak implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public static void onExplosion(EntityExplodeEvent event) {
+    public void onExplosion(EntityExplodeEvent event) {
         if (event.blockList() == null || !Properties.USE_BUILT_IN_PROTECTION) {
             return;
         }
@@ -121,20 +125,20 @@ public class SignBreak implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public static void onIgnite(BlockBurnEvent event) {
+    public void onIgnite(BlockBurnEvent event) {
         if (!canBlockBeBroken(event.getBlock(), null)) {
             event.setCancelled(true);
         }
     }
 
     @EventHandler(ignoreCancelled = true)
-    public static void onEntityChangeBlock(EntityChangeBlockEvent event) {
+    public void onEntityChangeBlock(EntityChangeBlockEvent event) {
         if (!canBlockBeBroken(event.getBlock(), null)) {
             event.setCancelled(true);
         }
     }
 
-    public static boolean canBlockBeBroken(Block block, Player breaker) {
+    public boolean canBlockBeBroken(Block block, Player breaker) {
         List<Sign> attachedSigns = getAttachedSigns(block);
         List<Sign> brokenBlocks = new LinkedList<Sign>();
 
@@ -158,21 +162,21 @@ public class SignBreak implements Listener {
         }
 
         for (Sign sign : brokenBlocks) {
-            sign.setMetadata(METADATA_NAME, new FixedMetadataValue(ChestShop.getPlugin(), breaker));
+            sign.setMetadata(METADATA_NAME, new FixedMetadataValue(plugin, breaker));
         }
 
         return true;
     }
 
-    private static boolean canDestroyShop(Player player, String name) {
-        return player != null && NameManager.canUseName(player, OTHER_NAME_DESTROY, name);
+    private boolean canDestroyShop(Player player, String name) {
+        return player != null && nameManager.canUseName(player, OTHER_NAME_DESTROY, name);
     }
 
-    public static void sendShopDestroyedEvent(Sign sign, Player player) {
+    public void sendShopDestroyedEvent(Sign sign, Player player) {
         Container connectedContainer = uBlock.findConnectedContainer(sign.getBlock());
 
         Event event = new ShopDestroyedEvent(player, sign, connectedContainer);
-        ChestShop.callEvent(event);
+        plugin.getServer().getPluginManager().callEvent(event);
     }
 
     private static List<Sign> getAttachedSigns(Block block) {

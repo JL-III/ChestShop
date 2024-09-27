@@ -11,28 +11,16 @@ import com.Acrobot.ChestShop.Events.Economy.CurrencySubtractEvent;
 import com.Acrobot.ChestShop.Events.Economy.CurrencyTransferEvent;
 import com.Acrobot.ChestShop.Utils.NameManager;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
 
 import java.math.BigDecimal;
 
 public abstract class EconomyAdapter implements Listener {
+    private final Plugin plugin;
 
-    public abstract ProviderInfo getProviderInfo();
-
-    public abstract void onAmountCheck(CurrencyAmountEvent event);
-
-    public abstract void onCurrencyCheck(CurrencyCheckEvent event);
-
-    public abstract void onAccountCheck(AccountCheckEvent event);
-
-    public abstract void onCurrencyFormat(CurrencyFormatEvent event);
-
-    public abstract void onCurrencyAdd(CurrencyAddEvent event);
-
-    public abstract void onCurrencySubtraction(CurrencySubtractEvent event);
-
-    public abstract void onCurrencyTransfer(CurrencyTransferEvent event);
-
-    public abstract void onCurrencyHoldCheck(CurrencyHoldEvent event);
+    public EconomyAdapter(Plugin plugin) {
+        this.plugin = plugin;
+    }
 
     /**
      * Convenience method to process transfers by first subtracting and then adding
@@ -47,7 +35,7 @@ public abstract class EconomyAdapter implements Listener {
         BigDecimal amountSent = event.getAmountSent();
         CurrencySubtractEvent currencySubtractEvent = new CurrencySubtractEvent(amountSent, event.getSender(), event.getWorld());
         if (!NameManager.isAdminShop(event.getSender())) {
-            ChestShop.callEvent(currencySubtractEvent);
+            plugin.getServer().getPluginManager().callEvent(currencySubtractEvent);
         } else {
             currencySubtractEvent.setHandled(true);
         }
@@ -59,7 +47,7 @@ public abstract class EconomyAdapter implements Listener {
         BigDecimal amountReceived = event.getAmountReceived().subtract(amountSent.subtract(currencySubtractEvent.getAmount()));
         CurrencyAddEvent currencyAddEvent = new CurrencyAddEvent(amountReceived, event.getReceiver(), event.getWorld());
         if (!NameManager.isAdminShop(event.getReceiver())) {
-            ChestShop.callEvent(currencyAddEvent);
+            plugin.getServer().getPluginManager().callEvent(currencyAddEvent);
         } else {
             currencyAddEvent.setHandled(true);
         }
@@ -72,9 +60,11 @@ public abstract class EconomyAdapter implements Listener {
                     event.getSender(),
                     event.getWorld()
             );
-            ChestShop.callEvent(currencyResetEvent);
+            plugin.getServer().getPluginManager().callEvent(currencyResetEvent);
         }
     }
+
+    public abstract ProviderInfo getProviderInfo();
 
     public static class ProviderInfo {
         private final String name;

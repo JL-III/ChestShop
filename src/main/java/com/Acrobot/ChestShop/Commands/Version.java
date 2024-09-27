@@ -11,9 +11,15 @@ import org.bukkit.command.CommandSender;
  * @author Acrobot
  */
 public class Version implements CommandExecutor {
+    private final ChestShop plugin;
+
+    public Version(ChestShop plugin) {
+        this.plugin = plugin;
+    }
+
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (args.length > 0 && args[0].equals("reload")) {
-            ChestShop.callEvent(new ChestShopReloadEvent(sender));
+            plugin.getServer().getPluginManager().callEvent(new ChestShopReloadEvent(sender));
 
             sender.sendMessage(ChatColor.DARK_GREEN + "The config was reloaded.");
             return true;

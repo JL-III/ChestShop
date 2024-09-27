@@ -3,6 +3,7 @@ package com.Acrobot.ChestShop.Signs;
 import com.Acrobot.Breeze.Utils.BlockUtil;
 import com.Acrobot.ChestShop.Configuration.Messages;
 import com.Acrobot.ChestShop.Events.tobesorted.PreTransactionEvent;
+import com.Acrobot.ChestShop.Utils.NameManager;
 import com.Acrobot.ChestShop.todo.Permission;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -23,10 +24,18 @@ import static com.Acrobot.ChestShop.todo.Permission.ADMIN;
  * @author Acrobot
  */
 public class RestrictedSign implements Listener {
+    private final ChestShopSign chestShopSign;
+    private final NameManager nameManager;
+
+    public RestrictedSign(ChestShopSign chestShopSign, NameManager nameManager) {
+        this.chestShopSign = chestShopSign;
+        this.nameManager = nameManager;
+    }
+
     private static final BlockFace[] SIGN_CONNECTION_FACES = {BlockFace.SELF, BlockFace.UP, BlockFace.EAST, BlockFace.WEST, BlockFace.NORTH, BlockFace.SOUTH};
 
     @EventHandler(ignoreCancelled = true)
-    public static void onBlockDestroy(BlockBreakEvent event) {
+    public void onBlockDestroy(BlockBreakEvent event) {
         Block destroyed = event.getBlock();
         Sign attachedRestrictedSign = getRestrictedSign(destroyed.getLocation());
 
@@ -40,7 +49,7 @@ public class RestrictedSign implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-    public static void onSignChange(SignChangeEvent event) {
+    public void onSignChange(SignChangeEvent event) {
         String[] lines = event.getLines();
         Player player = event.getPlayer();
 
@@ -59,7 +68,7 @@ public class RestrictedSign implements Listener {
 
             Sign sign = (Sign) getState(connectedSign, false);
 
-            if (!ChestShopSign.hasPermission(player, Permission.OTHER_NAME_DESTROY, sign)) {
+            if (!chestShopSign.hasPermission(player, Permission.OTHER_NAME_DESTROY, sign, nameManager)) {
                 dropSignAndCancelEvent(event);
                 return;
             }
@@ -133,9 +142,9 @@ public class RestrictedSign implements Listener {
         return !BlockUtil.isSign(blockUp) || hasPermission(player, ((Sign) getState(blockUp, false)).getLines());
     }
 
-    public static boolean canDestroy(Player player, Sign sign) {
+    public boolean canDestroy(Player player, Sign sign) {
         Sign shopSign = getAssociatedSign(sign);
-        return ChestShopSign.hasPermission(player, Permission.OTHER_NAME_DESTROY, shopSign);
+        return chestShopSign.hasPermission(player, Permission.OTHER_NAME_DESTROY, shopSign, nameManager);
     }
 
     public static Sign getAssociatedSign(Sign restricted) {

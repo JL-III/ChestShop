@@ -22,6 +22,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
 
 import java.sql.SQLException;
 import java.util.Date;
@@ -35,8 +36,8 @@ import java.util.logging.Level;
  *
  * @author Andrzej Pomirski (Acrobot)
  */
-@SuppressWarnings("UnusedAssignment") // I deliberately set the variables to null while initializing
 public class NameManager implements Listener {
+    private final Plugin plugin;
     private static final Object accountsLock = new Object();
 
     private static Dao<Account, String> accounts;
@@ -49,6 +50,10 @@ public class NameManager implements Listener {
     private static Account adminAccount;
     private static Account serverEconomyAccount;
     private static int uuidVersion = -1;
+
+    public NameManager(Plugin plugin) {
+        this.plugin = plugin;
+    }
 
     public static int getAccountCount() {
         try {
@@ -153,7 +158,7 @@ public class NameManager implements Listener {
     }
 
     @EventHandler
-    public static void onAccountQuery(AccountQueryEvent event) {
+    public void onAccountQuery(AccountQueryEvent event) {
         if (event.getAccount() == null) {
             event.setAccount(getLastAccountFromName(event.getName(), event.searchOfflinePlayers()));
         }
@@ -200,14 +205,14 @@ public class NameManager implements Listener {
      * @return The last account or <tt>null</tt> if none was found
      * @throws IllegalArgumentException if the username is empty
      */
-    private static Account getLastAccountFromName(String name, boolean searchOfflinePlayer) {
+    private Account getLastAccountFromName(String name, boolean searchOfflinePlayer) {
         Account account = getAccountFromShortName(name); // first get the account associated with the short name
         if (account == null) {
             account = getAccount(name);
         }
         if (account == null && searchOfflinePlayer && !invalidPlayers.contains(name.toLowerCase(Locale.ROOT))) {
             // no account with that shortname was found, try to get an offline player with that name
-            OfflinePlayer offlinePlayer = ChestShop.getBukkitServer().getOfflinePlayer(name);
+            OfflinePlayer offlinePlayer = plugin.getServer().getOfflinePlayer(name);
             if (offlinePlayer != null && offlinePlayer.getName() != null && offlinePlayer.getUniqueId() != null
                     && (!Properties.ENSURE_CORRECT_PLAYERID || offlinePlayer.getUniqueId().version() == uuidVersion)) {
                 account = storeUsername(new PlayerDTO(offlinePlayer.getUniqueId(), offlinePlayer.getName()));
@@ -280,7 +285,7 @@ public class NameManager implements Listener {
         return shortenedName;
     }
 
-    public static boolean canUseName(Player player, Permission base, String name) {
+    public boolean canUseName(Player player, Permission base, String name) {
         if (ChestShopSign.isAdminShop(name)) {
             if (Permission.has(player, Permission.ADMIN_SHOP)) {
                 return true;
@@ -295,7 +300,7 @@ public class NameManager implements Listener {
         }
 
         AccountQueryEvent queryEvent = new AccountQueryEvent(name);
-        ChestShop.callEvent(queryEvent);
+        plugin.getServer().getPluginManager().callEvent(queryEvent);
         Account account = queryEvent.getAccount();
         if (account == null) {
             // There is no account by the provided name, but it matches the player name
@@ -310,7 +315,7 @@ public class NameManager implements Listener {
             return true;
         }
         AccountAccessEvent event = new AccountAccessEvent(player, account);
-        ChestShop.callEvent(event);
+        plugin.getServer().getPluginManager().callEvent(event);
         return event.canAccess();
     }
 

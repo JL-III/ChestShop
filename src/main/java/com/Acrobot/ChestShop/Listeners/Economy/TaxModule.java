@@ -9,6 +9,7 @@ import com.Acrobot.ChestShop.Utils.NameManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -17,6 +18,12 @@ import java.util.UUID;
  * @author Acrobot
  */
 public class TaxModule implements Listener {
+    private final Plugin plugin;
+
+    public TaxModule(Plugin plugin) {
+        this.plugin = plugin;
+    }
+
     private static final String TAX_RECEIVED_MESSAGE = "Applied a tax of %1$f percent (%2$.2f) to the received amount for a resulting price of %3$.2f";
     private static final String TAX_SENT_MESSAGE = "Reduced buy price by tax of %1$f percent (%2$.2f) for a resulting price of %3$.2f as the buyer has the buy tax bypass permission";
 
@@ -36,7 +43,7 @@ public class TaxModule implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOW)
-    public static void onCurrencyTransfer(CurrencyTransferEvent event) {
+    public void onCurrencyTransfer(CurrencyTransferEvent event) {
         if (event.wasHandled()) {
             return;
         }
@@ -52,25 +59,25 @@ public class TaxModule implements Listener {
                 BigDecimal taxedAmount = event.getAmountReceived().subtract(tax);
                 event.setAmountReceived(taxedAmount);
                 if (NameManager.getServerEconomyAccount() != null) {
-                    ChestShop.callEvent(new CurrencyAddEvent(
+                    plugin.getServer().getPluginManager().callEvent(new CurrencyAddEvent(
                             tax,
                             NameManager.getServerEconomyAccount().getUuid(),
                             event.getWorld()));
                 }
-                ChestShop.getShopLogger().info(String.format(TAX_RECEIVED_MESSAGE, taxAmount, tax, taxedAmount));
+                plugin.getLogger().info(String.format(TAX_RECEIVED_MESSAGE, taxAmount, tax, taxedAmount));
             }
         } else if (event.getDirection() == CurrencyTransferEvent.Direction.PARTNER && Permission.has(event.getInitiator(), Permission.NO_BUY_TAX)) {
             // Reduce paid amount as the buyer has permission to not pay taxes
             BigDecimal taxSent = getTaxAmount(event.getAmountSent(), taxAmount);
             BigDecimal taxedSentAmount = event.getAmountSent().subtract(taxSent);
             event.setAmountSent(taxedSentAmount);
-            ChestShop.getShopLogger().info(String.format(TAX_SENT_MESSAGE, taxAmount, taxSent, taxedSentAmount));
+            plugin.getLogger().info(String.format(TAX_SENT_MESSAGE, taxAmount, taxSent, taxedSentAmount));
 
             // Reduce the amount that the seller receives anyways even though tax wasn't paid as that shouldn't make a difference for the seller
             BigDecimal taxReceived = getTaxAmount(event.getAmountReceived(), taxAmount);
             BigDecimal taxedReceivedAmount = event.getAmountReceived().subtract(taxReceived);
             event.setAmountReceived(taxedReceivedAmount);
-            ChestShop.getShopLogger().info(String.format(TAX_RECEIVED_MESSAGE, taxAmount, taxReceived, taxedReceivedAmount));
+            plugin.getLogger().info(String.format(TAX_RECEIVED_MESSAGE, taxAmount, taxReceived, taxedReceivedAmount));
         }
     }
 }

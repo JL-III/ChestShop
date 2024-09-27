@@ -32,11 +32,13 @@ import static com.Acrobot.ChestShop.Events.tobesorted.PreShopCreationEvent.Creat
  * @author Acrobot
  */
 public class LightweightChestProtection implements Listener {
+    private final Security security;
     private final LWC lwc;
     private final LimitsModule limitsModule;
     private final LimitsV2 limitsV2;
 
-    public LightweightChestProtection() {
+    public LightweightChestProtection(Security security) {
+        this.security = security;
         this.lwc = LWC.getInstance();
         this.limitsModule = (LimitsModule) lwc.getModuleLoader().getModule(LimitsModule.class);
         this.limitsV2 = (LimitsV2) lwc.getModuleLoader().getModule(LimitsV2.class);
@@ -78,14 +80,14 @@ public class LightweightChestProtection implements Listener {
     }
 
     @EventHandler
-    public static void onShopCreation(ShopCreatedEvent event) {
+    public void onShopCreation(ShopCreatedEvent event) {
         Player player = event.getPlayer();
         Sign sign = event.getSign();
         Container connectedContainer = event.getContainer();
 
         Messages.Message message = null;
         if (Properties.PROTECT_SIGN_WITH_LWC) {
-            if (Security.protect(player, sign.getBlock(), event.getOwnerAccount() != null ? event.getOwnerAccount().getUuid() : player.getUniqueId(), Properties.LWC_SIGN_PROTECTION_TYPE)) {
+            if (security.protect(player, sign.getBlock(), event.getOwnerAccount() != null ? event.getOwnerAccount().getUuid() : player.getUniqueId(), Properties.LWC_SIGN_PROTECTION_TYPE)) {
                 message = Messages.PROTECTED_SHOP_SIGN;
             } else {
                 message = Messages.NOT_ENOUGH_PROTECTIONS;
@@ -93,7 +95,7 @@ public class LightweightChestProtection implements Listener {
         }
 
         if (Properties.PROTECT_CHEST_WITH_LWC && connectedContainer != null) {
-            if (Security.protect(player, connectedContainer.getBlock(), event.getOwnerAccount() != null ? event.getOwnerAccount().getUuid() : player.getUniqueId(), Properties.LWC_CHEST_PROTECTION_TYPE)) {
+            if (security.protect(player, connectedContainer.getBlock(), event.getOwnerAccount() != null ? event.getOwnerAccount().getUuid() : player.getUniqueId(), Properties.LWC_CHEST_PROTECTION_TYPE)) {
                 message = Messages.PROTECTED_SHOP;
             } else if (message == null) {
                 message = Messages.NOT_ENOUGH_PROTECTIONS;

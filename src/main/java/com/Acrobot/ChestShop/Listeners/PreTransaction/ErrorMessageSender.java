@@ -32,6 +32,13 @@ import static com.Acrobot.ChestShop.Configuration.Messages.NOT_ENOUGH_SPACE_IN_Y
  * @author Acrobot
  */
 public class ErrorMessageSender implements Listener {
+    private final Economy economy;
+    private final ItemUtil itemUtil;
+
+    public ErrorMessageSender(ItemUtil itemUtil, Economy economy) {
+        this.economy = economy;
+        this.itemUtil = itemUtil;
+    }
 
     private static Table<UUID, String, Long> notificationCooldowns = HashBasedTable.create();
 
@@ -43,7 +50,7 @@ public class ErrorMessageSender implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public static void onMessage(PreTransactionEvent event) {
+    public void onMessage(PreTransactionEvent event) {
         if (!event.isCancelled()) {
             return;
         }
@@ -70,7 +77,7 @@ public class ErrorMessageSender implements Listener {
                 if (Properties.SHOW_MESSAGE_FULL_SHOP && !Properties.CSTOGGLE_TOGGLES_FULL_SHOP || !Toggle.isIgnoring(event.getOwnerAccount().getUuid())) {
                     Location loc = event.getSign().getLocation();
                     sendMessageToOwner(event.getOwnerAccount(), NOT_ENOUGH_SPACE_IN_YOUR_SHOP, new String[]{
-                            "price", Economy.formatBalance(event.getExactPrice()),
+                            "price", economy.formatBalance(event.getExactPrice()),
                             "seller", event.getClient().getName(),
                             "world", loc.getWorld().getName(),
                             "x", String.valueOf(loc.getBlockX()),
@@ -90,7 +97,7 @@ public class ErrorMessageSender implements Listener {
                 if (Properties.SHOW_MESSAGE_OUT_OF_STOCK && !Properties.CSTOGGLE_TOGGLES_OUT_OF_STOCK || !Toggle.isIgnoring(event.getOwnerAccount().getUuid())) {
                     Location loc = event.getSign().getLocation();
                     sendMessageToOwner(event.getOwnerAccount(), NOT_ENOUGH_STOCK_IN_YOUR_SHOP, new String[]{
-                            "price", Economy.formatBalance(event.getExactPrice()),
+                            "price", economy.formatBalance(event.getExactPrice()),
                             "buyer", event.getClient().getName(),
                             "world", loc.getWorld().getName(),
                             "x", String.valueOf(loc.getBlockX()),
@@ -128,12 +135,12 @@ public class ErrorMessageSender implements Listener {
         }
     }
 
-    private static void sendMessageToOwner(Account ownerAccount, Messages.Message message, String[] replacements, ItemStack... stock) {
+    private void sendMessageToOwner(Account ownerAccount, Messages.Message message, String[] replacements, ItemStack... stock) {
         Player player = Bukkit.getPlayer(ownerAccount.getUuid());
         if (player != null || Properties.BUNGEECORD_MESSAGES) {
 
             if (Properties.NOTIFICATION_MESSAGE_COOLDOWN > 0) {
-                String cacheKey = message.getKey() + "|" + String.join(",", replacements) + "|" + ItemUtil.getItemList(stock);
+                String cacheKey = message.getKey() + "|" + String.join(",", replacements) + "|" + itemUtil.getItemList(stock);
                 Long last = notificationCooldowns.get(ownerAccount.getUuid(), cacheKey);
                 if (last != null && last + Properties.NOTIFICATION_MESSAGE_COOLDOWN * 1000 > System.currentTimeMillis()) {
                     return;
@@ -142,12 +149,8 @@ public class ErrorMessageSender implements Listener {
             }
 
             if (player != null) {
-                String items = ItemUtil.getItemList(stock);
+                String items = itemUtil.getItemList(stock);
                 message.sendWithPrefix(player,
-                        ImmutableMap.of("material", items, "item", items), replacements);
-            } else {
-                String items = ItemUtil.getItemList(stock);
-                ChestShop.sendBungeeMessage(ownerAccount.getName(), message,
                         ImmutableMap.of("material", items, "item", items), replacements);
             }
         }

@@ -20,9 +20,14 @@ import java.util.List;
  * @author Acrobot
  */
 public class BlockPlace implements Listener {
+    private final Security security;
+
+    public BlockPlace(Security security) {
+        this.security = security;
+    }
 
     @EventHandler(ignoreCancelled = true)
-    public static void onContainerPlace(BlockPlaceEvent event) {
+    public void onContainerPlace(BlockPlaceEvent event) {
         Block placed = event.getBlockPlaced();
 
         if (!uBlock.couldBeShopContainer(placed)) {
@@ -35,7 +40,7 @@ public class BlockPlace implements Listener {
             return;
         }
 
-        if (!Security.canAccess(player, placed)) {
+        if (!security.canAccess(player, placed)) {
             Messages.ACCESS_DENIED.sendWithPrefix(event.getPlayer());
             event.setCancelled(true);
             return;
@@ -43,7 +48,7 @@ public class BlockPlace implements Listener {
 
         Block neighbor = uBlock.findNeighbor(placed);
 
-        if (neighbor != null && !Security.canAccess(event.getPlayer(), neighbor)) {
+        if (neighbor != null && !security.canAccess(event.getPlayer(), neighbor)) {
             Messages.ACCESS_DENIED.sendWithPrefix(event.getPlayer());
             event.setCancelled(true);
         }
@@ -62,7 +67,7 @@ public class BlockPlace implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public static void onHopperDropperPlace(BlockPlaceEvent event) {
+    public void onHopperDropperPlace(BlockPlaceEvent event) {
         Block placed = event.getBlockPlaced();
 
         List<BlockFace> searchDirections = new ArrayList<>();
@@ -85,7 +90,7 @@ public class BlockPlace implements Listener {
                 continue;
             }
 
-            if (!Security.canAccess(event.getPlayer(), relative)) {
+            if (!security.canAccess(event.getPlayer(), relative)) {
                 Messages.ACCESS_DENIED.sendWithPrefix(event.getPlayer());
                 event.setCancelled(true);
                 return;

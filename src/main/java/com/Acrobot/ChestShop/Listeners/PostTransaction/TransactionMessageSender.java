@@ -11,6 +11,7 @@ import com.Acrobot.ChestShop.Events.tobesorted.TransactionEvent;
 import com.Acrobot.ChestShop.Utils.ItemUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -24,8 +25,16 @@ import java.util.Map;
  * @author Acrobot
  */
 public class TransactionMessageSender implements Listener {
+    private final ItemUtil itemUtil;
+    private final Economy economy;
+
+    public TransactionMessageSender(ItemUtil itemUtil, Economy economy) {
+        this.itemUtil = itemUtil;
+        this.economy = economy;
+    }
+
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public static void onCurrencyTransfer(CurrencyTransferEvent event) {
+    public void onCurrencyTransfer(CurrencyTransferEvent event) {
         if (event.getTransactionEvent() == null) {
             return;
         }
@@ -36,7 +45,7 @@ public class TransactionMessageSender implements Listener {
         }
     }
 
-    protected static void sendBuyMessage(CurrencyTransferEvent event) {
+    protected void sendBuyMessage(CurrencyTransferEvent event) {
         TransactionEvent transactionEvent = event.getTransactionEvent();
         Player player = transactionEvent.getClient();
 
@@ -50,7 +59,7 @@ public class TransactionMessageSender implements Listener {
         }
     }
 
-    protected static void sendSellMessage(CurrencyTransferEvent event) {
+    protected void sendSellMessage(CurrencyTransferEvent event) {
         TransactionEvent transactionEvent = event.getTransactionEvent();
         Player player = transactionEvent.getClient();
 
@@ -64,14 +73,14 @@ public class TransactionMessageSender implements Listener {
         }
     }
 
-    private static void sendMessage(Player player, String playerName, Messages.Message rawMessage, CurrencyTransferEvent event, MessageTarget messageTarget, String... replacements) {
+    private void sendMessage(Player player, String playerName, Messages.Message rawMessage, CurrencyTransferEvent event, MessageTarget messageTarget, String... replacements) {
         TransactionEvent transactionEvent = event.getTransactionEvent();
 
         BigDecimal actualAmount = getTransactionActualAmount(event, messageTarget);
 
         Location loc = transactionEvent.getSign().getLocation();
         Map<String, String> replacementMap = new LinkedHashMap<>();
-        replacementMap.put("price", Economy.formatBalance(actualAmount));
+        replacementMap.put("price", economy.formatBalance(actualAmount));
         replacementMap.put("world", loc.getWorld().getName());
         replacementMap.put("x", String.valueOf(loc.getBlockX()));
         replacementMap.put("y", String.valueOf(loc.getBlockY()));
@@ -83,11 +92,10 @@ public class TransactionMessageSender implements Listener {
         }
 
         if (player != null) {
-            replacementMap.put("item", ItemUtil.getItemList(transactionEvent.getStock()));
+            replacementMap.put("item", itemUtil.getItemList(transactionEvent.getStock()));
             rawMessage.sendWithPrefix(player, replacementMap);
         } else if (playerName != null) {
-            replacementMap.put("item", ItemUtil.getItemList(transactionEvent.getStock()));
-            ChestShop.sendBungeeMessage(playerName, rawMessage, replacementMap);
+            replacementMap.put("item", itemUtil.getItemList(transactionEvent.getStock()));
         }
     }
 

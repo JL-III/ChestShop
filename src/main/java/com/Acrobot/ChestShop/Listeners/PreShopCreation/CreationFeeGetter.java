@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
 
 import java.math.BigDecimal;
 
@@ -23,9 +24,16 @@ import static com.Acrobot.ChestShop.todo.Permission.NOFEE;
  * @author Acrobot
  */
 public class CreationFeeGetter implements Listener {
+    private final Plugin plugin;
+    private final Economy economy;
+
+    public CreationFeeGetter(Plugin plugin, Economy economy) {
+        this.plugin = plugin;
+        this.economy = economy;
+    }
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
-    public static void onShopCreation(PreShopCreationEvent event) {
+    public void onShopCreation(PreShopCreationEvent event) {
         BigDecimal shopCreationPrice = Properties.SHOP_CREATION_PRICE;
 
         if (shopCreationPrice.compareTo(BigDecimal.ZERO) == 0) {
@@ -43,7 +51,7 @@ public class CreationFeeGetter implements Listener {
         }
 
         CurrencySubtractEvent subtractionEvent = new CurrencySubtractEvent(shopCreationPrice, player);
-        ChestShop.callEvent(subtractionEvent);
+        plugin.getServer().getPluginManager().callEvent(subtractionEvent);
 
         if (!subtractionEvent.wasHandled()) {
             event.setOutcome(PreShopCreationEvent.CreationOutcome.NOT_ENOUGH_MONEY);
@@ -56,9 +64,9 @@ public class CreationFeeGetter implements Listener {
                     shopCreationPrice,
                     NameManager.getServerEconomyAccount().getUuid(),
                     player.getWorld());
-            ChestShop.callEvent(currencyAddEvent);
+            plugin.getServer().getPluginManager().callEvent(currencyAddEvent);
         }
 
-        Messages.SHOP_FEE_PAID.sendWithPrefix(player, "amount", Economy.formatBalance(shopCreationPrice));
+        Messages.SHOP_FEE_PAID.sendWithPrefix(player, "amount", economy.formatBalance(shopCreationPrice));
     }
 }

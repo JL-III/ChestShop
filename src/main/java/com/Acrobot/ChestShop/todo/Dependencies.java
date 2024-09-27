@@ -24,10 +24,14 @@ import java.util.logging.Level;
  * @author Acrobot
  */
 public class Dependencies implements Listener {
+    private final ChestShop plugin;
     private final EventManager eventManager;
+    private final VaultListener vaultListener;
 
-    public Dependencies(EventManager eventManager) {
+    public Dependencies(ChestShop plugin, EventManager eventManager, VaultListener vaultListener) {
+        this.plugin = plugin;
         this.eventManager = eventManager;
+        this.vaultListener = vaultListener;
     }
 
     public static void initializePlugins() {
@@ -86,7 +90,7 @@ public class Dependencies implements Listener {
 
         if(Bukkit.getPluginManager().getPlugin("Vault") != null) {
             plugin = "Vault";
-            economy = VaultListener.initializeVault();
+            economy = vaultListener.initializeVault();
         }
 
         if (economy == null) {
@@ -113,7 +117,7 @@ public class Dependencies implements Listener {
         switch (dependency) {
             //Protection plugins
             case LWC:
-                listener = new LightweightChestProtection();
+                listener = new LightweightChestProtection(new Security(plugin));
                 break;
 
             //Terrain protection plugins

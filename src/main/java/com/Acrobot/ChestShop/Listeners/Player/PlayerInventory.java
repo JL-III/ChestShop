@@ -27,8 +27,16 @@ import static com.Acrobot.Breeze.Utils.ImplementationAdapter.getHolder;
  * @author Acrobot
  */
 public class PlayerInventory implements Listener {
+    private final ChestShop plugin;
+    private final Security security;
+
+    public PlayerInventory(ChestShop pluign, Security security) {
+        this.plugin = pluign;
+        this.security = security;
+    }
+
     @EventHandler
-    public static void onInventoryOpen(InventoryOpenEvent event) {
+    public void onInventoryOpen(InventoryOpenEvent event) {
         if (!Properties.TURN_OFF_DEFAULT_PROTECTION_WHEN_PROTECTED_EXTERNALLY) {
             return;
         }
@@ -61,7 +69,7 @@ public class PlayerInventory implements Listener {
         boolean canAccess = false;
         for (Block container : containers) {
             if (ChestShopSign.isShopBlock(container)) {
-                if (Security.canView(player, container, false)) {
+                if (security.canView(player, container, false)) {
                     canAccess = true;
                 }
             } else {
@@ -74,7 +82,7 @@ public class PlayerInventory implements Listener {
                 for (Block container : containers) {
                     Sign sign = uBlock.getConnectedSign(container);
                     if (sign != null) {
-                        ChestShop.callEvent(new ShopInfoEvent((Player) event.getPlayer(), sign));
+                        plugin.getServer().getPluginManager().callEvent(new ShopInfoEvent((Player) event.getPlayer(), sign));
                     }
                 }
             } else {

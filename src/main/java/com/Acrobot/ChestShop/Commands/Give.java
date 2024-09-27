@@ -20,6 +20,11 @@ import java.util.Set;
  * @author Acrobot
  */
 public class Give implements CommandExecutor {
+    private final ItemUtil itemUtil;
+
+    public Give(ItemUtil itemUtil) {
+        this.itemUtil = itemUtil;
+    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -72,7 +77,7 @@ public class Give implements CommandExecutor {
         item.setAmount(quantity);
         InventoryUtil.add(item, receiver.getInventory());
 
-        Messages.ITEM_GIVEN.send(sender, "item", ItemUtil.getName(item), "player", receiver.getName());
+        Messages.ITEM_GIVEN.send(sender, "item", itemUtil.getName(item), "player", receiver.getName());
 
         return true;
     }

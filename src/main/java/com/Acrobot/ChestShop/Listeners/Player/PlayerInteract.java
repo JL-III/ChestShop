@@ -13,6 +13,7 @@ import com.Acrobot.ChestShop.Events.tobesorted.ItemParseEvent;
 import com.Acrobot.ChestShop.Events.tobesorted.PreTransactionEvent;
 import com.Acrobot.ChestShop.Events.tobesorted.ShopInfoEvent;
 import com.Acrobot.ChestShop.Events.tobesorted.TransactionEvent;
+import com.Acrobot.ChestShop.Utils.NameManager;
 import com.Acrobot.ChestShop.todo.Permission;
 import com.Acrobot.ChestShop.todo.Security;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
@@ -54,9 +55,22 @@ import static org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK;
  * @author Acrobot
  */
 public class PlayerInteract implements Listener {
+    private final ChestShop plugin;
+    private final ItemUtil itemUtil;
+    private final ChestShopSign chestShopSign;
+    private final Security security;
+    private final NameManager nameManager;
+
+    public PlayerInteract(ChestShop plugin, ItemUtil itemUtil, ChestShopSign chestShopSign, Security security, NameManager nameManager) {
+        this.plugin = plugin;
+        this.itemUtil = itemUtil;
+        this.chestShopSign = chestShopSign;
+        this.security = security;
+        this.nameManager = nameManager;
+    }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-    public static void onInteract(PlayerInteractEvent event) {
+    public void onInteract(PlayerInteractEvent event) {
         Block block = event.getClickedBlock();
         if (block == null)
             return;
@@ -68,9 +82,9 @@ public class PlayerInteract implements Listener {
             Sign sign = uBlock.getConnectedSign(block);
             if (sign != null) {
 
-                if (!Security.canView(player, block, Properties.TURN_OFF_DEFAULT_PROTECTION_WHEN_PROTECTED_EXTERNALLY)) {
+                if (!security.canView(player, block, Properties.TURN_OFF_DEFAULT_PROTECTION_WHEN_PROTECTED_EXTERNALLY)) {
                     if (Permission.has(player, Permission.SHOPINFO)) {
-                        ChestShop.callEvent(new ShopInfoEvent(player, sign));
+                        plugin.getServer().getPluginManager().callEvent(new ShopInfoEvent(player, sign));
                         event.setCancelled(true);
                     } else if (!Properties.TURN_OFF_DEFAULT_PROTECTION_WHEN_PROTECTED_EXTERNALLY) {
                         Messages.ACCESS_DENIED.send(player);
@@ -91,23 +105,23 @@ public class PlayerInteract implements Listener {
         }
 
         if (Properties.ALLOW_AUTO_ITEM_FILL && ChatColor.stripColor(ChestShopSign.getItem(sign)).equals(AUTOFILL_CODE)) {
-            if (ChestShopSign.hasPermission(player, OTHER_NAME_CREATE, sign)) {
+            if (chestShopSign.hasPermission(player, OTHER_NAME_CREATE, sign, nameManager)) {
                 ItemStack item = player.getInventory().getItemInMainHand();
                 if (!MaterialUtil.isEmpty(item)) {
                     event.setCancelled(true);
                     String itemCode;
                     try {
-                        itemCode = ItemUtil.getSignName(item);
+                        itemCode = itemUtil.getSignName(item);
                     } catch (IllegalArgumentException e) {
                         player.sendMessage(ChatColor.RED + "Error while generating shop sign item name. Please contact an admin or take a look at the console/log!");
-                        com.Acrobot.ChestShop.ChestShop.getPlugin().getLogger().log(Level.SEVERE, "Error while generating shop sign item name", e);
+                        plugin.getLogger().log(Level.SEVERE, "Error while generating shop sign item name", e);
                         return;
                     }
                     String[] lines = sign.getLines();
                     lines[ITEM_LINE] = itemCode;
 
                     SignChangeEvent changeEvent = new SignChangeEvent(block, player, lines);
-                    com.Acrobot.ChestShop.ChestShop.callEvent(changeEvent);
+                    plugin.getServer().getPluginManager().callEvent(changeEvent);
                     if (!changeEvent.isCancelled()) {
                         for (byte i = 0; i < changeEvent.getLines().length; ++i) {
                             String line = changeEvent.getLine(i);
@@ -124,7 +138,7 @@ public class PlayerInteract implements Listener {
             return;
         }
 
-        if (!AccessToggle.isIgnoring(player) && ChestShopSign.canAccess(player, sign) && !ChestShopSign.isAdminShop(sign)) {
+        if (!AccessToggle.isIgnoring(player) && chestShopSign.canAccess(player, sign, nameManager) && !ChestShopSign.isAdminShop(sign)) {
             if (Properties.IGNORE_ACCESS_PERMS || ChestShopSign.isOwner(player, sign)) {
                 if (player.getInventory().getItemInMainHand().getType().name().contains("SIGN") && action == RIGHT_CLICK_BLOCK) {
                     // Allow editing of sign (if supported)
@@ -159,11 +173,11 @@ public class PlayerInteract implements Listener {
 
         if (action == RIGHT_CLICK_BLOCK) {
             event.setCancelled(true);
-        } else if (action == LEFT_CLICK_BLOCK && !Properties.TURN_OFF_SIGN_PROTECTION && !ChestShopSign.canAccess(player, sign)) {
+        } else if (action == LEFT_CLICK_BLOCK && !Properties.TURN_OFF_SIGN_PROTECTION && !chestShopSign.canAccess(player, sign, nameManager)) {
             event.setCancelled(true);
         }
 
-        if (Properties.CHECK_ACCESS_FOR_SHOP_USE && !Security.canAccess(player, block, true)) {
+        if (Properties.CHECK_ACCESS_FOR_SHOP_USE && !security.canAccess(player, block, true)) {
             Messages.TRADE_DENIED.sendWithPrefix(player);
             return;
         }
@@ -298,7 +312,7 @@ public class PlayerInteract implements Listener {
         return Permission.has(player, Permission.OTHER_NAME_ACCESS + ".*");
     }
 
-    private static void showChestGUI(Player player, Block signBlock, Sign sign) {
+    private void showChestGUI(Player player, Block signBlock, Sign sign) {
         Container container = uBlock.findConnectedContainer(sign);
 
         if (container == null) {
@@ -306,11 +320,11 @@ public class PlayerInteract implements Listener {
             return;
         }
 
-        if (!Security.canAccess(player, signBlock)) {
+        if (!security.canAccess(player, signBlock)) {
             return;
         }
         
-        if (!Security.canAccess(player, container.getBlock())) {
+        if (!security.canAccess(player, container.getBlock())) {
             return;
         }
 

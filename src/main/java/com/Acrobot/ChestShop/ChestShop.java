@@ -1,28 +1,24 @@
 package com.Acrobot.ChestShop;
 
 import com.Acrobot.Breeze.Configuration.Configuration;
-import com.Acrobot.ChestShop.Commands.Give;
-import com.Acrobot.ChestShop.Commands.ItemInfo;
-import com.Acrobot.ChestShop.Commands.ShopInfo;
-import com.Acrobot.ChestShop.Commands.Toggle;
-import com.Acrobot.ChestShop.Commands.Version;
-import com.Acrobot.ChestShop.Commands.AccessToggle;
+import com.Acrobot.ChestShop.Commands.*;
 import com.Acrobot.ChestShop.Configuration.Messages;
 import com.Acrobot.ChestShop.Configuration.Properties;
 import com.Acrobot.ChestShop.Database.Migrations;
 import com.Acrobot.ChestShop.Events.EventManager;
+import com.Acrobot.ChestShop.Events.Protection.ProtectionCheckEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.ChestShopReloadEvent;
+import com.Acrobot.ChestShop.Listeners.Economy.Plugins.VaultListener;
 import com.Acrobot.ChestShop.Logging.FileFormatter;
 import com.Acrobot.ChestShop.Metadata.ItemDatabase;
+import com.Acrobot.ChestShop.Signs.ChestShopSign;
+import com.Acrobot.ChestShop.Utils.ItemUtil;
 import com.Acrobot.ChestShop.Utils.NameManager;
-
+import com.Acrobot.ChestShop.Utils.uBlock;
 import com.Acrobot.ChestShop.todo.Dependencies;
 import com.Acrobot.ChestShop.todo.Permission;
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
-
+import com.Acrobot.ChestShop.todo.Security;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Marker;
@@ -31,12 +27,15 @@ import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.core.config.LoggerConfig;
 import org.apache.logging.log4j.core.filter.AbstractFilter;
 import org.apache.logging.log4j.message.Message;
-
 import org.bukkit.Bukkit;
-import org.bukkit.Server;
+import org.bukkit.block.Block;
+import org.bukkit.block.Sign;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -44,25 +43,27 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
+import static com.Acrobot.Breeze.Utils.BlockUtil.isSign;
+import static com.Acrobot.Breeze.Utils.ImplementationAdapter.getState;
+
 /**
  * Main file of the plugin
  *
  * @author Acrobot
  */
-public class ChestShop extends JavaPlugin {
-    private static ChestShop plugin;
-    private static Server server;
+public class ChestShop extends JavaPlugin implements Listener {
     private static PluginDescriptionFile description;
     private static final ExecutorService executorService = Executors.newCachedThreadPool();
     private final EventManager eventManager;
     private static BukkitAudiences audiences;
+    private final NameManager nameManager;
+    private final ChestShopSign chestShopSign;
 
     private static File dataFolder;
     private static ItemDatabase itemDatabase;
@@ -70,6 +71,9 @@ public class ChestShop extends JavaPlugin {
     private static Logger logger;
     private static Logger shopLogger;
     private FileHandler handler;
+    private final Security security;
+    private final ItemInfo itemInfo;
+    private final ItemUtil itemUtil;
 
     private final List<PluginCommand> commands = new ArrayList<>();
 
@@ -79,9 +83,13 @@ public class ChestShop extends JavaPlugin {
         shopLogger = Logger.getLogger("ChestShop Shops");
         shopLogger.setParent(logger);
         description = getDescription();
-        server = getServer();
-        plugin = this;
-        eventManager = new EventManager(getServer().getPluginManager(), this);
+        nameManager = new NameManager(this);
+        chestShopSign = new ChestShopSign();
+        eventManager = new EventManager(getServer().getPluginManager(), this, chestShopSign, nameManager);
+        security = new Security(this);
+        itemUtil = new ItemUtil(this);
+        itemInfo = new ItemInfo(this, itemUtil);
+        getServer().getPluginManager().registerEvents(this, this);
     }
 
     @Override
@@ -91,20 +99,21 @@ public class ChestShop extends JavaPlugin {
 
     @Override
     public void onEnable() {
+
         audiences = BukkitAudiences.create(this);
         turnOffDatabaseLogging();
         File versionFile = loadFile("version");
         if (!Migrations.handleMigrations(logger, versionFile)) {
-            plugin.getServer().getPluginManager().disablePlugin(this);
+            getServer().getPluginManager().disablePlugin(this);
             return;
         }
-        Dependencies dependencies = new Dependencies(eventManager);
+        Dependencies dependencies = new Dependencies(this, eventManager, new VaultListener(this));
 
-        registerCommand("iteminfo", new ItemInfo(), Permission.ITEMINFO);
-        registerCommand("shopinfo", new ShopInfo(), Permission.SHOPINFO);
-        registerCommand("csVersion", new Version(), Permission.ADMIN);
+        registerCommand("iteminfo", itemInfo, Permission.ITEMINFO);
+        registerCommand("shopinfo", new ShopInfo(this), Permission.SHOPINFO);
+        registerCommand("csVersion", new Version(this), Permission.ADMIN);
         registerCommand("csMetrics", new com.Acrobot.ChestShop.Commands.Metrics(), Permission.ADMIN);
-        registerCommand("csGive", new Give(), Permission.ADMIN);
+        registerCommand("csGive", new Give(itemUtil), Permission.ADMIN);
         registerCommand("cstoggle", new Toggle(), Permission.NOTIFY_TOGGLE);
         registerCommand("csaccess", new AccessToggle(), Permission.ACCESS_TOGGLE);
 
@@ -129,7 +138,7 @@ public class ChestShop extends JavaPlugin {
     public void loadConfig() {
         Configuration.pairFileAndClass(loadFile("config.yml"), Properties.class, getBukkitLogger());
 
-        Messages.load();
+        new Messages(this).load();
 
         NameManager.load();
 
@@ -263,10 +272,6 @@ public class ChestShop extends JavaPlugin {
         }
     }
 
-    public static Server getBukkitServer() {
-        return server;
-    }
-
     public static String getVersion() {
         return description.getVersion();
     }
@@ -279,39 +284,78 @@ public class ChestShop extends JavaPlugin {
         return description.getSoftDepend();
     }
 
-    public static ChestShop getPlugin() {
-        return plugin;
-    }
-
     public static BukkitAudiences getAudiences() {
         return audiences;
     }
 
-    public static <E extends Event> E callEvent(E event) {
-        Bukkit.getPluginManager().callEvent(event);
-        return event;
+    public static void runInAsyncThread(Runnable runnable) {
+        executorService.submit(runnable);
     }
 
-    public static void sendBungeeMessage(String playerName, Messages.Message message, Map<String, String> replacementMap, String... replacements) {
-        sendBungeeMessage(playerName, message.getComponent(null, true, replacementMap, replacements));
+    public ItemInfo getItemInfo() {
+        return itemInfo;
     }
 
-    public static void sendBungeeMessage(String playerName, Component message) {
-        sendBungeeMessage(playerName, "MessageRaw", GsonComponentSerializer.gson().serialize(message));
+    public ItemUtil getItemUtil() {
+        return itemUtil;
     }
 
-    private static void sendBungeeMessage(String playerName, String channel, String message) {
-        if (Properties.BUNGEECORD_MESSAGES && !Bukkit.getOnlinePlayers().isEmpty()) {
-            ByteArrayDataOutput out = ByteStreams.newDataOutput();
-            out.writeUTF(channel);
-            out.writeUTF(playerName);
-            out.writeUTF(message);
+    @EventHandler
+    public void onReload(ChestShopReloadEvent event) {
+        loadConfig();
+    }
 
-            Bukkit.getOnlinePlayers().iterator().next().sendPluginMessage(plugin, "BungeeCord", out.toByteArray());
+    @EventHandler
+    public void onProtectionCheck(ProtectionCheckEvent event) {
+        if (event.getResult() == Event.Result.DENY || event.isBuiltInProtectionIgnored()) {
+            return;
+        }
+
+        Block block = event.getBlock();
+        Player player = event.getPlayer();
+
+        if (!canAccess(player, block, chestShopSign, nameManager)) {
+            event.setResult(Event.Result.DENY);
         }
     }
 
-    public static void runInAsyncThread(Runnable runnable) {
-        executorService.submit(runnable);
+    public boolean canAccess(Player player, Block block, ChestShopSign chestShopSign, NameManager nameManager) {
+        if (!canBeProtected(block)) {
+            return true;
+        }
+
+        if (isSign(block)) {
+            Sign sign = (Sign) getState(block, false);
+
+            if (!ChestShopSign.isValid(sign)) {
+                return true;
+            }
+
+            if (!isShopMember(player, sign, chestShopSign, nameManager)) {
+                return false;
+            }
+        }
+
+        if (uBlock.couldBeShopContainer(block)) {
+            Sign sign = uBlock.getConnectedSign(block);
+
+            if (sign != null && !isShopMember(player, sign, chestShopSign, nameManager)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static boolean canBeProtected(Block block) {
+        return isSign(block) || uBlock.couldBeShopContainer(block);
+    }
+
+    private boolean isShopMember(Player player, Sign sign, ChestShopSign chestShopSign, NameManager nameManager) {
+        return chestShopSign.hasPermission(player, Permission.OTHER_NAME_ACCESS, sign, nameManager);
+    }
+
+    public Security getSecurity() {
+        return security;
     }
 }

@@ -19,9 +19,14 @@ import static com.Acrobot.ChestShop.todo.Permission.ADMIN;
  * @author Acrobot
  */
 public class ChestChecker implements Listener {
+    private final Security security;
+
+    public ChestChecker(Security security) {
+        this.security = security;
+    }
 
     @EventHandler(priority = EventPriority.LOW)
-    public static void onPreShopCreation(PreShopCreationEvent event) {
+    public void onPreShopCreation(PreShopCreationEvent event) {
         String nameLine = ChestShopSign.getOwner(event.getSignLines());
 
         Container connectedContainer = uBlock.findConnectedContainer(event.getSign().getBlock());
@@ -39,7 +44,7 @@ public class ChestChecker implements Listener {
             return;
         }
 
-        if (!Security.canAccess(player, connectedContainer.getBlock())) {
+        if (!security.canAccess(player, connectedContainer.getBlock())) {
             event.setOutcome(NO_PERMISSION_FOR_CHEST);
         }
     }

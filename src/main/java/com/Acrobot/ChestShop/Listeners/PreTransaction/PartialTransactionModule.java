@@ -15,6 +15,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -32,9 +33,14 @@ import static com.Acrobot.ChestShop.Events.tobesorted.TransactionEvent.Transacti
  * @author Acrobot
  */
 public class PartialTransactionModule implements Listener {
+    private final Plugin plugin;
+
+    public PartialTransactionModule(Plugin plugin) {
+        this.plugin = plugin;
+    }
 
     @EventHandler(priority = EventPriority.LOW)
-    public static void onPreBuyTransaction(PreTransactionEvent event) {
+    public void onPreBuyTransaction(PreTransactionEvent event) {
         if (event.isCancelled() || event.getTransactionType() != BUY) {
             return;
         }
@@ -44,12 +50,12 @@ public class PartialTransactionModule implements Listener {
         BigDecimal pricePerItem = event.getExactPrice().divide(BigDecimal.valueOf(InventoryUtil.countItems(event.getStock())), MathContext.DECIMAL128);
 
         CurrencyAmountEvent currencyAmountEvent = new CurrencyAmountEvent(client);
-        ChestShop.callEvent(currencyAmountEvent);
+        plugin.getServer().getPluginManager().callEvent(currencyAmountEvent);
 
         BigDecimal walletMoney = currencyAmountEvent.getAmount();
 
         CurrencyCheckEvent currencyCheckEvent = new CurrencyCheckEvent(event.getExactPrice(), client);
-        ChestShop.callEvent(currencyCheckEvent);
+        plugin.getServer().getPluginManager().callEvent(currencyCheckEvent);
 
         if (!currencyCheckEvent.hasEnough()) {
             int amountAffordable = getAmountOfAffordableItems(walletMoney, pricePerItem);
@@ -109,7 +115,7 @@ public class PartialTransactionModule implements Listener {
         UUID seller = event.getOwnerAccount().getUuid();
 
         CurrencyHoldEvent currencyHoldEvent = new CurrencyHoldEvent(event.getExactPrice(), seller, client.getWorld());
-        ChestShop.callEvent(currencyHoldEvent);
+        plugin.getServer().getPluginManager().callEvent(currencyHoldEvent);
 
         if (!currencyHoldEvent.canHold()) {
             event.setCancelled(SHOP_DEPOSIT_FAILED);
@@ -117,7 +123,7 @@ public class PartialTransactionModule implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOW)
-    public static void onPreSellTransaction(PreTransactionEvent event) {
+    public void onPreSellTransaction(PreTransactionEvent event) {
         if (event.isCancelled() || event.getTransactionType() != SELL) {
             return;
         }
@@ -130,11 +136,11 @@ public class PartialTransactionModule implements Listener {
 
         if (Economy.isOwnerEconomicallyActive(event.getOwnerInventory())) {
             CurrencyCheckEvent currencyCheckEvent = new CurrencyCheckEvent(event.getExactPrice(), owner, client.getWorld());
-            ChestShop.callEvent(currencyCheckEvent);
+            plugin.getServer().getPluginManager().callEvent(currencyCheckEvent);
 
             if (!currencyCheckEvent.hasEnough()) {
                 CurrencyAmountEvent currencyAmountEvent = new CurrencyAmountEvent(owner, client.getWorld());
-                ChestShop.callEvent(currencyAmountEvent);
+                plugin.getServer().getPluginManager().callEvent(currencyAmountEvent);
 
                 BigDecimal walletMoney = currencyAmountEvent.getAmount();
                 int amountAffordable = getAmountOfAffordableItems(walletMoney, pricePerItem);
@@ -193,7 +199,7 @@ public class PartialTransactionModule implements Listener {
         }
 
         CurrencyHoldEvent currencyHoldEvent = new CurrencyHoldEvent(event.getExactPrice(), client);
-        ChestShop.callEvent(currencyHoldEvent);
+        plugin.getServer().getPluginManager().callEvent(currencyHoldEvent);
 
         if (!currencyHoldEvent.canHold()) {
             event.setCancelled(CLIENT_DEPOSIT_FAILED);

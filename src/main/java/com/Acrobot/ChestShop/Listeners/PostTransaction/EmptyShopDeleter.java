@@ -15,14 +15,20 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 
 /**
  * @author Acrobot
  */
 public class EmptyShopDeleter implements Listener {
+    private final Plugin plugin;
+
+    public EmptyShopDeleter(Plugin plugin) {
+        this.plugin = plugin;
+    }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public static void onTransaction(TransactionEvent event) {
+    public void onTransaction(TransactionEvent event) {
         if (event.getTransactionType() != TransactionEvent.TransactionType.BUY) {
             return;
         }
@@ -46,7 +52,7 @@ public class EmptyShopDeleter implements Listener {
         Container connectedContainer = uBlock.findConnectedContainer(sign);
 
         ShopDestroyedEvent destroyedEvent = new ShopDestroyedEvent(null, event.getSign(), connectedContainer);
-        ChestShop.callEvent(destroyedEvent);
+        plugin.getServer().getPluginManager().callEvent(destroyedEvent);
 
         Material signType = sign.getType();
         sign.getBlock().setType(Material.AIR);

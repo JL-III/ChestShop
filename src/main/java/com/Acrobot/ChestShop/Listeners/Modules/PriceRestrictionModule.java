@@ -33,8 +33,10 @@ import static com.Acrobot.ChestShop.todo.Permission.*;
 public class PriceRestrictionModule implements Listener {
     private YamlConfiguration configuration;
     private static final double INVALID_PATH = Double.MIN_VALUE;
+    private final ItemUtil itemUtil;
 
-    public PriceRestrictionModule() {
+    public PriceRestrictionModule(ItemUtil itemUtil) {
+        this.itemUtil = itemUtil;
         load();
     }
 
@@ -126,7 +128,7 @@ public class PriceRestrictionModule implements Listener {
      * @return the getSignName for the itemStack, or the item's material
      */
     private String getItemReference(String maxMinPath, ItemStack itemStack) {
-        String signName = ItemUtil.getSignName(itemStack);
+        String signName = itemUtil.getSignName(itemStack);
         // If there is a valid path to the itemstack using getSignName, return signName
         // otherwise return the item material
         return isValid((maxMinPath + signName)) ? signName

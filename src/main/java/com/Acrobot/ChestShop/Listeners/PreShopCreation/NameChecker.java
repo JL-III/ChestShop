@@ -21,18 +21,25 @@ import static com.Acrobot.ChestShop.Events.tobesorted.PreShopCreationEvent.Creat
  * @author Acrobot
  */
 public class NameChecker implements Listener {
+    private final ChestShop plugin;
+    private final NameManager nameManager;
+
+    public NameChecker(ChestShop plugin, NameManager nameManager) {
+        this.plugin = plugin;
+        this.nameManager = nameManager;
+    }
 
     @EventHandler(priority = EventPriority.LOW)
-    public static void onPreShopCreation(PreShopCreationEvent event) {
+    public void onPreShopCreation(PreShopCreationEvent event) {
         handleEvent(event);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public static void onPreShopCreationHighest(PreShopCreationEvent event) {
+    public void onPreShopCreationHighest(PreShopCreationEvent event) {
         handleEvent(event);
     }
 
-    private static void handleEvent(PreShopCreationEvent event) {
+    private void handleEvent(PreShopCreationEvent event) {
         String name = ChestShopSign.getOwner(event.getSignLines());
         Player player = event.getPlayer();
 
@@ -40,19 +47,19 @@ public class NameChecker implements Listener {
         if (account == null || !account.getShortName().equalsIgnoreCase(name)) {
             account = null;
             try {
-                if (name.isEmpty() || !NameManager.canUseName(player, OTHER_NAME_CREATE, name)) {
+                if (name.isEmpty() || !nameManager.canUseName(player, OTHER_NAME_CREATE, name)) {
                     account = NameManager.getOrCreateAccount(player);
                 } else {
                     AccountQueryEvent accountQueryEvent = new AccountQueryEvent(name);
-                    ChestShop.callEvent(accountQueryEvent);
+                    plugin.getServer().getPluginManager().callEvent(accountQueryEvent);
                     account = accountQueryEvent.getAccount();
                     if (account == null) {
-                        Player otherPlayer = ChestShop.getBukkitServer().getPlayer(name);
+                        Player otherPlayer = plugin.getServer().getPlayer(name);
                         try {
                             if (otherPlayer != null) {
                                 account = NameManager.getOrCreateAccount(otherPlayer);
                             } else {
-                                account = NameManager.getOrCreateAccount(ChestShop.getBukkitServer().getOfflinePlayer(name));
+                                account = NameManager.getOrCreateAccount(plugin.getServer().getOfflinePlayer(name));
                             }
                         } catch (IllegalArgumentException e) {
                             event.getPlayer().sendMessage(e.getMessage());

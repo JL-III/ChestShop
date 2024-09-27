@@ -36,28 +36,31 @@ import com.Acrobot.ChestShop.Events.Economy.CurrencyTransferEvent;
  * @author Acrobot
  */
 public class VaultListener extends EconomyAdapter {
+    private final Plugin plugin;
     private RegisteredServiceProvider<Economy> rsp;
     private static Economy provider;
     private Plugin providingPlugin;
 
-    private VaultListener() {
+    public VaultListener(Plugin plugin) {
+        super(plugin);
+        this.plugin = plugin;
         updateEconomyProvider();
     }
 
     private void updateEconomyProvider() {
-        rsp = ChestShop.getBukkitServer().getServicesManager().getRegistration(Economy.class);
+        rsp = plugin.getServer().getServicesManager().getRegistration(Economy.class);
 
         if (rsp != null) {
             provider = rsp.getProvider();
             providingPlugin = rsp.getPlugin();
-            ChestShop.getBukkitLogger().log(Level.INFO, "Using " + provider.getName() + " as the Economy provider now.");
+            plugin.getLogger().log(Level.INFO, "Using " + provider.getName() + " as the Economy provider now.");
         }
     }
 
     private boolean checkSetup() {
         if (provider == null) {
             ChestShop.getBukkitLogger().log(Level.SEVERE, "No Vault compatible Economy plugin found!");
-            ChestShop.getBukkitServer().getPluginManager().disablePlugin(ChestShop.getPlugin());
+            plugin.getServer().getPluginManager().disablePlugin(plugin);
             return false;
         }
         return true;
@@ -86,11 +89,11 @@ public class VaultListener extends EconomyAdapter {
      *
      * @return VaultListener
      */
-    public static @Nullable VaultListener initializeVault() {
+    public @Nullable VaultListener initializeVault() {
         if (Bukkit.getPluginManager().getPlugin("Vault") == null) {
             return null;
         }
-        return new VaultListener();
+        return new VaultListener(plugin);
     }
 
     @EventHandler

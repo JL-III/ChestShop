@@ -12,11 +12,18 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 /**
  * @author Phoenix616
  */
 public class ShopInfo implements CommandExecutor {
+    private final Plugin plugin;
+
+    public ShopInfo(Plugin plugin) {
+        this.plugin = plugin;
+    }
+
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (sender instanceof Player) {
             Block target = ((Player) sender).getTargetBlockExact(5);
@@ -30,7 +37,7 @@ public class ShopInfo implements CommandExecutor {
 
                 if (sign != null) {
                     ShopInfoEvent event = new ShopInfoEvent((Player) sender, sign);
-                    ChestShop.callEvent(event);
+                    plugin.getServer().getPluginManager().callEvent(event);
                 } else {
                     Messages.NO_SHOP_FOUND.sendWithPrefix(sender);
                 }

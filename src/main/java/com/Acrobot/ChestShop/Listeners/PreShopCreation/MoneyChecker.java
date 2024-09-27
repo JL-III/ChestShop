@@ -9,6 +9,7 @@ import com.Acrobot.ChestShop.Signs.ChestShopSign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.checkerframework.checker.units.qual.C;
 
 import java.math.BigDecimal;
 
@@ -19,9 +20,14 @@ import static com.Acrobot.ChestShop.todo.Permission.NOFEE;
  * @author Acrobot
  */
 public class MoneyChecker implements Listener {
+    private final ChestShop plugin;
+
+    public MoneyChecker(ChestShop plugin) {
+        this.plugin = plugin;
+    }
 
     @EventHandler
-    public static void onPreShopCreation(PreShopCreationEvent event) {
+    public void onPreShopCreation(PreShopCreationEvent event) {
         BigDecimal shopCreationPrice = Properties.SHOP_CREATION_PRICE;
 
         if (shopCreationPrice.compareTo(BigDecimal.ZERO) == 0) {
@@ -39,7 +45,7 @@ public class MoneyChecker implements Listener {
         }
 
         CurrencyCheckEvent currencyCheckEvent = new CurrencyCheckEvent(shopCreationPrice, player);
-        ChestShop.callEvent(currencyCheckEvent);
+        plugin.getServer().getPluginManager().callEvent(currencyCheckEvent);
 
         if (!currencyCheckEvent.hasEnough()) {
             event.setOutcome(NOT_ENOUGH_MONEY);

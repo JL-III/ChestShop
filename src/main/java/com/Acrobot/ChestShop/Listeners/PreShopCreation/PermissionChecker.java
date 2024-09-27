@@ -23,13 +23,18 @@ import static org.bukkit.event.EventPriority.HIGH;
  * @author Acrobot
  */
 public class PermissionChecker implements Listener {
+    private final NameManager nameManager;
+
+    public PermissionChecker(NameManager nameManager) {
+        this.nameManager = nameManager;
+    }
 
     @EventHandler(priority = HIGH)
-    public static void onPreShopCreation(PreShopCreationEvent event) {
+    public void onPreShopCreation(PreShopCreationEvent event) {
         Player player = event.getPlayer();
 
         if (event.getOwnerAccount() != null
-                && !NameManager.canUseName(player, OTHER_NAME_CREATE, event.getOwnerAccount().getShortName())) {
+                && !nameManager.canUseName(player, OTHER_NAME_CREATE, event.getOwnerAccount().getShortName())) {
             event.setSignLine(NAME_LINE, "");
             event.setOutcome(NO_PERMISSION);
             return;

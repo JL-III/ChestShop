@@ -7,6 +7,7 @@ import com.Acrobot.ChestShop.Events.tobesorted.ItemParseEvent;
 import com.Acrobot.ChestShop.Events.tobesorted.ItemStringQueryEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,11 @@ import static com.Acrobot.Breeze.Utils.MaterialUtil.MAXIMUM_SIGN_WIDTH;
 import static com.Acrobot.Breeze.Utils.StringUtil.getMinecraftStringWidth;
 
 public class ItemUtil {
+    private final Plugin plugin;
+
+    public ItemUtil(Plugin plugin) {
+        this.plugin = plugin;
+    }
 
     /**
      * Get a list with item information
@@ -22,7 +28,7 @@ public class ItemUtil {
      * @param items The items to get the information from
      * @return The list, including the amount and names of the items
      */
-    public static String getItemList(ItemStack[] items) {
+    public String getItemList(ItemStack[] items) {
         ItemStack[] mergedItems = InventoryUtil.mergeSimilarStacks(items);
 
         List<String> itemText = new ArrayList<>();
@@ -40,7 +46,7 @@ public class ItemUtil {
      * @param itemStack ItemStack to name
      * @return ItemStack's name
      */
-    public static String getName(ItemStack itemStack) {
+    public String getName(ItemStack itemStack) {
         return getName(itemStack, 0);
     }
 
@@ -52,8 +58,11 @@ public class ItemUtil {
      * @param maxWidth The max width that the name should have; 0 or below if it should be unlimited
      * @return ItemStack's name
      */
-    public static String getName(ItemStack itemStack, int maxWidth) {
-        String code = ChestShop.callEvent(new ItemStringQueryEvent(itemStack, maxWidth)).getItemString();
+    public String getName(ItemStack itemStack, int maxWidth) {
+        ItemStringQueryEvent event = new ItemStringQueryEvent(itemStack, maxWidth);
+        String code = event.getItemString();
+        plugin.getServer().getPluginManager().callEvent(event);
+
         if (code != null) {
             if (maxWidth > 0) {
                 int codeWidth = getMinecraftStringWidth(code);
@@ -93,7 +102,7 @@ public class ItemUtil {
      * @param itemStack ItemStack to name
      * @return ItemStack's name
      */
-    public static String getSignName(ItemStack itemStack) {
+    public String getSignName(ItemStack itemStack) {
         return getName(itemStack, MAXIMUM_SIGN_WIDTH);
     }
 }
