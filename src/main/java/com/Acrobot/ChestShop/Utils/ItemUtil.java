@@ -3,8 +3,8 @@ package com.Acrobot.ChestShop.Utils;
 import com.Acrobot.Breeze.Utils.InventoryUtil;
 import com.Acrobot.Breeze.Utils.MaterialUtil;
 import com.Acrobot.ChestShop.ChestShop;
-import com.Acrobot.ChestShop.Events.ItemParseEvent;
-import com.Acrobot.ChestShop.Events.ItemStringQueryEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.ItemParseEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.ItemStringQueryEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 

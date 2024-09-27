@@ -1,13 +1,13 @@
 package com.Acrobot.ChestShop.Listeners.PreTransaction;
 
 import com.Acrobot.ChestShop.Configuration.Properties;
-import com.Acrobot.ChestShop.Events.PreTransactionEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.PreTransactionEvent;
 import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
-import static com.Acrobot.ChestShop.Events.PreTransactionEvent.TransactionOutcome.CREATIVE_MODE_PROTECTION;
+import static com.Acrobot.ChestShop.Events.tobesorted.PreTransactionEvent.TransactionOutcome.CREATIVE_MODE_PROTECTION;
 
 /**
  * @author Acrobot

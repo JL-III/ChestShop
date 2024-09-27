@@ -1,7 +1,7 @@
 package com.Acrobot.ChestShop.Tests;
 
 import com.Acrobot.Breeze.Utils.PriceUtil;
-import com.Acrobot.ChestShop.Events.PreShopCreationEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.PreShopCreationEvent;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
 import org.junit.Test;
 import org.junit.runner.RunWith;

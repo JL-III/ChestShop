@@ -3,7 +3,7 @@ package com.Acrobot.ChestShop.Listeners.PreShopCreation;
 import com.Acrobot.ChestShop.ChestShop;
 import com.Acrobot.ChestShop.Configuration.Properties;
 import com.Acrobot.ChestShop.Events.Economy.CurrencyCheckEvent;
-import com.Acrobot.ChestShop.Events.PreShopCreationEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.PreShopCreationEvent;
 import com.Acrobot.ChestShop.todo.Permission;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
 import org.bukkit.entity.Player;
@@ -12,7 +12,7 @@ import org.bukkit.event.Listener;
 
 import java.math.BigDecimal;
 
-import static com.Acrobot.ChestShop.Events.PreShopCreationEvent.CreationOutcome.NOT_ENOUGH_MONEY;
+import static com.Acrobot.ChestShop.Events.tobesorted.PreShopCreationEvent.CreationOutcome.NOT_ENOUGH_MONEY;
 import static com.Acrobot.ChestShop.todo.Permission.NOFEE;
 
 /**

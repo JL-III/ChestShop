@@ -3,7 +3,7 @@ package com.Acrobot.ChestShop.Listeners.Player;
 import com.Acrobot.ChestShop.ChestShop;
 import com.Acrobot.ChestShop.Configuration.Messages;
 import com.Acrobot.ChestShop.Configuration.Properties;
-import com.Acrobot.ChestShop.Events.ShopInfoEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.ShopInfoEvent;
 import com.Acrobot.ChestShop.todo.Permission;
 import com.Acrobot.ChestShop.todo.Security;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;

@@ -8,7 +8,7 @@ import com.Acrobot.ChestShop.Economy.Economy;
 import com.Acrobot.ChestShop.Events.Economy.CurrencyAmountEvent;
 import com.Acrobot.ChestShop.Events.Economy.CurrencyCheckEvent;
 import com.Acrobot.ChestShop.Events.Economy.CurrencyHoldEvent;
-import com.Acrobot.ChestShop.Events.PreTransactionEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.PreTransactionEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -24,9 +24,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
-import static com.Acrobot.ChestShop.Events.PreTransactionEvent.TransactionOutcome.*;
-import static com.Acrobot.ChestShop.Events.TransactionEvent.TransactionType.BUY;
-import static com.Acrobot.ChestShop.Events.TransactionEvent.TransactionType.SELL;
+import static com.Acrobot.ChestShop.Events.tobesorted.PreTransactionEvent.TransactionOutcome.*;
+import static com.Acrobot.ChestShop.Events.tobesorted.TransactionEvent.TransactionType.BUY;
+import static com.Acrobot.ChestShop.Events.tobesorted.TransactionEvent.TransactionType.SELL;
 
 /**
  * @author Acrobot

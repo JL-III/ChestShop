@@ -3,9 +3,9 @@ package com.Acrobot.ChestShop.Listeners.Modules;
 import com.Acrobot.Breeze.Utils.PriceUtil;
 import com.Acrobot.ChestShop.ChestShop;
 import com.Acrobot.ChestShop.Configuration.Messages;
-import com.Acrobot.ChestShop.Events.ChestShopReloadEvent;
-import com.Acrobot.ChestShop.Events.ItemParseEvent;
-import com.Acrobot.ChestShop.Events.PreShopCreationEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.ChestShopReloadEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.ItemParseEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.PreShopCreationEvent;
 import com.Acrobot.ChestShop.todo.Permission;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
 import com.Acrobot.ChestShop.Utils.ItemUtil;
@@ -24,7 +24,7 @@ import java.math.BigDecimal;
 import java.util.Locale;
 import java.util.logging.Level;
 
-import static com.Acrobot.ChestShop.Events.PreShopCreationEvent.CreationOutcome.*;
+import static com.Acrobot.ChestShop.Events.tobesorted.PreShopCreationEvent.CreationOutcome.*;
 import static com.Acrobot.ChestShop.todo.Permission.*;
 
 /**

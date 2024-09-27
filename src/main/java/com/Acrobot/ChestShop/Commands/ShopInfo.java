@@ -2,7 +2,7 @@ package com.Acrobot.ChestShop.Commands;
 
 import com.Acrobot.ChestShop.ChestShop;
 import com.Acrobot.ChestShop.Configuration.Messages;
-import com.Acrobot.ChestShop.Events.ShopInfoEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.ShopInfoEvent;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
 import com.Acrobot.ChestShop.Utils.uBlock;
 import org.bukkit.ChatColor;

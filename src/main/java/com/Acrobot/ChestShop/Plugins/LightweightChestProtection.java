@@ -3,11 +3,11 @@ package com.Acrobot.ChestShop.Plugins;
 import com.Acrobot.ChestShop.ChestShop;
 import com.Acrobot.ChestShop.Configuration.Messages;
 import com.Acrobot.ChestShop.Configuration.Properties;
-import com.Acrobot.ChestShop.Events.PreShopCreationEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.PreShopCreationEvent;
 import com.Acrobot.ChestShop.Events.Protection.ProtectBlockEvent;
 import com.Acrobot.ChestShop.Events.Protection.ProtectionCheckEvent;
-import com.Acrobot.ChestShop.Events.ShopCreatedEvent;
-import com.Acrobot.ChestShop.Events.ShopDestroyedEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.ShopCreatedEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.ShopDestroyedEvent;
 import com.Acrobot.ChestShop.todo.Security;
 import com.Acrobot.ChestShop.Utils.uBlock;
 import com.griefcraft.lwc.LWC;
@@ -26,7 +26,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
-import static com.Acrobot.ChestShop.Events.PreShopCreationEvent.CreationOutcome.OTHER_BREAK;
+import static com.Acrobot.ChestShop.Events.tobesorted.PreShopCreationEvent.CreationOutcome.OTHER_BREAK;
 
 /**
  * @author Acrobot

@@ -10,38 +10,9 @@ import com.Acrobot.ChestShop.Commands.AccessToggle;
 import com.Acrobot.ChestShop.Configuration.Messages;
 import com.Acrobot.ChestShop.Configuration.Properties;
 import com.Acrobot.ChestShop.Database.Migrations;
-import com.Acrobot.ChestShop.Listeners.Block.BlockPlace;
-import com.Acrobot.ChestShop.Listeners.Block.Break.ChestBreak;
-import com.Acrobot.ChestShop.Listeners.Block.Break.SignBreak;
-import com.Acrobot.ChestShop.Listeners.Block.SignCreate;
-import com.Acrobot.ChestShop.Listeners.Economy.ServerAccountCorrector;
-import com.Acrobot.ChestShop.Listeners.Economy.TaxModule;
-import com.Acrobot.ChestShop.Listeners.GarbageTextListener;
-import com.Acrobot.ChestShop.Listeners.Item.ItemMoveListener;
-import com.Acrobot.ChestShop.Listeners.Item.ItemStringListener;
-import com.Acrobot.ChestShop.Listeners.ItemInfoListener;
-import com.Acrobot.ChestShop.Listeners.Modules.ItemAliasModule;
-import com.Acrobot.ChestShop.Listeners.Modules.MetricsModule;
-import com.Acrobot.ChestShop.Listeners.Modules.StockCounterModule;
-import com.Acrobot.ChestShop.Listeners.ShopInfoListener;
-import com.Acrobot.ChestShop.Listeners.SignParseListener;
-import com.Acrobot.ChestShop.Listeners.Modules.DiscountModule;
-import com.Acrobot.ChestShop.Listeners.Modules.PriceRestrictionModule;
-import com.Acrobot.ChestShop.Listeners.Player.*;
-import com.Acrobot.ChestShop.Listeners.PreShopCreation.CreationFeeGetter;
-import com.Acrobot.ChestShop.Listeners.PostShopCreation.MessageSender;
-import com.Acrobot.ChestShop.Listeners.PostShopCreation.ShopCreationLogger;
-import com.Acrobot.ChestShop.Listeners.PostShopCreation.SignSticker;
-import com.Acrobot.ChestShop.Listeners.PostTransaction.*;
-import com.Acrobot.ChestShop.Listeners.PreShopCreation.*;
-import com.Acrobot.ChestShop.Listeners.PreTransaction.*;
-import com.Acrobot.ChestShop.Listeners.PreTransaction.ErrorMessageSender;
-import com.Acrobot.ChestShop.Listeners.PreTransaction.PermissionChecker;
-import com.Acrobot.ChestShop.Listeners.ShopRemoval.ShopRefundListener;
-import com.Acrobot.ChestShop.Listeners.ShopRemoval.ShopRemovalLogger;
+import com.Acrobot.ChestShop.Events.EventManager;
 import com.Acrobot.ChestShop.Logging.FileFormatter;
 import com.Acrobot.ChestShop.Metadata.ItemDatabase;
-import com.Acrobot.ChestShop.Signs.RestrictedSign;
 import com.Acrobot.ChestShop.Utils.NameManager;
 
 import com.Acrobot.ChestShop.todo.Dependencies;
@@ -52,8 +23,6 @@ import com.google.common.io.ByteStreams;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.chat.ComponentSerializer;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Marker;
@@ -93,7 +62,7 @@ public class ChestShop extends JavaPlugin {
     private static Server server;
     private static PluginDescriptionFile description;
     private static final ExecutorService executorService = Executors.newCachedThreadPool();
-
+    private final EventManager eventManager;
     private static BukkitAudiences audiences;
 
     private static File dataFolder;
@@ -113,6 +82,7 @@ public class ChestShop extends JavaPlugin {
         description = getDescription();
         server = getServer();
         plugin = this;
+        eventManager = new EventManager(getServer().getPluginManager(), this);
     }
 
     @Override
@@ -129,6 +99,7 @@ public class ChestShop extends JavaPlugin {
             plugin.getServer().getPluginManager().disablePlugin(this);
             return;
         }
+        Dependencies dependencies = new Dependencies(eventManager);
 
         registerCommand("iteminfo", new ItemInfo(), Permission.ITEMINFO);
         registerCommand("shopinfo", new ShopInfo(), Permission.SHOPINFO);
@@ -142,16 +113,9 @@ public class ChestShop extends JavaPlugin {
 
         itemDatabase = new ItemDatabase();
 
-        if (!Dependencies.loadPlugins()) {
+        if (!dependencies.loadPlugins()) {
             getServer().getPluginManager().disablePlugin(this);
-            return;
         }
-
-        registerEvents();
-
-        registerPluginMessagingChannels();
-
-        startBuildNotificatier();
     }
 
     private void registerCommand(String name, CommandExecutor executor, Permission permission) {
@@ -278,140 +242,6 @@ public class ChestShop extends JavaPlugin {
         }
     }
 
-    //////////////////    REGISTER EVENTS, SCHEDULER & STATS    ///////////////////////////
-    private void registerEvents() {
-        registerEvent(new com.Acrobot.ChestShop.Plugins.ChestShop()); //Chest protection
-
-        registerEvent(new Dependencies());
-        
-        registerEvent(new NameManager());
-
-        registerPreShopCreationEvents();
-        registerPreTransactionEvents();
-        registerPostShopCreationEvents();
-        registerPostTransactionEvents();
-        registerShopRemovalEvents();
-
-        registerModules();
-
-        registerEvent(new SignBreak());
-        registerEvent(new SignCreate());
-        registerEvent(new ChestBreak());
-
-        registerEvent(new BlockPlace());
-        registerEvent(new PlayerConnect());
-        registerEvent(new PlayerInteract());
-        registerEvent(new PlayerInventory());
-        registerEvent(new PlayerLeave());
-        registerEvent(new PlayerTeleport());
-
-        registerEvent(new SignParseListener());
-        registerEvent(new ItemStringListener());
-        registerEvent(new ItemInfoListener());
-        registerEvent(new ShopInfoListener());
-        registerEvent(new GarbageTextListener());
-
-        registerEvent(new RestrictedSign());
-
-        if (!Properties.TURN_OFF_HOPPER_PROTECTION) {
-            registerEvent(new ItemMoveListener());
-        }
-    }
-
-    private void registerShopRemovalEvents() {
-        registerEvent(new ShopRefundListener());
-        registerEvent(new ShopRemovalLogger());
-    }
-
-    private void registerPreShopCreationEvents() {
-        if (Properties.BLOCK_SHOPS_WITH_SELL_PRICE_HIGHER_THAN_BUY_PRICE) {
-            registerEvent(new PriceRatioChecker());
-        }
-
-        registerEvent(new ChestChecker());
-        registerEvent(new ItemChecker());
-        registerEvent(new MoneyChecker());
-        registerEvent(new NameChecker());
-        registerEvent(new com.Acrobot.ChestShop.Listeners.PreShopCreation.PermissionChecker());
-        registerEvent(new com.Acrobot.ChestShop.Listeners.PreShopCreation.ErrorMessageSender());
-        registerEvent(new PriceChecker());
-        registerEvent(new QuantityChecker());
-        registerEvent(new TerrainChecker());
-    }
-
-    private void registerPostShopCreationEvents() {
-        registerEvent(new CreationFeeGetter());
-        registerEvent(new MessageSender());
-        registerEvent(new SignSticker());
-        registerEvent(new ShopCreationLogger());
-    }
-
-    private void registerPreTransactionEvents() {
-        if (Properties.ALLOW_PARTIAL_TRANSACTIONS) {
-            registerEvent(new PartialTransactionModule());
-        } else {
-            registerEvent(new AmountAndPriceChecker());
-        }
-
-        registerEvent(new InvalidNameIgnorer());
-        registerEvent(new CreativeModeIgnorer());
-        registerEvent(new ErrorMessageSender());
-        registerEvent(new PermissionChecker());
-        registerEvent(new PriceValidator());
-        registerEvent(new ShopValidator());
-        registerEvent(new SpamClickProtector());
-        registerEvent(new StockFittingChecker());
-    }
-
-    private void registerPostTransactionEvents() {
-        registerEvent(new EconomicModule());
-        registerEvent(new EmptyShopDeleter());
-        registerEvent(new ItemManager());
-        registerEvent(new TransactionLogger());
-        registerEvent(new TransactionMessageSender());
-    }
-
-    private void registerModules() {
-        registerEvent(new ItemAliasModule());
-        registerEvent(new DiscountModule());
-        registerEvent(new MetricsModule());
-        registerEvent(new PriceRestrictionModule());
-        registerEvent(new StockCounterModule());
-
-        registerEconomicalModules();
-    }
-
-    private void registerEconomicalModules() {
-        registerEvent(new ServerAccountCorrector());
-        registerEvent(new TaxModule());
-    }
-
-    private void registerPluginMessagingChannels() {
-        if (Properties.BUNGEECORD_MESSAGES) {
-            getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-        }
-    }
-
-    public void registerEvent(Listener listener) {
-        getServer().getPluginManager().registerEvents(listener, this);
-    }
-
-    private int[] getChartArray(boolean value) {
-        return new int[]{!value ? 1 : 0, value ? 0 : 1};
-    }
-
-    private static final int PROJECT_BUKKITDEV_ID = 31263;
-
-    private static final String PROJECT_JENKINS_JOB_URL = "https://ci.minebench.de/job/ChestShop-3/";
-
-    private void startBuildNotificatier() {
-        if (Properties.TURN_OFF_DEV_UPDATE_NOTIFIER) {
-            return;
-        }
-    }
-
-    ///////////////////////////////////////////////////////////////////////////////
-
     public static ItemDatabase getItemDatabase() {
         return itemDatabase;
     }
@@ -458,10 +288,6 @@ public class ChestShop extends JavaPlugin {
         return audiences;
     }
 
-    public static void registerListener(Listener listener) {
-        plugin.registerEvent(listener);
-    }
-
     public static <E extends Event> E callEvent(E event) {
         Bukkit.getPluginManager().callEvent(event);
         return event;
@@ -469,14 +295,6 @@ public class ChestShop extends JavaPlugin {
 
     public static void sendBungeeMessage(String playerName, Messages.Message message, Map<String, String> replacementMap, String... replacements) {
         sendBungeeMessage(playerName, message.getComponent(null, true, replacementMap, replacements));
-    }
-
-    public static void sendBungeeMessage(String playerName, String message) {
-        sendBungeeMessage(playerName, "Message", message);
-    }
-
-    public static void sendBungeeMessage(String playerName, BaseComponent[] message) {
-        sendBungeeMessage(playerName, "MessageRaw", ComponentSerializer.toString(message));
     }
 
     public static void sendBungeeMessage(String playerName, Component message) {

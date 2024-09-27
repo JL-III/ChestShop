@@ -2,11 +2,11 @@ package com.Acrobot.ChestShop.Listeners.PostTransaction;
 
 import com.Acrobot.ChestShop.ChestShop;
 import com.Acrobot.ChestShop.Events.Economy.CurrencyTransferEvent;
-import com.Acrobot.ChestShop.Events.TransactionEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.TransactionEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
-import static com.Acrobot.ChestShop.Events.TransactionEvent.TransactionType.BUY;
+import static com.Acrobot.ChestShop.Events.tobesorted.TransactionEvent.TransactionType.BUY;
 
 /**
  * @author Acrobot

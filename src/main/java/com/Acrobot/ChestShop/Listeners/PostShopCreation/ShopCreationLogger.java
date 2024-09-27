@@ -2,7 +2,7 @@ package com.Acrobot.ChestShop.Listeners.PostShopCreation;
 
 import com.Acrobot.Breeze.Utils.LocationUtil;
 import com.Acrobot.ChestShop.ChestShop;
-import com.Acrobot.ChestShop.Events.ShopCreatedEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.ShopCreatedEvent;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

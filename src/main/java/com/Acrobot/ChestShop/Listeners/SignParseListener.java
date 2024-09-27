@@ -1,8 +1,8 @@
 package com.Acrobot.ChestShop.Listeners;
 
 import com.Acrobot.Breeze.Utils.MaterialUtil;
-import com.Acrobot.ChestShop.Events.ItemParseEvent;
-import com.Acrobot.ChestShop.Events.MaterialParseEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.ItemParseEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.MaterialParseEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;

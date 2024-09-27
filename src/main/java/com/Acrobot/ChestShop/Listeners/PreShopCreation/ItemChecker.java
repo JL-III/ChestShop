@@ -3,8 +3,8 @@ package com.Acrobot.ChestShop.Listeners.PreShopCreation;
 import com.Acrobot.Breeze.Utils.MaterialUtil;
 import com.Acrobot.Breeze.Utils.StringUtil;
 import com.Acrobot.ChestShop.Configuration.Properties;
-import com.Acrobot.ChestShop.Events.ItemParseEvent;
-import com.Acrobot.ChestShop.Events.PreShopCreationEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.ItemParseEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.PreShopCreationEvent;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
 import com.Acrobot.ChestShop.Utils.ItemUtil;
 import com.Acrobot.ChestShop.Utils.uBlock;
@@ -19,8 +19,8 @@ import org.bukkit.inventory.ItemStack;
 import java.util.regex.Matcher;
 
 import static com.Acrobot.Breeze.Utils.MaterialUtil.*;
-import static com.Acrobot.ChestShop.Events.PreShopCreationEvent.CreationOutcome.INVALID_ITEM;
-import static com.Acrobot.ChestShop.Events.PreShopCreationEvent.CreationOutcome.ITEM_AUTOFILL;
+import static com.Acrobot.ChestShop.Events.tobesorted.PreShopCreationEvent.CreationOutcome.INVALID_ITEM;
+import static com.Acrobot.ChestShop.Events.tobesorted.PreShopCreationEvent.CreationOutcome.ITEM_AUTOFILL;
 import static com.Acrobot.ChestShop.Signs.ChestShopSign.ITEM_LINE;
 import static com.Acrobot.ChestShop.Signs.ChestShopSign.AUTOFILL_CODE;
 

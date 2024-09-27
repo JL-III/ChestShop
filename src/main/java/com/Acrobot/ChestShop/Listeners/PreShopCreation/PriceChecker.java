@@ -2,7 +2,7 @@ package com.Acrobot.ChestShop.Listeners.PreShopCreation;
 
 import com.Acrobot.Breeze.Utils.PriceUtil;
 import com.Acrobot.ChestShop.Configuration.Properties;
-import com.Acrobot.ChestShop.Events.PreShopCreationEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.PreShopCreationEvent;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -11,7 +11,7 @@ import org.bukkit.event.Listener;
 import java.util.Locale;
 
 import static com.Acrobot.Breeze.Utils.PriceUtil.isPrice;
-import static com.Acrobot.ChestShop.Events.PreShopCreationEvent.CreationOutcome.INVALID_PRICE;
+import static com.Acrobot.ChestShop.Events.tobesorted.PreShopCreationEvent.CreationOutcome.INVALID_PRICE;
 import static com.Acrobot.ChestShop.Signs.ChestShopSign.PRICE_LINE;
 
 /**

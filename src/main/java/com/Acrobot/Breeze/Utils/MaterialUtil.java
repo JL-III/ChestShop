@@ -4,7 +4,7 @@ import com.Acrobot.Breeze.Collection.SimpleCache;
 import com.Acrobot.ChestShop.ChestShop;
 import com.Acrobot.ChestShop.Configuration.Messages;
 import com.Acrobot.ChestShop.Configuration.Properties;
-import com.Acrobot.ChestShop.Events.MaterialParseEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.MaterialParseEvent;
 import com.Acrobot.ChestShop.Utils.ItemUtil;
 import de.themoep.ShowItem.api.ShowItem;
 import de.themoep.minedown.adventure.Replacer;

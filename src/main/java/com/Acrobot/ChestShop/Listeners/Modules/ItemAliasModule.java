@@ -2,9 +2,9 @@ package com.Acrobot.ChestShop.Listeners.Modules;
 
 import com.Acrobot.Breeze.Utils.MaterialUtil;
 import com.Acrobot.ChestShop.ChestShop;
-import com.Acrobot.ChestShop.Events.ChestShopReloadEvent;
-import com.Acrobot.ChestShop.Events.ItemParseEvent;
-import com.Acrobot.ChestShop.Events.ItemStringQueryEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.ChestShopReloadEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.ItemParseEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.ItemStringQueryEvent;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import org.bukkit.configuration.file.YamlConfiguration;

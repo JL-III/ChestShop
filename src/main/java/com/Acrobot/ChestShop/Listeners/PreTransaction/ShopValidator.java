@@ -1,12 +1,12 @@
 package com.Acrobot.ChestShop.Listeners.PreTransaction;
 
-import com.Acrobot.ChestShop.Events.PreTransactionEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.PreTransactionEvent;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
-import static com.Acrobot.ChestShop.Events.PreTransactionEvent.TransactionOutcome.INVALID_SHOP;
+import static com.Acrobot.ChestShop.Events.tobesorted.PreTransactionEvent.TransactionOutcome.INVALID_SHOP;
 
 /**
  * @author Acrobot

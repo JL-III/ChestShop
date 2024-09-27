@@ -2,8 +2,8 @@ package com.Acrobot.ChestShop.Listeners.Modules;
 
 import com.Acrobot.Breeze.Utils.PriceUtil;
 import com.Acrobot.ChestShop.ChestShop;
-import com.Acrobot.ChestShop.Events.ChestShopReloadEvent;
-import com.Acrobot.ChestShop.Events.PreTransactionEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.ChestShopReloadEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.PreTransactionEvent;
 import com.Acrobot.ChestShop.todo.Permission;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
 import com.Acrobot.ChestShop.Utils.NameManager;
@@ -19,7 +19,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
 
-import static com.Acrobot.ChestShop.Events.TransactionEvent.TransactionType.BUY;
+import static com.Acrobot.ChestShop.Events.tobesorted.TransactionEvent.TransactionType.BUY;
 
 /**
  * @author Acrobot

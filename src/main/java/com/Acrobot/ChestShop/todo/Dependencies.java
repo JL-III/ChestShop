@@ -3,6 +3,7 @@ package com.Acrobot.ChestShop.todo;
 import com.Acrobot.Breeze.Utils.MaterialUtil;
 import com.Acrobot.ChestShop.ChestShop;
 import com.Acrobot.ChestShop.Configuration.Properties;
+import com.Acrobot.ChestShop.Events.EventManager;
 import com.Acrobot.ChestShop.Listeners.Economy.EconomyAdapter;
 import com.Acrobot.ChestShop.Listeners.Economy.Plugins.ReserveListener;
 import com.Acrobot.ChestShop.Listeners.Economy.Plugins.VaultListener;
@@ -28,6 +29,11 @@ import java.util.stream.Collectors;
  * @author Acrobot
  */
 public class Dependencies implements Listener {
+    private final EventManager eventManager;
+
+    public Dependencies(EventManager eventManager) {
+        this.eventManager = eventManager;
+    }
 
     private static final Map<String, String> versions = new HashMap<>();
 
@@ -63,7 +69,7 @@ public class Dependencies implements Listener {
         com.Acrobot.ChestShop.ChestShop.getBukkitLogger().info(description.getName() + " version " + description.getVersion() + " loaded.");
     }
 
-    public static boolean loadPlugins() {
+    public boolean loadPlugins() {
         PluginManager pluginManager = Bukkit.getPluginManager();
 
         for (Dependency dependency : Dependency.values()) {
@@ -80,7 +86,7 @@ public class Dependencies implements Listener {
         return loadEconomy();
     }
 
-    private static boolean loadEconomy() {
+    private boolean loadEconomy() {
         String plugin = "none";
 
         EconomyAdapter economy = null;
@@ -95,12 +101,12 @@ public class Dependencies implements Listener {
             return false;
         }
 
-        com.Acrobot.ChestShop.ChestShop.registerListener(economy);
+        eventManager.registerEvent(economy);
         com.Acrobot.ChestShop.ChestShop.getBukkitLogger().info(plugin + " loaded!");
         return true;
     }
 
-    private static boolean loadPlugin(String name, Plugin plugin) { //Really messy, right? But it's short and fast :)
+    private boolean loadPlugin(String name, Plugin plugin) { //Really messy, right? But it's short and fast :)
         Dependency dependency;
 
         try {
@@ -147,7 +153,7 @@ public class Dependencies implements Listener {
                 }
 
                 if (Properties.WORLDGUARD_USE_PROTECTION) {
-                    com.Acrobot.ChestShop.ChestShop.registerListener(new WorldGuardProtection(plugin));
+                    eventManager.registerEvent(new WorldGuardProtection(plugin));
                 }
 
                 if (Properties.WORLDGUARD_INTEGRATION) {
@@ -166,7 +172,7 @@ public class Dependencies implements Listener {
         }
 
         if (listener != null) {
-            com.Acrobot.ChestShop.ChestShop.registerListener(listener);
+            eventManager.registerEvent(listener);
         }
 
         PluginDescriptionFile description = plugin.getDescription();

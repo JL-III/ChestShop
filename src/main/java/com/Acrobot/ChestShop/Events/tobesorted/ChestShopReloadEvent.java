@@ -1,4 +1,4 @@
-package com.Acrobot.ChestShop.Events;
+package com.Acrobot.ChestShop.Events.tobesorted;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Event;

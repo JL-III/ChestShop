@@ -1,8 +1,8 @@
 package com.Acrobot.ChestShop.Plugins;
 
 import com.Acrobot.ChestShop.ChestShop;
-import com.Acrobot.ChestShop.Events.ItemParseEvent;
-import com.Acrobot.ChestShop.Events.ItemStringQueryEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.ItemParseEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.ItemStringQueryEvent;
 import com.jojodmo.itembridge.ItemBridge;
 import com.jojodmo.itembridge.ItemBridgeKey;
 import org.bukkit.event.EventHandler;

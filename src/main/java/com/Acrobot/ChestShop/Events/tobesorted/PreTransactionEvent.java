@@ -1,4 +1,4 @@
-package com.Acrobot.ChestShop.Events;
+package com.Acrobot.ChestShop.Events.tobesorted;
 
 import com.Acrobot.ChestShop.Database.Account;
 import org.bukkit.block.Sign;
@@ -11,9 +11,9 @@ import org.bukkit.inventory.ItemStack;
 
 import java.math.BigDecimal;
 
-import static com.Acrobot.ChestShop.Events.PreTransactionEvent.TransactionOutcome.OTHER;
-import static com.Acrobot.ChestShop.Events.PreTransactionEvent.TransactionOutcome.TRANSACTION_SUCCESFUL;
-import static com.Acrobot.ChestShop.Events.TransactionEvent.TransactionType;
+import static com.Acrobot.ChestShop.Events.tobesorted.PreTransactionEvent.TransactionOutcome.OTHER;
+import static com.Acrobot.ChestShop.Events.tobesorted.PreTransactionEvent.TransactionOutcome.TRANSACTION_SUCCESFUL;
+import static com.Acrobot.ChestShop.Events.tobesorted.TransactionEvent.TransactionType;
 
 /**
  * Represents a state before transaction occurs

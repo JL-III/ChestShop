@@ -1,7 +1,7 @@
 package com.Acrobot.ChestShop.Listeners.Item;
 
 import com.Acrobot.Breeze.Utils.MaterialUtil;
-import com.Acrobot.ChestShop.Events.ItemStringQueryEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.ItemStringQueryEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;

@@ -1,6 +1,6 @@
 package com.Acrobot.ChestShop.Plugins;
 
-import com.Acrobot.ChestShop.Events.ChestShopReloadEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.ChestShopReloadEvent;
 import com.Acrobot.ChestShop.Events.Protection.ProtectionCheckEvent;
 import com.Acrobot.ChestShop.todo.Permission;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;

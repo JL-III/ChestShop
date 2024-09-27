@@ -2,9 +2,8 @@ package com.Acrobot.ChestShop.Listeners.PostTransaction;
 
 import com.Acrobot.Breeze.Utils.ImplementationAdapter;
 import com.Acrobot.Breeze.Utils.InventoryUtil;
-import com.Acrobot.ChestShop.ChestShop;
 import com.Acrobot.ChestShop.Configuration.Properties;
-import com.Acrobot.ChestShop.Events.TransactionEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.TransactionEvent;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.DoubleChest;
 import org.bukkit.entity.Player;
@@ -15,8 +14,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
-import static com.Acrobot.ChestShop.Events.TransactionEvent.TransactionType.BUY;
-import static com.Acrobot.ChestShop.Events.TransactionEvent.TransactionType.SELL;
+import static com.Acrobot.ChestShop.Events.tobesorted.TransactionEvent.TransactionType.BUY;
+import static com.Acrobot.ChestShop.Events.tobesorted.TransactionEvent.TransactionType.SELL;
 
 /**
  * @author Acrobot

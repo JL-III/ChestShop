@@ -2,8 +2,8 @@ package com.Acrobot.ChestShop.Listeners.PreShopCreation;
 
 import com.Acrobot.ChestShop.ChestShop;
 import com.Acrobot.ChestShop.Database.Account;
-import com.Acrobot.ChestShop.Events.AccountQueryEvent;
-import com.Acrobot.ChestShop.Events.PreShopCreationEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.AccountQueryEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.PreShopCreationEvent;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
 import com.Acrobot.ChestShop.Utils.NameManager;
 import org.bukkit.entity.Player;
@@ -15,7 +15,7 @@ import java.util.logging.Level;
 
 import static com.Acrobot.ChestShop.todo.Permission.OTHER_NAME_CREATE;
 import static com.Acrobot.ChestShop.Signs.ChestShopSign.NAME_LINE;
-import static com.Acrobot.ChestShop.Events.PreShopCreationEvent.CreationOutcome.UNKNOWN_PLAYER;
+import static com.Acrobot.ChestShop.Events.tobesorted.PreShopCreationEvent.CreationOutcome.UNKNOWN_PLAYER;
 
 /**
  * @author Acrobot

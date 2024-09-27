@@ -2,7 +2,7 @@ package com.Acrobot.ChestShop.Listeners.PostTransaction;
 
 import com.Acrobot.Breeze.Utils.LocationUtil;
 import com.Acrobot.ChestShop.ChestShop;
-import com.Acrobot.ChestShop.Events.TransactionEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.TransactionEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 
 import static com.Acrobot.Breeze.Utils.InventoryUtil.mergeSimilarStacks;
 import static com.Acrobot.ChestShop.Utils.ItemUtil.getName;
-import static com.Acrobot.ChestShop.Events.TransactionEvent.TransactionType.BUY;
+import static com.Acrobot.ChestShop.Events.tobesorted.TransactionEvent.TransactionType.BUY;
 
 /**
  * @author Acrobot

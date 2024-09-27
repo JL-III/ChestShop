@@ -1,7 +1,7 @@
 package com.Acrobot.ChestShop.Listeners.PreTransaction;
 
-import com.Acrobot.ChestShop.Events.PreTransactionEvent;
-import com.Acrobot.ChestShop.Events.TransactionEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.PreTransactionEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.TransactionEvent;
 import com.Acrobot.ChestShop.todo.Permission;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
 import org.bukkit.entity.Player;
@@ -11,8 +11,8 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Locale;
 
-import static com.Acrobot.ChestShop.Events.PreTransactionEvent.TransactionOutcome.CLIENT_DOES_NOT_HAVE_PERMISSION;
-import static com.Acrobot.ChestShop.Events.TransactionEvent.TransactionType.BUY;
+import static com.Acrobot.ChestShop.Events.tobesorted.PreTransactionEvent.TransactionOutcome.CLIENT_DOES_NOT_HAVE_PERMISSION;
+import static com.Acrobot.ChestShop.Events.tobesorted.TransactionEvent.TransactionType.BUY;
 
 /**
  * @author Acrobot

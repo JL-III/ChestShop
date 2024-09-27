@@ -3,7 +3,8 @@ package com.Acrobot.ChestShop.Listeners;
 import com.Acrobot.Breeze.Utils.StringUtil;
 import com.Acrobot.ChestShop.ChestShop;
 import com.Acrobot.ChestShop.Commands.ItemInfo;
-import com.Acrobot.ChestShop.Events.ItemInfoEvent;
+import com.Acrobot.ChestShop.Events.EventManager;
+import com.Acrobot.ChestShop.Events.tobesorted.ItemInfoEvent;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.NamespacedKey;
@@ -50,12 +51,10 @@ import static com.Acrobot.ChestShop.Configuration.Messages.iteminfo_tropical_fis
  * @author Acrobot
  */
 public class ItemInfoListener implements Listener {
-
-    // Register version dependent listeners
-    static {
+    public ItemInfoListener(EventManager eventManager) {
         try {
             Class.forName("org.bukkit.inventory.meta.AxolotlBucketMeta");
-            ChestShop.registerListener(new Listener() {
+            eventManager.registerEvent(new Listener() {
                 @EventHandler
                 public void addAxolotlInfo(ItemInfoEvent event) {
                     if (event.getItem().hasItemMeta()) {
@@ -69,7 +68,7 @@ public class ItemInfoListener implements Listener {
         } catch (ClassNotFoundException | NoClassDefFoundError ignored) {}
         try {
             Class.forName("org.bukkit.inventory.meta.BundleMeta");
-            ChestShop.registerListener(new Listener() {
+            eventManager.registerEvent(new Listener() {
                 @EventHandler
                 public void addAxolotlInfo(ItemInfoEvent event) {
                     if (event.getItem().hasItemMeta()) {
@@ -83,7 +82,7 @@ public class ItemInfoListener implements Listener {
         } catch (ClassNotFoundException | NoClassDefFoundError ignored) {}
         try {
             Class.forName("org.bukkit.inventory.meta.CrossbowMeta");
-            ChestShop.registerListener(new Listener() {
+            eventManager.registerEvent(new Listener() {
                 @EventHandler
                 public void addCrossBowInfo(ItemInfoEvent event) {
                     if (event.getItem().hasItemMeta()) {
@@ -101,6 +100,8 @@ public class ItemInfoListener implements Listener {
             });
         } catch (ClassNotFoundException | NoClassDefFoundError ignored) {}
     }
+    // Register version dependent listeners
+
 
     @EventHandler
     public static void addRepairCost(ItemInfoEvent event) {

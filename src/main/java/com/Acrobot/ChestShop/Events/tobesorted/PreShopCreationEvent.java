@@ -1,4 +1,4 @@
-package com.Acrobot.ChestShop.Events;
+package com.Acrobot.ChestShop.Events.tobesorted;
 
 import com.Acrobot.ChestShop.Database.Account;
 import org.bukkit.block.Sign;

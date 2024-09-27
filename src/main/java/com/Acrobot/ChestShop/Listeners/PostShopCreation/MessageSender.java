@@ -1,7 +1,7 @@
 package com.Acrobot.ChestShop.Listeners.PostShopCreation;
 
 import com.Acrobot.ChestShop.Configuration.Messages;
-import com.Acrobot.ChestShop.Events.ShopCreatedEvent;
+import com.Acrobot.ChestShop.Events.tobesorted.ShopCreatedEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
