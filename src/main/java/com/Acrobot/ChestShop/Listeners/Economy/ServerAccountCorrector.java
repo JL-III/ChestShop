@@ -30,7 +30,6 @@ public class ServerAccountCorrector implements Listener {
             event.setHandled(true);
             return;
         }
-
         event.setTarget(target);
     }
 
@@ -49,7 +48,6 @@ public class ServerAccountCorrector implements Listener {
             event.setHandled(true);
             return;
         }
-
         event.setTarget(target);
     }
 
@@ -67,7 +65,6 @@ public class ServerAccountCorrector implements Listener {
         if (partner == null) {
             return;
         }
-
         event.setPartner(partner);
     }
 
@@ -86,7 +83,6 @@ public class ServerAccountCorrector implements Listener {
             event.hasEnough(true);
             return;
         }
-
         event.setAccount(target);
     }
 
@@ -105,7 +101,6 @@ public class ServerAccountCorrector implements Listener {
             event.canHold(true);
             return;
         }
-
         event.setAccount(target);
     }
 
@@ -124,7 +119,6 @@ public class ServerAccountCorrector implements Listener {
             event.setAmount(BigDecimal.valueOf(Double.MAX_VALUE));
             return;
         }
-
         event.setAccount(target);
     }
 }

@@ -2,12 +2,12 @@ package com.Acrobot.ChestShop.Commands;
 
 import com.Acrobot.ChestShop.Configuration.Messages;
 import com.google.common.base.Preconditions;
-import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,7 +20,7 @@ public class Toggle implements CommandExecutor {
     private static final Set<UUID> toggledPlayers = new HashSet<>();
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (!(sender instanceof Player)) {
             return false;
         }
@@ -52,14 +52,6 @@ public class Toggle implements CommandExecutor {
         return toggledPlayers.contains(playerId);
     }
 
-    /**
-     * @deprecated Use {@link #isIgnoring(UUID)}
-     */
-    @Deprecated
-    public static boolean isIgnoring(String playerName) {
-        return isIgnoring(Bukkit.getOfflinePlayer(playerName));
-    }
-
     public static boolean setIgnoring(Player player, boolean ignoring) {
         Preconditions.checkNotNull(player); // Make sure the player instance is not null, in case there are any errors in the code
 
@@ -68,8 +60,6 @@ public class Toggle implements CommandExecutor {
         } else {
             toggledPlayers.remove(player.getUniqueId());
         }
-
         return ignoring;
     }
-
 }

@@ -30,8 +30,8 @@ public class PlayerInventory implements Listener {
     private final ChestShop plugin;
     private final Security security;
 
-    public PlayerInventory(ChestShop pluign, Security security) {
-        this.plugin = pluign;
+    public PlayerInventory(ChestShop plugin, Security security) {
+        this.plugin = plugin;
         this.security = security;
     }
 

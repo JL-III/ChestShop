@@ -4,6 +4,7 @@ import com.Acrobot.ChestShop.Events.Economy.CurrencyAddEvent;
 import com.Acrobot.ChestShop.Events.Economy.CurrencySubtractEvent;
 import com.Acrobot.ChestShop.Events.Economy.CurrencyTransferEvent;
 import com.Acrobot.ChestShop.Utils.NameManager;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
@@ -21,6 +22,7 @@ public abstract class EconomyAdapter implements Listener {
      *
      * @param event The CurrencyTransferEvent to process
      */
+    @EventHandler
     protected void processTransfer(CurrencyTransferEvent event) {
         if (event.wasHandled()) {
             return;
@@ -55,24 +57,6 @@ public abstract class EconomyAdapter implements Listener {
                     event.getWorld()
             );
             plugin.getServer().getPluginManager().callEvent(currencyResetEvent);
-        }
-    }
-
-    public static class ProviderInfo {
-        private final String name;
-        private final String version;
-
-        public ProviderInfo(String name, String version) {
-            this.name = name;
-            this.version = version;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public String getVersion() {
-            return version;
         }
     }
 }

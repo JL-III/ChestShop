@@ -8,7 +8,6 @@ import com.Acrobot.ChestShop.Listeners.Block.ChestBreak;
 import com.Acrobot.ChestShop.Listeners.Block.SignBreak;
 import com.Acrobot.ChestShop.Listeners.Block.SignCreate;
 import com.Acrobot.ChestShop.Listeners.Economy.ServerAccountCorrector;
-import com.Acrobot.ChestShop.Listeners.Economy.TaxModule;
 import com.Acrobot.ChestShop.Listeners.GarbageTextListener;
 import com.Acrobot.ChestShop.Listeners.Item.ItemMoveListener;
 import com.Acrobot.ChestShop.Listeners.ItemInfoListener;
@@ -134,9 +133,7 @@ public class EventManager {
 
     private void registerModules() {
         registerEvent(new ItemAliasModule());
-        registerEvent(new DiscountModule());
         registerEvent(new MetricsModule());
-        registerEvent(new PriceRestrictionModule(plugin.getItemUtil()));
         registerEvent(new StockCounterModule());
 
         registerEconomicalModules();
@@ -144,7 +141,6 @@ public class EventManager {
 
     private void registerEconomicalModules() {
         registerEvent(new ServerAccountCorrector());
-        registerEvent(new TaxModule(plugin));
     }
 
     public void registerEvent(Listener listener) {

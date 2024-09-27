@@ -6,12 +6,15 @@ import com.Acrobot.ChestShop.Utils.NameManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Acrobot
  */
 public class Metrics implements CommandExecutor {
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+
+    @Override
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         Messages.METRICS.send(sender,
                 "accounts", String.valueOf(NameManager.getAccountCount()),
                 "totalTransactions", String.valueOf(MetricsModule.getTotalTransactions()),

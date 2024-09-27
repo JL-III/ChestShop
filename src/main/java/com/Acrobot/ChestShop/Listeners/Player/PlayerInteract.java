@@ -304,14 +304,6 @@ public class PlayerInteract implements Listener {
         }
     }
 
-    /**
-     * @deprecated Use {@link ChestShopSign#hasPermission(Player, Permission, Sign)} with {@link Permission#OTHER_NAME_ACCESS}
-     */
-    @Deprecated
-    public static boolean canOpenOtherShops(Player player) {
-        return Permission.has(player, Permission.OTHER_NAME_ACCESS + ".*");
-    }
-
     private void showChestGUI(Player player, Block signBlock, Sign sign) {
         Container container = uBlock.findConnectedContainer(sign);
 

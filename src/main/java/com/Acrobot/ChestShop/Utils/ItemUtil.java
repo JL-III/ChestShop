@@ -57,7 +57,7 @@ public class ItemUtil {
      * @return ItemStack's name
      */
     public String getName(ItemStack itemStack, int maxWidth) {
-        String code = getItemString(itemStack, maxWidth);
+        String code = MaterialUtil.getName(itemStack, maxWidth);
 
         if (code != null) {
             if (maxWidth > 0) {
@@ -100,9 +100,5 @@ public class ItemUtil {
      */
     public String getSignName(ItemStack itemStack) {
         return getName(itemStack, MAXIMUM_SIGN_WIDTH);
-    }
-
-    public String getItemString(ItemStack item, int maxWidth) {
-        return MaterialUtil.getName(item, maxWidth);
     }
 }

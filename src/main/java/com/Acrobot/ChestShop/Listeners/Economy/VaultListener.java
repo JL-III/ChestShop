@@ -155,7 +155,6 @@ public class VaultListener extends EconomyAdapter {
         }
 
         World world = event.getWorld();
-        //String lastSeen = NameManager.getLastSeenName(event.getAccount());
         OfflinePlayer lastSeen = Bukkit.getOfflinePlayer(event.getAccount());
 
         try {
@@ -186,7 +185,6 @@ public class VaultListener extends EconomyAdapter {
         }
 
         World world = event.getWorld();
-        //String lastSeen = NameManager.getLastSeenName(event.getTarget());
         OfflinePlayer lastSeen = Bukkit.getOfflinePlayer(event.getTarget());
 
         if (lastSeen != null) {
@@ -210,7 +208,6 @@ public class VaultListener extends EconomyAdapter {
         }
 
         World world = event.getWorld();
-        //String lastSeen = NameManager.getLastSeenName(event.getTarget());
         OfflinePlayer lastSeen = Bukkit.getOfflinePlayer(event.getTarget());
 
         if (lastSeen != null) {
@@ -241,7 +238,6 @@ public class VaultListener extends EconomyAdapter {
             return;
         }
 
-        //String lastSeen = NameManager.getLastSeenName(event.getAccount());
         OfflinePlayer lastSeen = Bukkit.getOfflinePlayer(event.getAccount());
         String world = event.getWorld().getName();
 
