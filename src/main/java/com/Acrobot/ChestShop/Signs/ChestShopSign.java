@@ -8,12 +8,11 @@ import com.Acrobot.ChestShop.Configuration.Properties;
 import com.Acrobot.ChestShop.Database.Account;
 import com.Acrobot.ChestShop.Events.tobesorted.AccountQueryEvent;
 import com.Acrobot.ChestShop.Utils.NameManager;
-import com.Acrobot.ChestShop.Utils.uBlock;
 import com.Acrobot.ChestShop.Utils.Permission;
+import com.Acrobot.ChestShop.Utils.uBlock;
 import org.bukkit.Bukkit;
 import org.bukkit.block.*;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 
 import java.util.Locale;
@@ -79,24 +78,6 @@ public class ChestShopSign {
         }
 
         return uBlock.getConnectedSign(block) != null;
-    }
-
-    /**
-     * @deprecated Use {@link #isShopBlock(InventoryHolder}
-     */
-    @Deprecated
-    public static boolean isShopChest(InventoryHolder holder) {
-        if (!BlockUtil.isChest(holder)) {
-            return false;
-        }
-
-        if (holder instanceof DoubleChest) {
-            return isShopChest(((DoubleChest) holder).getLocation().getBlock());
-        } else if (holder instanceof Chest) {
-            return isShopChest(((Chest) holder).getBlock());
-        } else {
-            return false;
-        }
     }
 
     public static boolean isShopBlock(InventoryHolder holder) {

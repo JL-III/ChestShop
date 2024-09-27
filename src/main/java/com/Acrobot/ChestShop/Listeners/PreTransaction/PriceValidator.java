@@ -17,6 +17,7 @@ import static com.Acrobot.ChestShop.Events.tobesorted.TransactionEvent.Transacti
  * @author Acrobot
  */
 public class PriceValidator implements Listener {
+
     @EventHandler(priority = EventPriority.LOWEST)
     public static void onPriceCheck(PreTransactionEvent event) {
         if (event.isCancelled()) {

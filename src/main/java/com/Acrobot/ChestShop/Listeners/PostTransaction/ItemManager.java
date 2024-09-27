@@ -2,7 +2,6 @@ package com.Acrobot.ChestShop.Listeners.PostTransaction;
 
 import com.Acrobot.Breeze.Utils.ImplementationAdapter;
 import com.Acrobot.Breeze.Utils.InventoryUtil;
-import com.Acrobot.ChestShop.Configuration.Properties;
 import com.Acrobot.ChestShop.Events.tobesorted.TransactionEvent;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.DoubleChest;

@@ -25,35 +25,16 @@ public enum Permission {
     SELL("ChestShop.shop.sell"),
 
     ADMIN("ChestShop.admin"),
-    ADMIN_SHOP("ChestShop.adminshop"),
-    MOD("ChestShop.mod"),
     OTHER_NAME("ChestShop.name"),
     OTHER_NAME_CREATE("ChestShop.othername.create"),
     OTHER_NAME_DESTROY("ChestShop.othername.destroy"),
     OTHER_NAME_ACCESS("ChestShop.othername.access"),
     GROUP("ChestShop.group."),
 
-    NOFEE("ChestShop.nofee"),
-    DISCOUNT("ChestShop.discount."),
-    NO_BUY_TAX("ChestShop.notax.buy"),
-    NO_SELL_TAX("ChestShop.notax.sell"),
-
     NOTIFY_TOGGLE("ChestShop.toggle"),
     ACCESS_TOGGLE("ChestShop.accesstoggle"),
     ITEMINFO("ChestShop.iteminfo"),
-    SHOPINFO("ChestShop.shopinfo"),
-
-    NOLIMIT_MIN_BUY("ChestShop.nolimit.buy.min"),
-    NOLIMIT_MIN_BUY_ID("ChestShop.nolimit.buy.min."),
-
-    NOLIMIT_MAX_BUY("ChestShop.nolimit.buy.max"),
-    NOLIMIT_MAX_BUY_ID("ChestShop.nolimit.buy.max."),
-
-    NOLIMIT_MIN_SELL("ChestShop.nolimit.sell.min"),
-    NOLIMIT_MIN_SELL_ID("ChestShop.nolimit.sell.min."),
-
-    NOLIMIT_MAX_SELL("ChestShop.nolimit.sell.max"),
-    NOLIMIT_MAX_SELL_ID("ChestShop.nolimit.sell.max.");
+    SHOPINFO("ChestShop.shopinfo");
 
     private final String permission;
 

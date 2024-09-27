@@ -30,7 +30,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.logging.Level;
 
 import static com.Acrobot.Breeze.Utils.BlockUtil.isSign;
