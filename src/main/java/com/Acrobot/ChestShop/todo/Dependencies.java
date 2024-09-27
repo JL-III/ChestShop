@@ -1,12 +1,14 @@
 package com.Acrobot.ChestShop.todo;
 
-import com.Acrobot.Breeze.Utils.MaterialUtil;
 import com.Acrobot.ChestShop.ChestShop;
 import com.Acrobot.ChestShop.Configuration.Properties;
 import com.Acrobot.ChestShop.Events.EventManager;
 import com.Acrobot.ChestShop.Listeners.Economy.EconomyAdapter;
 import com.Acrobot.ChestShop.Listeners.Economy.Plugins.VaultListener;
-import com.Acrobot.ChestShop.Plugins.*;
+import com.Acrobot.ChestShop.Plugins.LightweightChestProtection;
+import com.Acrobot.ChestShop.Plugins.WorldGuardBuilding;
+import com.Acrobot.ChestShop.Plugins.WorldGuardFlags;
+import com.Acrobot.ChestShop.Plugins.WorldGuardProtection;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -16,8 +18,6 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 
 /**
@@ -29,8 +29,6 @@ public class Dependencies implements Listener {
     public Dependencies(EventManager eventManager) {
         this.eventManager = eventManager;
     }
-
-    private static final Map<String, String> versions = new HashMap<>();
 
     public static void initializePlugins() {
         PluginManager pluginManager = Bukkit.getPluginManager();
@@ -101,17 +99,11 @@ public class Dependencies implements Listener {
         return true;
     }
 
-    private boolean loadPlugin(String name, Plugin plugin) { //Really messy, right? But it's short and fast :)
+    private boolean loadPlugin(String name, Plugin plugin) {
         Dependency dependency;
 
         try {
             dependency = Dependency.valueOf(name);
-
-            if (dependency.author != null && !plugin.getDescription().getAuthors().contains(dependency.author)) {
-                com.Acrobot.ChestShop.ChestShop.getBukkitLogger().info("You are not using the supported variant of " + name + " by " + dependency.author + "."
-                        + " This variant of " + name + " seems to be made by " + plugin.getDescription().getAuthors().get(0) + " which isn't supported!");
-                return false;
-            }
         } catch (IllegalArgumentException exception) {
             return false;
         }
@@ -141,14 +133,6 @@ public class Dependencies implements Listener {
                 }
 
                 break;
-
-            //Other plugins
-            case ItemBridge:
-                listener = new ItemBridgeListener();
-                break;
-            case ShowItem:
-                MaterialUtil.Show.initialize(plugin);
-                break;
         }
 
         if (listener != null) {
@@ -156,7 +140,6 @@ public class Dependencies implements Listener {
         }
 
         PluginDescriptionFile description = plugin.getDescription();
-        versions.put(description.getName(), description.getVersion());
         ChestShop.getBukkitLogger().info(description.getName() + " version " + description.getVersion() + " hooked.");
 
         return true;
@@ -164,34 +147,11 @@ public class Dependencies implements Listener {
 
     private enum Dependency {
         LWC,
-        Lockette("Acru"),
-        LockettePro,
-        Deadbolt,
-        SimpleChestLock,
-        BlockLocker,
-        Residence,
-
         WorldGuard,
-        GriefPrevention,
-        RedProtect,
-
-        Heroes,
-
         ItemBridge,
-
-        ShowItem;
-
-        private final String author;
-
-        Dependency() {
-            this.author = null;
-        }
-
-        Dependency(String author) {
-            this.author = author;
-        }
+        ShowItem
     }
-    
+
     @EventHandler(priority = EventPriority.MONITOR)
     public void onEnable(PluginEnableEvent event) {
         Plugin plugin = event.getPlugin();

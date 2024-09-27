@@ -185,32 +185,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
-        <dependency>
-            <groupId>com.github.TechFortress</groupId>
-            <artifactId>GriefPrevention</artifactId>
-            <version>16.12.0</version>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.bukkit</groupId>
-                    <artifactId>bukkit</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.jojodmo</groupId>
-            <artifactId>ItemBridge</artifactId>
-            <version>b0054538c1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>de.themoep.showitem</groupId>
-            <artifactId>api</artifactId>
-            <version>1.6.3</version>
-            <scope>provided</scope>
-        </dependency>
     </dependencies>
 
     <build>
@@ -300,20 +274,6 @@
                 </executions>
             </plugin>
         </plugins>
-
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-            <resource>
-                <directory>.</directory>
-                <includes>
-                    <include>LICENSE</include>
-                    <include>README.md</include>
-                </includes>
-            </resource>
-        </resources>
     </build>
 
     <properties>
@@ -348,80 +308,6 @@
             </dependencies>
         </profile>
 
-<!--        <profile>-->
-<!--            <id>spigot</id>-->
-<!--            <activation>-->
-<!--                <property>-->
-<!--                    <name>testprofile</name>-->
-<!--                    <value>spigot</value>-->
-<!--                </property>-->
-<!--            </activation>-->
-<!--            <repositories>-->
-<!--                <repository>-->
-<!--                    <id>spigotmc-repo</id>-->
-<!--                    <url>https://hub.spigotmc.org/nexus/content/groups/public</url>-->
-<!--                </repository>-->
-<!--            </repositories>-->
-<!--            <dependencies>-->
-<!--                <dependency>-->
-<!--                    <groupId>org.spigotmc</groupId>-->
-<!--                    <artifactId>spigot-api</artifactId>-->
-<!--                    <version>${bukkit.dependency.version}</version>-->
-<!--                    <scope>provided</scope>-->
-<!--                </dependency>-->
-<!--            </dependencies>-->
-<!--            <build>-->
-<!--                <finalName>${project.name}-Spigot</finalName>-->
-<!--                <plugins>-->
-<!--                    <plugin>-->
-<!--                        <artifactId>maven-compiler-plugin</artifactId>-->
-<!--                        <configuration>-->
-<!--                            <excludes>-->
-<!--                                <exclude>**/Paper*.java</exclude>-->
-<!--                            </excludes>-->
-<!--                        </configuration>-->
-<!--                    </plugin>-->
-<!--                </plugins>-->
-<!--            </build>-->
-<!--        </profile>-->
-
-        <profile>
-            <id>backwards</id>
-            <activation>
-                <property>
-                    <name>testprofile</name>
-                    <value>backwards</value>
-                </property>
-            </activation>
-            <repositories>
-                <repository>
-                    <id>papermc</id>
-                    <url>https://repo.papermc.io/repository/maven-public/</url>
-                </repository>
-            </repositories>
-            <dependencies>
-                <dependency>
-                    <groupId>io.papermc.paper</groupId>
-                    <artifactId>paper-api</artifactId>
-                    <version>1.20.6-R0.1-SNAPSHOT</version>
-                    <scope>provided</scope>
-                </dependency>
-            </dependencies>
-            <build>
-                <finalName>${project.name}-1.13.2</finalName>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-compiler-plugin</artifactId>
-                        <configuration>
-                            <excludes>
-                                <exclude>**/PaperLatest*.java</exclude>
-                            </excludes>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
         <profile>
             <id>static_build_number</id>
             <activation>
@@ -433,20 +319,6 @@
                 <buildType>manual</buildType>
                 <buildNumber>0</buildNumber>
                 <buildDescription>(compiled at ${maven.build.timestamp})</buildDescription>
-            </properties>
-        </profile>
-
-        <profile>
-            <id>dynamic_build_number</id>
-            <activation>
-                <property>
-                    <name>env.BUILD_NUMBER</name>
-                </property>
-            </activation>
-            <properties>
-                <buildType>jenkins</buildType>
-                <buildNumber>${env.BUILD_NUMBER}</buildNumber>
-                <buildDescription>(build ${env.BUILD_NUMBER})</buildDescription>
             </properties>
         </profile>
     </profiles>

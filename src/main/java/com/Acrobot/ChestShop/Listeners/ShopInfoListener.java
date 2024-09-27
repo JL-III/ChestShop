@@ -73,8 +73,7 @@ public class ShopInfoListener implements Listener {
                     "prices", pricesLine,
                     "quantity", String.valueOf(amount)
             );
-            if (!Properties.SHOWITEM_MESSAGE
-                    || !MaterialUtil.Show.sendMessage(event.getSender(), event.getSender().getName(), Messages.shopinfo, false, new ItemStack[]{item}, replacementMap)) {
+            if (!Properties.SHOWITEM_MESSAGE) {
                 Messages.shopinfo.send(event.getSender(), replacementMap);
             }
 
